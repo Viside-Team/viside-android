@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Vside</string>
+
+    <string name="failed_message">%1$s에 실패하였습니다.</string>
 </resources>
