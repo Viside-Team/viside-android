@@ -3,7 +3,7 @@ package com.viside.app.util.log
 import android.util.Log
 
 object VisideLog {
-    const val TAG = "VsideLog"
+    const val TAG = "VisideLog"
     fun d(msg: String, tr: Throwable? = null, tag: String = TAG) {
         Log.d(tag, msg, tr)
     }
