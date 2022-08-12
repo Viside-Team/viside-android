@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">Vside</string>
+    <string name="app_name">Viside</string>
+
+    <string name="kakao_app_key">e20ec75ca7af711c440a6a61dd7ebb58</string>
 
     <string name="failed_message">%1$s에 실패하였습니다.</string>
+    <string name="login_with_kakao">카카오로 3초 만에 시작하기</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.vside.vside
+package com.viside.app
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

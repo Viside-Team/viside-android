@@ -1,4 +1,4 @@
-package com.vside.vside.util.base
+package com.viside.app.util.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import com.vside.vside.R
+import com.viside.app.R
 
 abstract class BaseFragment<T: ViewDataBinding, VM: BaseViewModel>: Fragment() {
     lateinit var viewDataBinding: T

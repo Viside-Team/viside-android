@@ -1,8 +1,8 @@
-package com.vside.vside.feature
+package com.viside.app.feature
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.vside.vside.R
+import com.viside.app.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

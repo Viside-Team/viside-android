@@ -1,4 +1,4 @@
-package com.vside.vside.util.base
+package com.viside.app.util.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

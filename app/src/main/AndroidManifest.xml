@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.vside.vside">
+    package="com.viside.app">
+
+    <!-- 인터넷 사용 권한 설정-->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".util.common.VsideApplication"
+        android:name="com.viside.app.util.common.VisideApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,13 +18,17 @@
         android:theme="@style/Theme.Vside"
         tools:targetApi="31">
         <activity
-            android:name=".feature.MainActivity"
-            android:exported="true">
+            android:name="com.viside.app.feature.login.LoginActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.viside.app.feature.MainActivity"
+            android:exported="true">
         </activity>
     </application>
 

@@ -1,4 +1,4 @@
-package com.vside.vside
+package com.viside.app
 
 import org.junit.Test
 

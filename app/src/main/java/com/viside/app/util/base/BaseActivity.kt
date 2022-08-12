@@ -1,11 +1,11 @@
-package com.vside.vside.util.base
+package com.viside.app.util.base
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.vside.vside.R
+import com.viside.app.R
 
 abstract class BaseActivity<T: ViewDataBinding, VM: BaseViewModel> : AppCompatActivity() {
     lateinit var viewDataBinding: T

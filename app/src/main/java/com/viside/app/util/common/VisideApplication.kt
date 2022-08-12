@@ -1,22 +1,29 @@
-package com.vside.vside.util.common
+package com.viside.app.util.common
 
 import android.app.Application
-import com.vside.vside.util.viewModelModule
+import com.kakao.sdk.common.KakaoSdk
+import com.viside.app.R
+import com.viside.app.util.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
-class VsideApplication: Application() {
+class VisideApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         setUpKoin()
+        setUpKakao()
     }
 
     private fun setUpKoin() {
         startKoin {
             androidLogger()
-            androidContext(this@VsideApplication)
+            androidContext(this@VisideApplication)
             modules(viewModelModule)
         }
+    }
+
+    private fun setUpKakao() {
+        KakaoSdk.init(this, getString(R.string.kakao_app_key))
     }
 }

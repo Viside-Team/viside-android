@@ -7,7 +7,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.vside.vside"
+        applicationId "com.viside.app"
         minSdk 23
         targetSdk 32
         versionCode 1
@@ -47,4 +47,7 @@ dependencies {
     //koin
     implementation "io.insert-koin:koin-android:3.2.0"
     implementation "io.insert-koin:koin-gradle-plugin:3.2.0"
+
+    //kakao
+    implementation "com.kakao.sdk:v2-user:2.11.0" // 카카오 로그인
 }
