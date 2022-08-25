@@ -6,14 +6,14 @@
     <data>
         <variable
             name="viewModel"
-            type="com.viside.app.feature.login.LoginViewModel" />
+            type="com.viside.app.feature.auth.LoginViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".feature.login.LoginActivity">
+        tools:context=".feature.auth.LoginActivity">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

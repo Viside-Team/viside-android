@@ -3,6 +3,8 @@ package com.viside.app.util.common
 import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
 import com.viside.app.R
+import com.viside.app.util.networkModule
+import com.viside.app.util.repositoryModule
 import com.viside.app.util.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -19,7 +21,7 @@ class VisideApplication: Application() {
         startKoin {
             androidLogger()
             androidContext(this@VisideApplication)
-            modules(viewModelModule)
+            modules(networkModule, repositoryModule, viewModelModule)
         }
     }
 

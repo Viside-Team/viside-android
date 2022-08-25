@@ -1,4 +1,4 @@
-package com.viside.app.feature.login
+package com.viside.app.feature.auth
 
 import androidx.lifecycle.LiveData
 import com.viside.app.util.base.BaseViewModel

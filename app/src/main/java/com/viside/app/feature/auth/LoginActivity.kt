@@ -1,4 +1,4 @@
-package com.viside.app.feature.login
+package com.viside.app.feature.auth
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope

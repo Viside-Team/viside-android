@@ -18,7 +18,7 @@
         android:theme="@style/Theme.Viside"
         tools:targetApi="31">
         <activity
-            android:name="com.viside.app.feature.login.LoginActivity"
+            android:name="com.viside.app.feature.auth.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
