@@ -6,8 +6,12 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.viside.app.R
 import com.viside.app.databinding.ActivityLoginBinding
+import com.viside.app.feature.auth.data.VisideAgeRange
+import com.viside.app.feature.auth.data.VisideGender
+import com.viside.app.feature.auth.data.VisideLoginType
 import com.viside.app.util.auth.getKakaoLoginCallback
 import com.viside.app.util.base.BaseActivity
+import com.viside.app.util.log.VisideLog
 import org.koin.android.ext.android.inject
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
@@ -36,6 +40,20 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                             lifecycleScope.launchWhenCreated {
                                 val snsIdStr = user.id.toString()
                                 val snsAccessToken = kakaoOAuthToken?.accessToken ?: ""
+
+                                val nickname = user.kakaoAccount?.profile?.nickname
+                                val email = user.kakaoAccount?.email
+                                // 성별이랑 나이대는 enum 으로 만들어서 판별해야할 듯
+                                val genderStr = VisideGender.getRequestStrByKakaoGender(user.kakaoAccount?.gender)
+                                val ageRangeStr = VisideAgeRange.getRequestStrByKakaoAgeRangeObj(user.kakaoAccount?.ageRange)
+                                val loginTypeStr = VisideLoginType.Kakao.serverDataStr
+
+                                VisideLog.d("snsId $snsIdStr")
+                                VisideLog.d("loginType $loginTypeStr")
+                                VisideLog.d("nickname $nickname")
+                                VisideLog.d("email $email")
+                                VisideLog.d("gender $genderStr")
+                                VisideLog.d("ageRange $ageRangeStr")
                             }
                         }
                     }
