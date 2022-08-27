@@ -8,7 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-
     <!-- gray color -->
     <color name="g25">#FFfafafa</color>
     <color name="g50">#FFf1f1f3</color>
@@ -22,4 +21,12 @@
     <color name="g800">#FF2e3138</color>
     <color name="g900">#FF23242a</color>
     <color name="g950">#FF17181c</color>
+
+    <!-- main color -->
+    <color name="main100">#FFf8f7fd</color>
+    <color name="main200">#FFe4e2f9</color>
+    <color name="main300">#FFbcb7f1</color>
+    <color name="main400">#FF948ce9</color>
+    <color name="main500">#FF6c61e1</color>
+
 </resources>
