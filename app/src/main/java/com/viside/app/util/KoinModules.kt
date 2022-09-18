@@ -10,13 +10,13 @@ import org.koin.dsl.module
 
 val networkModule = module {
     single { createOkHttp() }
-    single { createRetrofit(get(), "http://43.200.221.188") }
+    single { createRetrofit(get(), "http://43.200.221.188:8080") }
 
     single { createAuthService(get()) }
 }
 
 val viewModelModule = module {
-    viewModel { LoginViewModel() }
+    viewModel { LoginViewModel(get()) }
 }
 
 val repositoryModule = module {
