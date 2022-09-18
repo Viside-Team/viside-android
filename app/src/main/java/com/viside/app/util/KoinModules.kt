@@ -1,5 +1,6 @@
 package com.viside.app.util
 
+import com.viside.app.feature.MainViewModel
 import com.viside.app.feature.auth.LoginViewModel
 import com.viside.app.feature.auth.repo.AuthRepository
 import com.viside.app.util.common.createAuthService
@@ -16,6 +17,7 @@ val networkModule = module {
 }
 
 val viewModelModule = module {
+    viewModel { MainViewModel() }
     viewModel { LoginViewModel(get()) }
 }
 

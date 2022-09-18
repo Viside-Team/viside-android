@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_menu_home">홈</string>
+    <string name="navigation_menu_filter">필터</string>
+    <string name="navigation_menu_my_page">마이페이지</string>
+</resources>

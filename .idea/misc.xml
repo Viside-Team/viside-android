@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_home.xml" value="0.263" />
+        <entry key="app/src/main/res/drawable/ic_my_page.xml" value="0.263" />
+        <entry key="app/src/main/res/drawable/ic_navigation_filter.xml" value="0.263" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.14583333333333334" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
+        <entry key="app/src/main/res/menu/viside_menu_main.xml" value="0.38220551378446116" />
       </map>
     </option>
   </component>
