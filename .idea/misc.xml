@@ -8,6 +8,9 @@
         <entry key="app/src/main/res/drawable/ic_navigation_filter.xml" value="0.263" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_filter.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_my_page.xml" value="0.1" />
         <entry key="app/src/main/res/menu/viside_menu_main.xml" value="0.38220551378446116" />
       </map>
     </option>

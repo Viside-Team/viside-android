@@ -3,6 +3,9 @@ package com.viside.app.util
 import com.viside.app.feature.MainViewModel
 import com.viside.app.feature.auth.LoginViewModel
 import com.viside.app.feature.auth.repo.AuthRepository
+import com.viside.app.feature.filter.FilterViewModel
+import com.viside.app.feature.home.HomeViewModel
+import com.viside.app.feature.mypage.MyPageViewModel
 import com.viside.app.util.common.createAuthService
 import com.viside.app.util.common.createOkHttp
 import com.viside.app.util.common.createRetrofit
@@ -17,8 +20,15 @@ val networkModule = module {
 }
 
 val viewModelModule = module {
-    viewModel { MainViewModel() }
+    // 로그인 화면
     viewModel { LoginViewModel(get()) }
+
+    // 메인 화면
+    viewModel { MainViewModel() }
+    viewModel { HomeViewModel() }
+    viewModel { FilterViewModel() }
+    viewModel { MyPageViewModel() }
+
 }
 
 val repositoryModule = module {
