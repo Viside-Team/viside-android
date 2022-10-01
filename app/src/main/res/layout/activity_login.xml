@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:cardBackgroundColor="@color/kakao_color"
+            app:cardBackgroundColor="@color/kakao_color"
             android:onClick="@{()->viewModel.onKakaoClick()}"
             app:cardElevation="0dp"
             app:cardCornerRadius="4dp"
@@ -28,7 +28,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextAppearance.AppCompat.BASE_M"
+                style="@style/TextAppearance.AppCompat.MD_M"
                 android:text="@string/login_with_kakao"
                 app:drawableStartCompat="@drawable/ic_kakao"
                 android:drawablePadding="6dp"
