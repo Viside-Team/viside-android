@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -64,4 +65,7 @@ dependencies {
 
     // sandwich
     implementation "com.github.skydoves:sandwich:1.0.9"
+
+    // simple recycler view
+    implementation "com.dino.library:simplerecyclerview:0.7.2"
 }
