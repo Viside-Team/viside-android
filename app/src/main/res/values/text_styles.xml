@@ -47,6 +47,11 @@
         <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
+    <style name="TextAppearance.AppCompat.SM_EB" parent="TextAppearance.EB">
+        <item name="android:textSize">@dimen/design_14</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
+    </style>
+
     <!-- md -->
     <style name="TextAppearance.AppCompat.MD_R" parent="TextAppearance.R">
         <item name="android:textSize">@dimen/design_15</item>
@@ -64,6 +69,11 @@
     </style>
 
     <style name="TextAppearance.AppCompat.MD_B" parent="TextAppearance.B">
+        <item name="android:textSize">@dimen/design_15</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.MD_EB" parent="TextAppearance.EB">
         <item name="android:textSize">@dimen/design_15</item>
         <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
@@ -89,6 +99,11 @@
         <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
+    <style name="TextAppearance.AppCompat.BASE_EB" parent="TextAppearance.EB">
+        <item name="android:textSize">@dimen/design_16</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
+    </style>
+
     <!-- lg -->
     <style name="TextAppearance.AppCompat.LG_R" parent="TextAppearance.R">
         <item name="android:textSize">@dimen/design_18</item>
@@ -106,6 +121,11 @@
     </style>
 
     <style name="TextAppearance.AppCompat.LG_B" parent="TextAppearance.B">
+        <item name="android:textSize">@dimen/design_18</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.LG_EB" parent="TextAppearance.EB">
         <item name="android:textSize">@dimen/design_18</item>
         <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
@@ -131,72 +151,114 @@
         <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
+    <style name="TextAppearance.AppCompat.XL_EB" parent="TextAppearance.EB">
+        <item name="android:textSize">@dimen/design_20</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
+    </style>
+
+
     <!-- 2xl -->
     <style name="TextAppearance.AppCompat.2XL_R" parent="TextAppearance.R">
         <item name="android:textSize">@dimen/design_22</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <style name="TextAppearance.AppCompat.2XL_M" parent="TextAppearance.M">
         <item name="android:textSize">@dimen/design_22</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <style name="TextAppearance.AppCompat.2XL_SB" parent="TextAppearance.SB">
         <item name="android:textSize">@dimen/design_22</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <style name="TextAppearance.AppCompat.2XL_B" parent="TextAppearance.B">
         <item name="android:textSize">@dimen/design_22</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.2XL_EB" parent="TextAppearance.EB">
+        <item name="android:textSize">@dimen/design_22</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <!-- 3xl -->
     <style name="TextAppearance.AppCompat.3XL_R" parent="TextAppearance.R">
         <item name="android:textSize">@dimen/design_24</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <style name="TextAppearance.AppCompat.3XL_M" parent="TextAppearance.M">
         <item name="android:textSize">@dimen/design_24</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <style name="TextAppearance.AppCompat.3XL_SB" parent="TextAppearance.SB">
         <item name="android:textSize">@dimen/design_24</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <style name="TextAppearance.AppCompat.3XL_B" parent="TextAppearance.B">
         <item name="android:textSize">@dimen/design_24</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.3XL_EB" parent="TextAppearance.EB">
+        <item name="android:textSize">@dimen/design_24</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <!-- 4xl -->
     <style name="TextAppearance.AppCompat.4XL_R" parent="TextAppearance.R">
         <item name="android:textSize">@dimen/design_26</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <style name="TextAppearance.AppCompat.4XL_M" parent="TextAppearance.M">
         <item name="android:textSize">@dimen/design_26</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <style name="TextAppearance.AppCompat.4XL_SB" parent="TextAppearance.SB">
         <item name="android:textSize">@dimen/design_26</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <style name="TextAppearance.AppCompat.4XL_B" parent="TextAppearance.B">
         <item name="android:textSize">@dimen/design_26</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.4XL_EB" parent="TextAppearance.EB">
+        <item name="android:textSize">@dimen/design_26</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <!-- 5xl -->
     <style name="TextAppearance.AppCompat.5XL_R" parent="TextAppearance.R">
         <item name="android:textSize">@dimen/design_28</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <style name="TextAppearance.AppCompat.5XL_M" parent="TextAppearance.M">
         <item name="android:textSize">@dimen/design_28</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <style name="TextAppearance.AppCompat.5XL_SB" parent="TextAppearance.SB">
         <item name="android:textSize">@dimen/design_28</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <style name="TextAppearance.AppCompat.5XL_B" parent="TextAppearance.B">
         <item name="android:textSize">@dimen/design_28</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.5XL_EB" parent="TextAppearance.EB">
+        <item name="android:textSize">@dimen/design_28</item>
+        <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
 
     <!-- 6xl -->
@@ -213,6 +275,10 @@
     </style>
 
     <style name="TextAppearance.AppCompat.6XL_B" parent="TextAppearance.B">
+        <item name="android:textSize">@dimen/design_30</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.6XL_EB" parent="TextAppearance.EB">
         <item name="android:textSize">@dimen/design_30</item>
     </style>
 
