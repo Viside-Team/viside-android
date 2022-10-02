@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.viside.app.feature.mypage.MyPageViewModel" />
+            type="com.vside.app.feature.mypage.MyPageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.viside.app.feature.auth.LoginViewModel" />
+            type="com.vside.app.feature.auth.LoginViewModel" />
 
     </data>
 

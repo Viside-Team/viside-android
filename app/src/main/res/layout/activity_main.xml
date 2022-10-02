@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.viside.app.feature.MainViewModel" />
+            type="com.vside.app.feature.MainViewModel" />
 
     </data>
 
@@ -33,7 +33,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/viside_menu_main" />
+            app:menu="@menu/vside_menu_main" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
