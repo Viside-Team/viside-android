@@ -16,5 +16,5 @@ dependencyResolutionManagement {
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }
-rootProject.name = "Viside"
+rootProject.name = "Vside"
 include ':app'

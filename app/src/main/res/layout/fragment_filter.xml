@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.viside.app.feature.filter.FilterViewModel" />
+            type="com.vside.app.feature.filter.FilterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
