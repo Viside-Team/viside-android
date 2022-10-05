@@ -3,15 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bg_home_action_bar.xml" value="0.1735" />
+        <entry key="app/src/main/res/drawable/ic_bookmark.xml" value="0.297" />
+        <entry key="app/src/main/res/drawable/ic_bookmark_deactivated.xml" value="0.297" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.263" />
         <entry key="app/src/main/res/drawable/ic_my_page.xml" value="0.263" />
         <entry key="app/src/main/res/drawable/ic_navigation_filter.xml" value="0.263" />
+        <entry key="app/src/main/res/drawable/test_home_item_filter.xml" value="0.297" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_filter.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_my_page.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/layout_toast.xml" value="0.321875" />
+        <entry key="app/src/main/res/layout/item_home_content.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_toast.xml" value="0.33" />
         <entry key="app/src/main/res/layout/te.xml" value="0.3234375" />
         <entry key="app/src/main/res/menu/viside_menu_main.xml" value="0.38220551378446116" />
       </map>

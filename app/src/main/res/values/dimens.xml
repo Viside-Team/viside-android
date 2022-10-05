@@ -27,4 +27,6 @@
     <dimen name="design_34">34dp</dimen>
     <dimen name="design_36">36dp</dimen>
     <dimen name="design_46">46dp</dimen>
+
+    <dimen name="default_horizontal_margin">20dp</dimen>
 </resources>

@@ -5,4 +5,6 @@
 
     <string name="failed_message">%1$s에 실패하였습니다.</string>
     <string name="login_with_kakao">카카오로 3초 만에 시작하기</string>
+    <string name="book_image">책 이미지</string>
+    <string name="bookmark">북마크</string>
 </resources>
