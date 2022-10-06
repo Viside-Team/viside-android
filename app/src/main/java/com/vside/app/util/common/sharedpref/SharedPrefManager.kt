@@ -60,6 +60,7 @@ internal object SharedPrefManager {
 
     internal object BooleanKey {
         const val IS_LOGGED_IN = "IS_LOGGED_IN"
+        const val HAVE_SEEN_WELCOME_TOAST = "HAVE_SEEN_WELCOME_TOAST"
     }
 
     /** Int 값 게터, 세터 **/

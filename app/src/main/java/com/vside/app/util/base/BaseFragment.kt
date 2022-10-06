@@ -16,6 +16,8 @@ abstract class BaseFragment<T: ViewDataBinding, VM: BaseViewModel>: Fragment() {
     abstract val layoutResId : Int
     abstract val viewModel : VM
 
+    protected var toast : Toast? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,10 +40,18 @@ abstract class BaseFragment<T: ViewDataBinding, VM: BaseViewModel>: Fragment() {
     }
 
     fun toastShort(str:String) {
-        Toast.makeText(requireContext(), str, Toast.LENGTH_SHORT).show()
+        toast?.cancel()
+        toast = Toast.makeText(requireContext(), str, Toast.LENGTH_SHORT)
+        toast?.show()
     }
 
     fun toastShortOfFailMessage(themeKeyword: String) {
         toastShort(String.format(getString(R.string.failed_message),themeKeyword))
+    }
+
+    fun showToastShort(toast: Toast) {
+        this.toast?.cancel()
+        this.toast = toast
+        this.toast?.show()
     }
 }
