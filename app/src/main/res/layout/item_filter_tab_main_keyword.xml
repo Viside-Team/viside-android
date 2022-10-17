@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="0dp"
+        app:rippleColor="@android:color/transparent"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/g100">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            tools:text="#성장"
+            style="@style/TextAppearance.AppCompat.XS_R"
+            android:textColor="@color/g500"
+            android:paddingHorizontal="12dp"/>
+   </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -26,8 +26,55 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <!-- xs -->
+    <style name="TextAppearance.AppCompat.2XS_R" parent="TextAppearance.R">
+        <item name="android:textSize">@dimen/design_10</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.2XS_M" parent="TextAppearance.M">
+        <item name="android:textSize">@dimen/design_10</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.2XS_SB" parent="TextAppearance.SB">
+        <item name="android:textSize">@dimen/design_10</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.2XS_B" parent="TextAppearance.B">
+        <item name="android:textSize">@dimen/design_10</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.2XS_EB" parent="TextAppearance.EB">
+        <item name="android:textSize">@dimen/design_10</item>
+    </style>
+
+    <!-- xs -->
+    <style name="TextAppearance.AppCompat.XS_R" parent="TextAppearance.R">
+        <item name="android:textSize">@dimen/design_12</item>
+        <item name="android:lineSpacingExtra">@dimen/design_5</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.XS_M" parent="TextAppearance.M">
+        <item name="android:textSize">@dimen/design_12</item>
+        <item name="android:lineSpacingExtra">@dimen/design_5</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.XS_SB" parent="TextAppearance.SB">
+        <item name="android:textSize">@dimen/design_12</item>
+        <item name="android:lineSpacingExtra">@dimen/design_5</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.XS_B" parent="TextAppearance.B">
+        <item name="android:textSize">@dimen/design_12</item>
+        <item name="android:lineSpacingExtra">@dimen/design_5</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.XS_EB" parent="TextAppearance.EB">
+        <item name="android:textSize">@dimen/design_12</item>
+        <item name="android:lineSpacingExtra">@dimen/design_5</item>
+    </style>
+
     <!-- sm -->
-    <style name="TextAppearance.AppCompat.SM_R" parent="TextAppearance.R">
+    <style name="TextAppearance.AppCompat.SM_R"  parent="TextAppearance.R">
         <item name="android:textSize">@dimen/design_14</item>
         <item name="android:lineSpacingExtra">@dimen/design_6</item>
     </style>
