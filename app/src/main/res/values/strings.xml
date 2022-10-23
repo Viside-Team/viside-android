@@ -20,4 +20,7 @@
     <string name="book_shelf_title">books</string>
     <string name="back">뒤로 가기</string>
     <string name="login_main">VIVID, INSIDE</string>
+    <string name="confirm">YES</string>
+    <string name="cancel">NO</string>
+    <string name="dialog_two_btn_divider">/</string>
 </resources>

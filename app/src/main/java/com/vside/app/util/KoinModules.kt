@@ -3,8 +3,11 @@ package com.vside.app.util
 import com.vside.app.feature.MainViewModel
 import com.vside.app.feature.auth.LoginViewModel
 import com.vside.app.feature.auth.repo.AuthRepository
+import com.vside.app.feature.common.view.OneBtnDialogViewModel
+import com.vside.app.feature.common.view.TwoBtnDialogViewModel
 import com.vside.app.feature.filter.FilterViewModel
 import com.vside.app.feature.home.HomeViewModel
+import com.vside.app.feature.mypage.BookShelfViewModel
 import com.vside.app.feature.mypage.MyPageViewModel
 import com.vside.app.util.common.createAuthService
 import com.vside.app.util.common.createOkHttp
@@ -29,6 +32,12 @@ val viewModelModule = module {
     viewModel { FilterViewModel() }
     viewModel { MyPageViewModel() }
 
+    // 마이 페이지 화면
+    viewModel { BookShelfViewModel() }
+
+    // 다이얼로그
+    viewModel { TwoBtnDialogViewModel() }
+    viewModel { OneBtnDialogViewModel() }
 }
 
 val repositoryModule = module {
