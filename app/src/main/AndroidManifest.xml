@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.vside.app">
-
-    <!-- 인터넷 사용 권한 설정-->
+    <!-- 인터넷 사용 권한 설정 -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,8 +15,11 @@
         android:theme="@style/Theme.Viside"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".feature.mypage.BookShelfActivity"
+            android:exported="false" />
+        <activity
             android:name="com.vside.app.feature.auth.LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,8 +28,7 @@
         </activity>
         <activity
             android:name="com.vside.app.feature.MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

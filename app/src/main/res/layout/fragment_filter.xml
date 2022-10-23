@@ -37,6 +37,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:paddingHorizontal="@dimen/default_horizontal_margin"
+            android:paddingTop="12dp"
+            android:clipToPadding="false"
             bind:dino_itemSpace="@{`14dp`}"
             tools:listitem="@layout/item_filter_tab_main"
             android:orientation="vertical"/>
