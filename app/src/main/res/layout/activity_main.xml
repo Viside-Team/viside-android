@@ -20,20 +20,34 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/bnv_main" />
+            app:layout_constraintBottom_toTopOf="@id/fl_bnv_main" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bnv_main"
+        <FrameLayout
+            android:id="@+id/fl_bnv_main"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@color/white"
-            app:itemBackground="@color/white"
-            app:itemIconSize="40dp"
-            app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/vside_menu_main" />
+            app:cardElevation="0dp"
+            android:clipToPadding="false"
+            android:paddingTop="10dp"
+            app:contentPaddingTop="10dp"
+            android:layout_height="66dp">
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bnv_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_nav_bar"
+                app:elevation="20dp"
+                app:itemBackground="@android:color/transparent"
+                app:itemIconSize="40dp"
+                app:labelVisibilityMode="unlabeled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/vside_menu_main" />
+        </FrameLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
