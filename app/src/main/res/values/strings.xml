@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Vside</string>
 
     <string name="kakao_app_key">e20ec75ca7af711c440a6a61dd7ebb58</string>
@@ -8,4 +8,13 @@
     <string name="book_image">책 이미지</string>
     <string name="bookmark">북마크</string>
     <string name="filter_tab_title">Search your favorite</string>
+    <string name="my_page_empty_main" tools:ignore="TypographyEllipsis">Empty...</string>
+    <string name="my_page_empty_main_sub">ZZ</string>
+    <string name="my_page_empty_sub">아직 북마크한 컨텐츠가 없어요.\n책장을 채워넣어보세요!</string>
+    <string name="my_page_inquiry">1:1 문의</string>
+    <string name="my_page_terms_of_service">서비스 이용방침</string>
+    <string name="my_page_privacy_policy">개인정보 처리방안</string>
+    <string name="my_page_log_out">로그아웃</string>
+    <string name="my_page_withdraw">탈퇴하기</string>
+    <string name="my_page_see_all">전체보기</string>
 </resources>
