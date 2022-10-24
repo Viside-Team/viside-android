@@ -54,7 +54,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="12dp"
                         style="@style/TextAppearance.AppCompat.MD_M"
                         tools:text="로그아웃을 진행하시겠어요?"
                         android:textColor="@color/g500"
