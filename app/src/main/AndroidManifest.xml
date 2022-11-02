@@ -12,8 +12,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Viside"
+        android:theme="@style/ContentDetailTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".feature.content.ContentActivity"
+            android:exported="false" />
         <activity
             android:name=".feature.mypage.BookShelfActivity"
             android:exported="false" />
