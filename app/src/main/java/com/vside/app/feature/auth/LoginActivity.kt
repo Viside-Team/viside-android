@@ -26,6 +26,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         super.onCreate(savedInstanceState)
         viewDataBinding.viewModel = viewModel
 
+        window.statusBarColor = getColor(R.color.black)
+
         observeData()
     }
 
