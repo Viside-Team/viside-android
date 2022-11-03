@@ -13,7 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".feature.MainActivity">
+        tools:context=".feature.MainActivity"
+        android:background="@color/white">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container_view_main"
