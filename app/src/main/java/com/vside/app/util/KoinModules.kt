@@ -6,6 +6,7 @@ import com.vside.app.feature.auth.repo.AuthRepository
 import com.vside.app.feature.common.view.OneBtnDialogViewModel
 import com.vside.app.feature.common.view.TwoBtnDialogViewModel
 import com.vside.app.feature.content.ContentViewModel
+import com.vside.app.feature.filter.FilterSelectViewModel
 import com.vside.app.feature.filter.FilterViewModel
 import com.vside.app.feature.home.HomeViewModel
 import com.vside.app.feature.mypage.BookShelfViewModel
@@ -32,6 +33,9 @@ val viewModelModule = module {
     viewModel { HomeViewModel() }
     viewModel { FilterViewModel() }
     viewModel { MyPageViewModel() }
+
+    // 필터 화면
+    viewModel { FilterSelectViewModel() }
 
     // 마이 페이지 화면
     viewModel { BookShelfViewModel() }
