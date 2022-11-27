@@ -1,6 +1,8 @@
 package com.vside.app.feature.auth
 
 import android.os.Bundle
+import android.view.WindowInsetsController
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.lifecycleScope
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
@@ -18,17 +20,24 @@ import com.vside.app.util.log.VsideLog
 import org.koin.android.ext.android.inject
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
-    override val layoutResId: Int
-        get() = R.layout.activity_login
+    override val layoutResId: Int = R.layout.activity_login
     override val viewModel: LoginViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewDataBinding.viewModel = viewModel
 
-        window.statusBarColor = getColor(R.color.black)
+        setUpStatusBarStyle()
 
         observeData()
+    }
+
+    private fun setUpStatusBarStyle() {
+        // 상태바 색 검정
+        window.statusBarColor = getColor(R.color.black)
+        // 텍스트 색 하얗게
+        val windowInsetController = ViewCompat.getWindowInsetsController(window.decorView)
+        windowInsetController?.isAppearanceLightStatusBars = false
     }
 
     private fun signUp(
