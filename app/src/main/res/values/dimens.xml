@@ -29,4 +29,6 @@
     <dimen name="design_46">46dp</dimen>
 
     <dimen name="default_horizontal_margin">20dp</dimen>
+    <dimen name="bottom_margin_for_covering_bnv">30dp</dimen>
+    <dimen name="bottom_margin_for_covering_bnv_in_main">-30dp</dimen>
 </resources>

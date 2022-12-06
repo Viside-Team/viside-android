@@ -70,4 +70,7 @@ dependencies {
 
     // simple recycler view
     implementation "com.dino.library:simplerecyclerview:0.7.2"
+
+    // flexbox layout manager 라이브러리
+    implementation "com.google.android.flexbox:flexbox:3.0.0"
 }

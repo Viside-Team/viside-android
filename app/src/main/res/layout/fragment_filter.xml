@@ -8,39 +8,61 @@
         <variable
             name="viewModel"
             type="com.vside.app.feature.filter.FilterViewModel" />
+        <variable
+            name="filterSelectViewModel"
+            type="com.vside.app.feature.filter.FilterSelectViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_action_bar"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            app:layout_constraintTop_toTopOf="parent">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_action_bar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toTopOf="parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="@dimen/default_horizontal_margin"
+                    android:text="@string/filter_tab_title"
+                    style="@style/TextAppearance.AppCompat.XL_EB"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/cl_action_bar"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="@dimen/default_horizontal_margin"
-                android:text="@string/filter_tab_title"
-                style="@style/TextAppearance.AppCompat.XL_EB"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:paddingHorizontal="@dimen/default_horizontal_margin"
+                android:paddingTop="12dp"
+                android:clipToPadding="false"
+                bind:dino_itemSpace="@{`14dp`}"
+                tools:listitem="@layout/item_filter_tab_main"
+                android:orientation="vertical"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/cl_action_bar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:paddingHorizontal="@dimen/default_horizontal_margin"
-            android:paddingTop="12dp"
-            android:clipToPadding="false"
-            bind:dino_itemSpace="@{`14dp`}"
-            tools:listitem="@layout/item_filter_tab_main"
-            android:orientation="vertical"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_filter_select"
+            app:elevation="20dp"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="70dp"
+            android:paddingBottom="@dimen/bottom_margin_for_covering_bnv"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            >
+            <include
+                layout="@layout/dialog_filter_select"
+                app:viewModel="@{filterSelectViewModel}"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
