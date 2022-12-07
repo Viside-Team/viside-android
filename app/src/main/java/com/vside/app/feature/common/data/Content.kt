@@ -12,5 +12,6 @@ data class Content(
     @SerializedName("lighterColor") val lighterColor: String?,
     @SerializedName("contentUrl") val contentUrl: String?,
     @SerializedName("scrap") val isBookmark: Boolean?,
-    @SerializedName("isLightBg") val isLightBg: Boolean?
+    @SerializedName("isLightBg") val isLightBg: Boolean?,
+    @SerializedName("keywords") val keywords: List<String>?
 )
