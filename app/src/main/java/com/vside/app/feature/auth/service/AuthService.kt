@@ -7,7 +7,7 @@ import com.vside.app.feature.auth.data.request.WithdrawRequest
 import com.vside.app.feature.auth.data.response.NicknameDuplicationCheckResponse
 import com.vside.app.feature.auth.data.response.SignInResponse
 import com.vside.app.feature.auth.data.response.SignUpResponse
-import com.vside.app.feature.common.data.BasicMessageResponse
+import com.vside.app.feature.common.data.response.BasicMessageResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.POST
