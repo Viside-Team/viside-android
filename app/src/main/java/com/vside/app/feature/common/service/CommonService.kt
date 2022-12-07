@@ -8,5 +8,4 @@ import retrofit2.http.Header
 interface CommonService {
     @GET("/profile")
     suspend fun getProfile(@Header("Authorization") jwtAccessToken : String) : ApiResponse<ProfileResponse>
-
 }

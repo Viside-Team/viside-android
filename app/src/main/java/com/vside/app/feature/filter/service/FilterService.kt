@@ -11,8 +11,8 @@ import retrofit2.http.POST
 
 interface FilterService {
     @GET("/keywords")
-    fun getKeywordsGroupedByCategory(@Header("Authorization") jwtAccessToken: String): ApiResponse<KeywordsGroupedByCategoryResponse>
+    suspend fun getKeywordsGroupedByCategory(@Header("Authorization") jwtAccessToken: String): ApiResponse<KeywordsGroupedByCategoryResponse>
 
     @POST("/search")
-    fun getFilteredContentList(@Header("Authorization") jwtAccessToken: String, @Body filteredContentRequest: FilteredContentRequest): ApiResponse<FilteredContentResponse>
+    suspend fun getFilteredContentList(@Header("Authorization") jwtAccessToken: String, @Body filteredContentRequest: FilteredContentRequest): ApiResponse<FilteredContentResponse>
 }
