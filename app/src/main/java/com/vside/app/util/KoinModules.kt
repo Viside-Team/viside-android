@@ -49,7 +49,7 @@ val viewModelModule = module {
     viewModel { OneBtnDialogViewModel() }
 
     // 컨텐츠 상세 화면
-    viewModel { ContentViewModel() }
+    viewModel { ContentViewModel(get()) }
 
 }
 
