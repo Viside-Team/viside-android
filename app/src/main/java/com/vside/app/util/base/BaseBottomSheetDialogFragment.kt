@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.vside.app.util.common.sharedpref.SharedPrefManager
 
 abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, VM: BaseViewModel>: BottomSheetDialogFragment() {
     lateinit var viewDataBinding: T; private set
@@ -21,6 +22,7 @@ abstract class BaseBottomSheetDialogFragment<T: ViewDataBinding, VM: BaseViewMod
     ): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         viewDataBinding.lifecycleOwner = viewLifecycleOwner
+        viewModel.tokenBearer = SharedPrefManager.getString(requireContext()) { TOKEN_BEARER }
 
         return viewDataBinding.root
     }
