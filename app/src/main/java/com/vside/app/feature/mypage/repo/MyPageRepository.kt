@@ -6,9 +6,9 @@ import com.vside.app.feature.mypage.service.MyPageService
 import com.vside.app.util.common.flowApiResponse
 
 class MyPageRepository(private val myPageService: MyPageService, private val authService: AuthService) {
-    suspend fun getScrapList(jwtAccessToken: String) = flowApiResponse(myPageService.getScrapList(jwtAccessToken))
+    suspend fun getScrapList(tokenBearer: String) = flowApiResponse(myPageService.getScrapList(tokenBearer))
 
-    suspend fun signOut(jwtAccessToken: String) = flowApiResponse(authService.signOut(jwtAccessToken))
+    suspend fun signOut(tokenBearer: String) = flowApiResponse(authService.signOut(tokenBearer))
 
-    suspend fun withdraw(jwtAccessToken: String, withdrawRequest: WithdrawRequest) = flowApiResponse(authService.withdraw(jwtAccessToken, withdrawRequest))
+    suspend fun withdraw(tokenBearer: String, withdrawRequest: WithdrawRequest) = flowApiResponse(authService.withdraw(tokenBearer, withdrawRequest))
 }

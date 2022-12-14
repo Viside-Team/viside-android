@@ -36,7 +36,7 @@ val viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { HomeViewModel() }
     viewModel { FilterViewModel() }
-    viewModel { MyPageViewModel() }
+    viewModel { MyPageViewModel(get()) }
 
     // 필터 화면
     viewModel { FilterSelectViewModel() }
