@@ -6,11 +6,15 @@ import com.vside.app.feature.auth.repo.AuthRepository
 import com.vside.app.feature.common.view.OneBtnDialogViewModel
 import com.vside.app.feature.common.view.TwoBtnDialogViewModel
 import com.vside.app.feature.content.ContentViewModel
+import com.vside.app.feature.content.repo.ContentRepository
 import com.vside.app.feature.filter.FilterSelectViewModel
 import com.vside.app.feature.filter.FilterViewModel
+import com.vside.app.feature.filter.repo.FilterRepository
 import com.vside.app.feature.home.HomeViewModel
+import com.vside.app.feature.home.repo.HomeRepository
 import com.vside.app.feature.mypage.BookShelfViewModel
 import com.vside.app.feature.mypage.MyPageViewModel
+import com.vside.app.feature.mypage.repo.MyPageRepository
 import com.vside.app.util.common.createAuthService
 import com.vside.app.util.common.createOkHttp
 import com.vside.app.util.common.createRetrofit
@@ -51,4 +55,8 @@ val viewModelModule = module {
 
 val repositoryModule = module {
     single { AuthRepository(get()) }
+    single { HomeRepository(get()) }
+    single { FilterRepository(get()) }
+    single { MyPageRepository(get(), get()) }
+    single { ContentRepository(get()) }
 }
