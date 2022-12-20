@@ -1,33 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="kakao_color">#FFfee500</color>
+    <color name="purple_200">#ffBB86FC</color>
+    <color name="purple_500">#ff6200EE</color>
+    <color name="purple_700">#ff3700B3</color>
+    <color name="teal_200">#ff03DAC5</color>
+    <color name="teal_700">#ff018786</color>
+    <color name="black">#ff000000</color>
+    <color name="white">#ffFFFFFF</color>
+    <color name="kakao_color">#fffee500</color>
 
     <!-- gray color -->
-    <color name="g25">#FFfafafa</color>
-    <color name="g50">#FFf1f1f3</color>
-    <color name="g100">#FFe3e4e8</color>
-    <color name="g200">#FFc7cad1</color>
-    <color name="g300">#FFabafba</color>
-    <color name="g400">#FF8f94a3</color>
-    <color name="g500">#FF737a8c</color>
-    <color name="g600">#FF5c6170</color>
-    <color name="g700">#FF454954</color>
-    <color name="g800">#FF2e3138</color>
-    <color name="g900">#FF23242a</color>
-    <color name="g950">#FF17181c</color>
+    <color name="g25">#fffafafa</color>
+    <color name="g50">#fff1f1f3</color>
+    <color name="g100">#ffe3e4e8</color>
+    <color name="g200">#ffc7cad1</color>
+    <color name="g300">#ffabafba</color>
+    <color name="g400">#ff8f94a3</color>
+    <color name="g500">#ff737a8c</color>
+    <color name="g600">#ff5c6170</color>
+    <color name="g700">#ff454954</color>
+    <color name="g800">#ff2e3138</color>
+    <color name="g900">#ff23242a</color>
+    <color name="g950">#ff17181c</color>
 
     <!-- main color -->
-    <color name="main100">#FFf8f7fd</color>
-    <color name="main200">#FFe4e2f9</color>
-    <color name="main300">#FFbcb7f1</color>
-    <color name="main400">#FF948ce9</color>
-    <color name="main500">#FF6c61e1</color>
+    <color name="main100">#fff8f7fd</color>
+    <color name="main200">#ffe4e2f9</color>
+    <color name="main300">#ffbcb7f1</color>
+    <color name="main400">#ff948ce9</color>
+    <color name="main500">#ff6c61e1</color>
+    
+    <!-- blue color -->
+    <color name="blue100">#ffEFF3FE</color>
+    <color name="blue200">#ffD7E3FC</color>
+    <color name="blue300">#ffBFD2FA</color>
+    <color name="blue400">#ff90B0F7</color>
+    <color name="blue500">#ff789FF5</color>
 
+    <!-- mint color -->
+    <color name="mint100">#ffF4FCFA</color>
+    <color name="mint200">#ffDFF7F2</color>
+    <color name="mint300">#ffB6EEE1</color>
+    <color name="mint400">#ffA1E9D8</color>
+    <color name="mint500">#ff78DFC7</color>
+
+    <!-- pink color -->
+    <color name="pink100">#ffFCF0FE</color>
+    <color name="pink200">#ffF7D9FB</color>
+    <color name="pink300">#ffF2C2F9</color>
+    <color name="pink400">#ffF2C2F9</color>
+    <color name="pink500">#ffE894F4</color>
+
+    <!-- red color -->
+    <color name="red100">#ffFFEFEF</color>
+    <color name="red200">#ffFFD6D6</color>
+    <color name="red300">#ffFFBCBC</color>
+    <color name="red400">#ffFF8989</color>
+    <color name="red500">#ffFF7070</color>
+
+    <!-- lemon color -->
+    <color name="lemon100">#ffF7FEED</color>
+    <color name="lemon200">#ffEBFED4</color>
+    <color name="lemon300">#ffEBFED4</color>
 </resources>
