@@ -41,7 +41,10 @@
                     android:layout_marginStart="@dimen/default_horizontal_margin"
                     android:text="@{`안녕하세요, ` + viewModel.userName + `님!`}"
                     tools:text="안녕하세요, 데비님!"
-                    style="@style/TextAppearance.AppCompat.XL_M"/>
+                    app:drawableEndCompat="@drawable/ic_home_title_star"
+                    android:drawablePadding="2dp"
+                    style="@style/TextAppearance.AppCompat.XL_M"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
