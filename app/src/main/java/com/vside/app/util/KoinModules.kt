@@ -15,9 +15,7 @@ import com.vside.app.feature.home.repo.HomeRepository
 import com.vside.app.feature.mypage.BookShelfViewModel
 import com.vside.app.feature.mypage.MyPageViewModel
 import com.vside.app.feature.mypage.repo.MyPageRepository
-import com.vside.app.util.common.createAuthService
-import com.vside.app.util.common.createOkHttp
-import com.vside.app.util.common.createRetrofit
+import com.vside.app.util.common.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -26,6 +24,11 @@ val networkModule = module {
     single { createRetrofit(get(), "http://43.200.221.188:8080") }
 
     single { createAuthService(get()) }
+    single { createHomeService(get()) }
+    single { createFilterService(get()) }
+    single { createMyPageService(get()) }
+    single { createContentService(get()) }
+    single { createCommonService(get()) }
 }
 
 val viewModelModule = module {
