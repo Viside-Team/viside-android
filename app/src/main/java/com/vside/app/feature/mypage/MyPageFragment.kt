@@ -28,16 +28,18 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
             }
 
             isInquiryClicked.observe(requireActivity()) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(VSideUrl.KAKAO_CHANNEL_WEB_LINK))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(VSideUrl.KAKAO_CHANNEL_WEB_LINK_URL))
                 startActivity(intent)
             }
 
             isTermsOfServiceClicked.observe(requireActivity()) {
-
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(VSideUrl.TERMS_OF_SERVICE_URL))
+                startActivity(intent)
             }
 
             isPrivacyPolicyClicked.observe(requireActivity()) {
-
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(VSideUrl.PRIVACY_POLICY_URL))
+                startActivity(intent)
             }
 
             isLogoutClicked.observe(requireActivity()) {
