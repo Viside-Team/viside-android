@@ -58,7 +58,7 @@ val viewModelModule = module {
 
 val repositoryModule = module {
     single { AuthRepository(get()) }
-    single { HomeRepository(get()) }
+    single { HomeRepository(get(), get()) }
     single { FilterRepository(get()) }
     single { MyPageRepository(get(), get()) }
     single { ContentRepository(get()) }

@@ -18,7 +18,12 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         viewDataBinding.viewModel = viewModel
 
+        initData()
+    }
+
+    private fun initData() {
         getHomeContentList()
+        getProfile()
     }
 
     private fun showToastIfFirstLoggedIn() {
@@ -33,6 +38,15 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             viewModel.getHomeContentList(
                 onGetSuccess = { showToastIfFirstLoggedIn() },
                 onGetFail = { toastShortOfFailMessage("컨텐츠 가져오기") }
+            )
+        }
+    }
+
+    private fun getProfile() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.getProfile(
+                onGetSuccess = {},
+                onGetFail = {toastShortOfFailMessage("프로필 정보 가져오기")}
             )
         }
     }

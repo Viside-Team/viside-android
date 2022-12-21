@@ -11,7 +11,11 @@ import com.vside.app.util.lifecycle.SingleLiveEvent
 import kotlinx.coroutines.flow.collect
 
 class HomeViewModel(private val homeRepository: HomeRepository): BaseViewModel(), HomeContentItemClickListener {
-    val contentList = MutableLiveData<List<Content>>()
+    private val _contentList = MutableLiveData<List<Content>>()
+    val contentList: LiveData<List<Content>> = _contentList
+
+    private val _userName = MutableLiveData<String>()
+    val userName: LiveData<String> = _userName
 
     suspend fun getHomeContentList(onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
         homeRepository.getHomeContentList(tokenBearer)
@@ -19,12 +23,32 @@ class HomeViewModel(private val homeRepository: HomeRepository): BaseViewModel()
                 handleApiResponse(
                     response = response,
                     onSuccess = {
-                        contentList.value = it.data?.contents
+                        _contentList.value = it.data?.contents
                         onGetSuccess()
                     },
                     onError = {
                         onGetFail()
-                    }, onException = {
+                    }
+                    , onException = {
+                        onGetFail()
+                    }
+                )
+            }
+    }
+
+    suspend fun getProfile(onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
+        homeRepository.getProfile(tokenBearer)
+            .collect { response ->
+                handleApiResponse(
+                    response = response,
+                    onSuccess = {
+                        _userName.value = it.data?.userName
+                        onGetSuccess()
+                    },
+                    onError = {
+                        onGetFail()
+                    }
+                    , onException = {
                         onGetFail()
                     }
                 )
