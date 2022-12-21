@@ -5,6 +5,9 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="item"
+            type="com.vside.app.feature.common.data.Content" />
 
     </data>
 
@@ -26,6 +29,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintDimensionRatio="H, 320:374"
+                bind:imgUrl="@{item.imgUrl}"
                 tools:src="@drawable/img_home_test"
                 android:foreground="@drawable/test_home_item_filter"
                 android:contentDescription="@string/book_image" />
@@ -43,7 +47,7 @@
                 app:tint="@color/white" />
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="56dp"
+                android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -60,9 +64,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:text="@{item.mainKeyword}"
                     tools:text="몽환"
                     android:gravity="center"
                     android:textColor="@color/g800"
+                    android:layout_marginHorizontal="14dp"
                     style="@style/TextAppearance.AppCompat.MD_M" />
             </com.google.android.material.card.MaterialCardView>
 
@@ -73,6 +79,7 @@
                 android:layout_marginHorizontal="24dp"
                 style="@style/TextAppearance.AppCompat.XL_B"
                 android:textColor="@color/white"
+                android:text="@{item.title}"
                 tools:text="사랑하지만 끝내 이해할 수 없는
 것이 당신에게도 있지 않나요"
                 android:layout_marginBottom="20dp" />

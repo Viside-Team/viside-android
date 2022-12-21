@@ -2,6 +2,7 @@ package com.vside.app.feature.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import com.vside.app.R
 import com.vside.app.databinding.FragmentHomeBinding
 import com.vside.app.feature.common.view.VSideToast
@@ -17,7 +18,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         viewDataBinding.viewModel = viewModel
 
-        showToastIfFirstLoggedIn()
+        getHomeContentList()
     }
 
     private fun showToastIfFirstLoggedIn() {
@@ -27,5 +28,12 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
     }
 
-
+    private fun getHomeContentList() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.getHomeContentList(
+                onGetSuccess = { showToastIfFirstLoggedIn() },
+                onGetFail = { toastShortOfFailMessage("컨텐츠 가져오기") }
+            )
+        }
+    }
 }

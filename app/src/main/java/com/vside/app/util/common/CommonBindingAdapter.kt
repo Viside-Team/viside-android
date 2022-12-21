@@ -2,8 +2,10 @@ package com.vside.app.util.common
 
 import android.graphics.drawable.ColorDrawable
 import android.view.View
+import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 
 @BindingAdapter("bgColorAlpha")
 fun View.setBgColorAlpha(alpha0To100: Int?) {
@@ -18,5 +20,14 @@ fun View.setBgColorAlpha(alpha0To100: Int?) {
 fun CardView.setCardBgColorAlpha(alpha0To100: Int?) {
     alpha0To100?.let {
         setCardBackgroundColor(cardBackgroundColor.withAlpha(alpha0To100*255/100))
+    }
+}
+
+@BindingAdapter("imgUrl")
+fun ImageView.setImageByUrl(url: String?) {
+    url?.let {
+        Glide.with(context)
+            .load(it)
+            .into(this)
     }
 }
