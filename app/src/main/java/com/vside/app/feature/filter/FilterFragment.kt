@@ -9,6 +9,7 @@ import com.vside.app.databinding.FragmentFilterBinding
 import com.vside.app.feature.filter.data.request.FilteredContentRequest
 import com.vside.app.util.base.BaseFragment
 import com.vside.app.util.common.sharedpref.SharedPrefManager
+import com.vside.app.util.log.VsideLog
 import org.koin.android.ext.android.inject
 
 class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
@@ -34,14 +35,12 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
     private fun addBottomSheetCallback() {
         val behavior = BottomSheetBehavior.from(viewDataBinding.clDialogFilterSelect)
         behavior.addBottomSheetCallback(object :BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when(newState) {
-                    BottomSheetBehavior.STATE_COLLAPSED -> viewDataBinding.bindingDialogFilterSelect.tvFilterSelectComplete.visibility = View.INVISIBLE
-                    else -> viewDataBinding.bindingDialogFilterSelect.tvFilterSelectComplete.visibility = View.VISIBLE
-                }
-            }
+            override fun onStateChanged(bottomSheet: View, newState: Int) {}
 
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                if(slideOffset<0.5) viewDataBinding.bindingDialogFilterSelect.tvFilterSelectComplete.visibility = View.INVISIBLE
+                else viewDataBinding.bindingDialogFilterSelect.tvFilterSelectComplete.visibility = View.VISIBLE
+            }
         })
     }
 
