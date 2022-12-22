@@ -53,6 +53,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_dialog_filter_select"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/bg_filter_select"
@@ -63,6 +64,7 @@
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             >
             <include
+                android:id="@+id/binding_dialog_filter_select"
                 layout="@layout/dialog_filter_select"
                 app:viewModel="@{filterSelectViewModel}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.vside.app.feature.filter
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.vside.app.R
 import com.vside.app.databinding.FragmentFilterBinding
 import com.vside.app.feature.filter.data.request.FilteredContentRequest
@@ -25,8 +26,23 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
     }
 
     private fun initData() {
+        addBottomSheetCallback()
         getFilteredGroupedByCategory()
         getKeywordsGroupedByCategory()
+    }
+
+    private fun addBottomSheetCallback() {
+        val behavior = BottomSheetBehavior.from(viewDataBinding.clDialogFilterSelect)
+        behavior.addBottomSheetCallback(object :BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when(newState) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> viewDataBinding.bindingDialogFilterSelect.tvFilterSelectComplete.visibility = View.INVISIBLE
+                    else -> viewDataBinding.bindingDialogFilterSelect.tvFilterSelectComplete.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
     }
 
     private fun getFilteredGroupedByCategory() {
