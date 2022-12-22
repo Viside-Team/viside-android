@@ -7,6 +7,7 @@ import android.view.View
 import com.vside.app.R
 import com.vside.app.databinding.FragmentMyPageBinding
 import com.vside.app.feature.common.VSideUrl
+import com.vside.app.feature.common.view.TwoBtnDialogFragment
 import com.vside.app.util.base.BaseFragment
 import org.koin.android.ext.android.inject
 
@@ -43,11 +44,25 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
             }
 
             isLogoutClicked.observe(requireActivity()) {
+                val twoBtnDialogFragment = TwoBtnDialogFragment("로그아웃을 하셔도 언제든지\n다시 돌아올 수 있어요!", "로그아웃을 진행하시겠어요?")
+                twoBtnDialogFragment.viewModel.isLeftBtnClicked.observe(viewLifecycleOwner) {
 
+                }
+                twoBtnDialogFragment.viewModel.isRightBtnClicked.observe(viewLifecycleOwner) {
+                    twoBtnDialogFragment.dismiss()
+                }
+                twoBtnDialogFragment.show(childFragmentManager, twoBtnDialogFragment.tag)
             }
 
             isWithDrawClicked.observe(requireActivity()) {
+                val twoBtnDialogFragment = TwoBtnDialogFragment("계정을 삭제하면 이은지님의\n기록이 모두 사라져요.", "삭제를 진행하시겠어요?")
+                twoBtnDialogFragment.viewModel.isLeftBtnClicked.observe(viewLifecycleOwner) {
 
+                }
+                twoBtnDialogFragment.viewModel.isRightBtnClicked.observe(viewLifecycleOwner) {
+                    twoBtnDialogFragment.dismiss()
+                }
+                twoBtnDialogFragment.show(childFragmentManager, twoBtnDialogFragment.tag)
             }
         }
     }

@@ -153,6 +153,8 @@
             android:layout_marginEnd="18dp"
             android:text="@string/complete"
             android:gravity="center"
+            android:visibility="invisible"
+            tools:visibility="visible"
             style="@style/TextAppearance.AppCompat.MD_M"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

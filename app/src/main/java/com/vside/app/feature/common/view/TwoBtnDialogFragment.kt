@@ -13,8 +13,8 @@ import org.koin.android.ext.android.inject
 class TwoBtnDialogFragment(
     private val contents: String,
     private val subContents: String = "",
-    private val leftTextBtn: String? = null,
-    private val rightTextBtn: String? = null
+    private val leftTextBtn: String? = "YES",
+    private val rightTextBtn: String? = "NO"
 ) : BaseDialogFragment<DialogTwoBtnBinding, TwoBtnDialogViewModel>(280){
     override val layoutResId: Int = R.layout.dialog_two_btn
     override val viewModel: TwoBtnDialogViewModel by inject()
