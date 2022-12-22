@@ -3,7 +3,7 @@ package com.vside.app.util.log
 import android.util.Log
 
 object VsideLog {
-    const val TAG = "VisideLog"
+    const val TAG = "VsideLog"
     fun d(msg: String, tr: Throwable? = null, tag: String = TAG) {
         Log.d(tag, msg, tr)
     }

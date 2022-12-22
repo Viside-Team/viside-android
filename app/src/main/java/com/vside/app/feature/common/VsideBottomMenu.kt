@@ -25,8 +25,8 @@ sealed class VsideBottomMenu(@IdRes val menuItemResId: Int) {
             onMyPageSelected: () -> Unit
         ) = NavigationBarView.OnItemSelectedListener { item ->
             var result = false
-            val visideBottomMenu = findMenuById(item.itemId)
-            visideBottomMenu?.let {
+            val vsideBottomMenu = findMenuById(item.itemId)
+            vsideBottomMenu?.let {
                 result =
                     when (it) {
                         Home -> {

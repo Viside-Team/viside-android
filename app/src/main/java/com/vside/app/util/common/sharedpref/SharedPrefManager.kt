@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 
 internal object SharedPrefManager {
     /** preference를 가져올 때 사용할 이름 **/
-    private const val PREFERENCE_NAME = "VisideSharedPreference"
+    private const val PREFERENCE_NAME = "VsideSharedPreference"
 
     /** 키 값에 해당하는 value값이 없을 때 반환할 기본 값 **/
     const val DEFAULT_VALUE_STRING=""
