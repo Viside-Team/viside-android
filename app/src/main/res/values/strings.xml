@@ -23,7 +23,7 @@
     <string name="confirm">YES</string>
     <string name="cancel">NO</string>
     <string name="dialog_two_btn_divider">/</string>
-    <string name="complete">완료</string>
+    <string name="complete">완료하기</string>
     <string name="filter_select_cancel_all">모두취소</string>
     <string name="filter_select_subtitle1">원하는&#032;</string>
     <string name="filter_select_subtitle2">카테고리</string>

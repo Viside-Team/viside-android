@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
     <data>
-
+        <variable
+            name="item"
+            type="com.vside.app.feature.filter.data.response.KeywordsGroupedByCategoryResponse.CategoryKeyword" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,6 +21,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            bind:text="@{item.category.get(0)}"
             tools:text="분위기"
             style="@style/TextAppearance.AppCompat.MD_B"/>
         <androidx.recyclerview.widget.RecyclerView
@@ -26,6 +31,8 @@
             android:layout_marginTop="14dp"
             android:orientation="horizontal"
             tools:listitem="@layout/item_keyword"
+            bind:dino_itemLayout="@{@layout/item_keyword}"
+            bind:dino_items="@{item.keywords}"
             app:layout_constraintTop_toBottomOf="@id/tv_item_category_category"
             app:layout_constraintBottom_toBottomOf="parent"/>
 

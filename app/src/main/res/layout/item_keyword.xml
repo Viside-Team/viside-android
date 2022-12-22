@@ -5,6 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="item"
+            type="String" />
 
     </data>
     <com.google.android.material.card.MaterialCardView
@@ -24,6 +27,7 @@
             android:layout_marginHorizontal="14dp"
             android:layout_marginVertical="8dp"
             tools:style="@style/TextAppearance.AppCompat.MD_R"
+            bind:text="@{item}"
             tools:textColor="@color/g600"
             tools:text="동기부여"/>
     </com.google.android.material.card.MaterialCardView>
