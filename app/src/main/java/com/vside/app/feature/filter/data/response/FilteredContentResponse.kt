@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 import com.vside.app.feature.common.data.Content
 
 data class FilteredContentResponse(
-    @SerializedName("Contents") val contents: List<Content>
+    @SerializedName("contents") val contents: List<Content>
 )
