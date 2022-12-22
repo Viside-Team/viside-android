@@ -29,9 +29,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintDimensionRatio="H, 320:374"
-                bind:imgUrl="@{item.imgUrl}"
                 tools:src="@drawable/img_home_test"
-                android:foreground="@drawable/test_home_item_filter"
+                android:scaleType="centerCrop"
+                bind:colorFilterBottomColor="@{item.darkerColor}"
+                bind:colorFilterTopColor="@{item.lighterColor}"
+                bind:imgUrl="@{item.imgUrl}"
+                tools:foreground="@drawable/test_home_item_filter"
                 android:contentDescription="@string/book_image" />
 
             <ImageView
