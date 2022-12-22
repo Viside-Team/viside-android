@@ -33,7 +33,7 @@
                 android:scaleType="centerCrop"
                 bind:colorFilterBottomColor="@{item.darkerColor}"
                 bind:colorFilterTopColor="@{item.lighterColor}"
-                bind:imgUrl="@{item.imgUrl}"
+                bind:imgUrl="@{item.coverImgUrl}"
                 tools:foreground="@drawable/test_home_item_filter"
                 android:contentDescription="@string/book_image" />
 

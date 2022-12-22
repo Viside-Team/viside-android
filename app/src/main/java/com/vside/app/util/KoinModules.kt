@@ -42,7 +42,7 @@ val viewModelModule = module {
     viewModel { MyPageViewModel(get()) }
 
     // 필터 화면
-    viewModel { FilterSelectViewModel() }
+    viewModel { FilterSelectViewModel(get()) }
 
     // 마이 페이지 화면
     viewModel { BookShelfViewModel() }

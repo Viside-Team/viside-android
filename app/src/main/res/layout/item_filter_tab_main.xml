@@ -5,6 +5,9 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="item"
+            type="com.vside.app.feature.common.data.Content" />
 
     </data>
 
@@ -25,6 +28,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                bind:imgUrl="@{item.coverImgUrl}"
                 tools:src="@drawable/img_home_test"
                 android:contentDescription="@string/book_image" />
         </androidx.cardview.widget.CardView>
@@ -45,6 +50,7 @@
             android:id="@+id/tv_item_filter_tab_main_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            bind:text="@{item.contentBody}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/cv_item_filter_tab_main_img"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,6 +74,8 @@
             android:orientation="horizontal"
             tools:listitem="@layout/item_filter_tab_main_keyword"
             bind:dino_itemSpace="@{`4dp`}"
+            bind:dino_items="@{item.keywords}"
+            bind:dino_itemLayout="@{@layout/item_filter_tab_main_keyword}"
             tools:itemCount="3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

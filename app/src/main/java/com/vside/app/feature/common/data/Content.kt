@@ -6,7 +6,8 @@ import java.math.BigInteger
 data class Content(
     @SerializedName("contentId") val contentId: BigInteger?,
     @SerializedName("title") val title: String?,
-    @SerializedName("coverImgUrl") val imgUrl: String?,
+    @SerializedName("contentBody") val contentBody: String?,
+    @SerializedName("coverImgUrl") val coverImgUrl: String?,
     @SerializedName("mainKeyword") val mainKeyword: String?,
     @SerializedName("darkerColor") val darkerColor: String?,
     @SerializedName("lighterColor") val lighterColor: String?,
