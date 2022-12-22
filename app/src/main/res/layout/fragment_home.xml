@@ -52,13 +52,15 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/cl_action_bar"
                 android:paddingHorizontal="@dimen/default_horizontal_margin"
-                android:paddingVertical="30dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="88dp"
                 android:clipToPadding="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
                 bind:dino_itemLayout="@{@layout/item_home_content}"
                 bind:dino_items="@{viewModel.contentList}"
                 bind:dino_itemSpace="@{`20dp`}"
+                tools:itemCount="3"
                 tools:listitem="@layout/item_home_content"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
