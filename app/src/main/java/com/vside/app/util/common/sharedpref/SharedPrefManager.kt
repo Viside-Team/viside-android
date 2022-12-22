@@ -38,6 +38,7 @@ internal object SharedPrefManager {
 
     internal object StringKey {
         const val TOKEN_BEARER = "TOKEN_BEARER"
+        const val SNS_ID = "SNS_ID"
     }
 
     /** Boolean 값 게터, 세터 **/

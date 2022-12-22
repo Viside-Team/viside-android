@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.vside.app.feature.mypage.MyPageViewModel" />
@@ -25,6 +27,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/default_horizontal_margin"
+                android:text="@{viewModel.userName + `'s Bookshelf`}"
                 tools:text="데비's Bookshelf"
                 style="@style/TextAppearance.AppCompat.XL_B"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -51,7 +54,8 @@
                         android:orientation="horizontal">
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:visibility="@{viewModel.scrapList == null || viewModel.scrapList.empty ? View.GONE : View.VISIBLE}">
                             <TextView
                                 android:id="@+id/tv_my_page_show_all"
                                 android:layout_width="wrap_content"
@@ -76,13 +80,15 @@
                                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                                 android:orientation="horizontal"
                                 android:layout_marginBottom="32dp"
+                                bind:dino_items="@{viewModel.scrapList}"
+                                bind:dino_itemLayout="@{@layout/item_my_page_book_shelf}"
                                 tools:listitem="@layout/item_my_page_book_shelf"
                                 app:spanCount="2"/>
                         </androidx.constraintlayout.widget.ConstraintLayout>
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="gone">
+                            android:visibility="@{viewModel.scrapList == null || viewModel.scrapList.empty ? View.VISIBLE : View.GONE}">
                             <TextView
                                 android:id="@+id/tv_my_page_empty_main"
                                 android:layout_width="wrap_content"

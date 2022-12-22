@@ -99,7 +99,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                                 signInRequest,
                                 onOurUser = { jwtBearer ->
                                     jwtBearer?.let {
-                                        storeInfoAndStartHomeActivity(appCompatActivity, jwtBearer)
+                                        storeInfoAndStartHomeActivity(appCompatActivity, jwtBearer, snsIdStr)
                                     }
                                 },
                                 onNewUser = {
@@ -118,7 +118,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                                                 signInRequest,
                                                 onOurUser = { jwtBearer ->
                                                     jwtBearer?.let {
-                                                        storeInfoAndStartHomeActivity(appCompatActivity, jwtBearer)
+                                                        storeInfoAndStartHomeActivity(appCompatActivity, jwtBearer, snsIdStr)
                                                     }
                                                 },
                                                 onNewUser = {},

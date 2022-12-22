@@ -23,9 +23,11 @@ fun getKakaoLoginCallback(
 
 fun storeInfoAndStartHomeActivity(
     fragmentActivity: FragmentActivity,
-    tokenBearer: String
+    tokenBearer: String,
+    snsId: String
 ) {
     SharedPrefManager.setString(fragmentActivity, { TOKEN_BEARER }, tokenBearer)
+    SharedPrefManager.setString(fragmentActivity, { SNS_ID }, snsId)
     fragmentActivity.startActivity(Intent(fragmentActivity, MainActivity::class.java))
 }
 

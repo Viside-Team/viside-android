@@ -4,11 +4,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import com.vside.app.R
 import com.vside.app.databinding.FragmentMyPageBinding
+import com.vside.app.feature.auth.data.request.WithdrawRequest
 import com.vside.app.feature.common.VSideUrl
 import com.vside.app.feature.common.view.TwoBtnDialogFragment
 import com.vside.app.util.base.BaseFragment
+import com.vside.app.util.common.sharedpref.SharedPrefManager
 import org.koin.android.ext.android.inject
 
 class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
@@ -19,7 +22,13 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         viewDataBinding.viewModel = viewModel
 
+        initData()
         observeData()
+    }
+
+    private fun initData() {
+        getScrapList()
+        getProfile()
     }
 
     private fun observeData() {
@@ -64,6 +73,43 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
                 }
                 twoBtnDialogFragment.show(childFragmentManager, twoBtnDialogFragment.tag)
             }
+        }
+    }
+
+    private fun getScrapList() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.getScrapList(
+                onGetSuccess = {},
+                onGetFail = { toastShortOfFailMessage("스크랩 리스트 가져오기") }
+            )
+        }
+    }
+
+    private fun getProfile() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.getProfile(
+                onGetSuccess = {},
+                onGetFail = {toastShortOfFailMessage("프로필 정보 가져오기")}
+            )
+        }
+    }
+
+    private fun signOut() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.signOut(
+                onSignOutSuccess = {},
+                onSignOutFail = { toastShortOfFailMessage("로그아웃") }
+            )
+        }
+    }
+
+    private fun withDraw() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.withdraw(
+                WithdrawRequest(SharedPrefManager.getString(requireContext()) { SNS_ID }),
+                onWithdrawSuccess = {},
+                onWithdrawFail = { toastShortOfFailMessage("회원 탈퇴")}
+            )
         }
     }
 }
