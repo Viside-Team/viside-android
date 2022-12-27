@@ -74,7 +74,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:text="@string/filter_select_subtitle1"
-                style="@style/TextAppearance.AppCompat.BASE_R"
+                style="@style/TextAppearance.AppCompat.MD_R"
                 android:textColor="@color/g700"/>
             <TextView
                 android:id="@+id/tv_filter_select_subtitle2"
@@ -84,7 +84,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_filter_select_subtitle1"
                 android:text="@string/filter_select_subtitle2"
-                style="@style/TextAppearance.AppCompat.BASE_R"
+                style="@style/TextAppearance.AppCompat.MD_R"
                 android:textColor="@color/g700"/>
             <TextView
                 android:id="@+id/tv_filter_select_subtitle3"
@@ -94,7 +94,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_filter_select_subtitle2"
                 android:text="@string/filter_select_subtitle3"
-                style="@style/TextAppearance.AppCompat.BASE_R"
+                style="@style/TextAppearance.AppCompat.MD_R"
                 android:textColor="@color/g700"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <View
