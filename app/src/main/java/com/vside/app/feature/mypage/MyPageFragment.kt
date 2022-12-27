@@ -64,7 +64,7 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
             }
 
             isWithDrawClicked.observe(requireActivity()) {
-                val twoBtnDialogFragment = TwoBtnDialogFragment("계정을 삭제하면 이은지님의\n기록이 모두 사라져요.", "삭제를 진행하시겠어요?")
+                val twoBtnDialogFragment = TwoBtnDialogFragment("계정을 삭제하면 ${viewModel.userName.value}님의\n기록이 모두 사라져요.", "삭제를 진행하시겠어요?")
                 twoBtnDialogFragment.viewModel.isLeftBtnClicked.observe(viewLifecycleOwner) {
 
                 }
