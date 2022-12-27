@@ -50,7 +50,7 @@
             android:id="@+id/tv_item_filter_tab_main_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            bind:text="@{item.contentBody}"
+            bind:text="@{item.title}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/cv_item_filter_tab_main_img"
             app:layout_constraintEnd_toEndOf="parent"
