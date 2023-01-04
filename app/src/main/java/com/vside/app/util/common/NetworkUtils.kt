@@ -83,14 +83,4 @@ fun createRetrofit(okHttpClient: OkHttpClient, baseUrl: String): Retrofit {
         .build()
 }
 
-fun createCommonService(retrofit: Retrofit): CommonService = retrofit.create(CommonService::class.java)
-
-fun createAuthService(retrofit: Retrofit): AuthService = retrofit.create(AuthService::class.java)
-
-fun createHomeService(retrofit: Retrofit): HomeService = retrofit.create(HomeService::class.java)
-
-fun createFilterService(retrofit: Retrofit): FilterService = retrofit.create(FilterService::class.java)
-
-fun createMyPageService(retrofit: Retrofit): MyPageService = retrofit.create(MyPageService::class.java)
-
-fun createContentService(retrofit: Retrofit): ContentService = retrofit.create(ContentService::class.java)
+inline fun <reified T> createService(retrofit: Retrofit): T = retrofit.create(T::class.java)

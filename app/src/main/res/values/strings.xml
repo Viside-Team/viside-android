@@ -30,4 +30,7 @@
     <string name="filter_select_subtitle3">를 선택해보세요!</string>
     <string name="filter_select_title">어떤 책을 찾고 계신가요?</string>
     <string name="filter_select_open">OPEN</string>
+    <string name="sign_up_nickname_hint">닉네임을 입력해주세요</string>
+    <string name="sign_up_login">로그인</string>
+    <string name="logo">로고</string>
 </resources>

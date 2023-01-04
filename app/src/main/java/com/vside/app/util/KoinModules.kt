@@ -2,19 +2,26 @@ package com.vside.app.util
 
 import com.vside.app.feature.MainViewModel
 import com.vside.app.feature.auth.LoginViewModel
+import com.vside.app.feature.auth.SignUpViewModel
 import com.vside.app.feature.auth.repo.AuthRepository
+import com.vside.app.feature.auth.service.AuthService
+import com.vside.app.feature.common.service.CommonService
 import com.vside.app.feature.common.view.OneBtnDialogViewModel
 import com.vside.app.feature.common.view.TwoBtnDialogViewModel
 import com.vside.app.feature.content.ContentViewModel
 import com.vside.app.feature.content.repo.ContentRepository
+import com.vside.app.feature.content.service.ContentService
 import com.vside.app.feature.filter.FilterSelectViewModel
 import com.vside.app.feature.filter.FilterViewModel
 import com.vside.app.feature.filter.repo.FilterRepository
+import com.vside.app.feature.filter.service.FilterService
 import com.vside.app.feature.home.HomeViewModel
 import com.vside.app.feature.home.repo.HomeRepository
+import com.vside.app.feature.home.service.HomeService
 import com.vside.app.feature.mypage.BookShelfViewModel
 import com.vside.app.feature.mypage.MyPageViewModel
 import com.vside.app.feature.mypage.repo.MyPageRepository
+import com.vside.app.feature.mypage.service.MyPageService
 import com.vside.app.util.common.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -23,17 +30,18 @@ val networkModule = module {
     single { createOkHttp() }
     single { createRetrofit(get(), "http://43.200.221.188:8080") }
 
-    single { createAuthService(get()) }
-    single { createHomeService(get()) }
-    single { createFilterService(get()) }
-    single { createMyPageService(get()) }
-    single { createContentService(get()) }
-    single { createCommonService(get()) }
+    single { createService<AuthService>(get()) }
+    single { createService<HomeService>(get()) }
+    single { createService<FilterService>(get()) }
+    single { createService<MyPageService>(get()) }
+    single { createService<ContentService>(get()) }
+    single { createService<CommonService>(get()) }
 }
 
 val viewModelModule = module {
     // 로그인 화면
     viewModel { LoginViewModel(get()) }
+    viewModel { SignUpViewModel(get()) }
 
     // 메인 화면
     viewModel { MainViewModel() }

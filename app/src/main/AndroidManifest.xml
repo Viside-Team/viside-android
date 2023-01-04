@@ -15,6 +15,16 @@
         android:theme="@style/ContentDetailTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="com.vside.app.feature.auth.SignUpActivity"
+            android:theme="@style/SignUpTheme"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".feature.content.ContentActivity"
             android:exported="false" />
         <activity
