@@ -2,7 +2,10 @@ package com.vside.app.feature.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.vside.app.feature.auth.data.VsideUser
 import com.vside.app.feature.auth.data.request.NicknameDuplicationCheckRequest
+import com.vside.app.feature.auth.data.request.SignInRequest
+import com.vside.app.feature.auth.data.request.SignUpRequest
 import com.vside.app.feature.auth.repo.AuthRepository
 import com.vside.app.util.auth.PersonalInfoValidation
 import com.vside.app.util.base.BaseViewModel
@@ -21,12 +24,7 @@ class SignUpViewModel(private val authRepository: AuthRepository) : BaseViewMode
     val nicknameGuidance = MutableLiveData("")
     val isNicknameValidate = MutableLiveData<Boolean>()
 
-    var time = 0L
-    fun setNicknameFlow(str: String) {
-        time = System.currentTimeMillis()
-        VsideLog.d("값 변경")
-        nickname.value = str
-    }
+    val passedVsideUser = MutableLiveData<VsideUser>()
 
     @ExperimentalCoroutinesApi
     @FlowPreview
@@ -37,9 +35,6 @@ class SignUpViewModel(private val authRepository: AuthRepository) : BaseViewMode
                 nicknameGuidance.value = PersonalInfoValidation.nicknameGuidanceStr(it)
                 isNicknameValidate.value = PersonalInfoValidation.nicknameValidationCheck(it)
                 if (PersonalInfoValidation.nicknameValidationCheck(it)) {
-                    val startTime = time
-                    time = System.currentTimeMillis()
-                    VsideLog.d("요청 전송 ${(time - startTime).toFloat() / 1000}")
                     nicknameDuplicationCheck(it, onCheckSuccess, onCheckFail)
                 }
             }
@@ -80,6 +75,60 @@ class SignUpViewModel(private val authRepository: AuthRepository) : BaseViewMode
                     onException = {
                         isNicknameValidate.value = false
                         onCheckFail()
+                    }
+                )
+            }
+    }
+
+
+    suspend fun signUp(
+        signUpRequest: SignUpRequest,
+        onPostSuccess: () -> Unit,
+        onPostFail: () -> Unit
+    ) {
+        authRepository.signUp(signUpRequest)
+            .collect { response ->
+                handleApiResponse(
+                    response = response,
+                    onSuccess = {
+                        if(it.data?.success == true) {
+                            onPostSuccess()
+                        }
+                        else {
+                            onPostFail()
+                        }
+                    }, onException = {
+                        onPostFail()
+                    }, onError = {
+                        onPostFail()
+                    }
+                )
+            }
+    }
+
+    suspend fun signIn(
+        signInRequest: SignInRequest,
+        onOurUser: (jwtBearer: String?) -> Unit,
+        onNewUser: () -> Unit,
+        onPostFail: () -> Unit
+    ) {
+        authRepository.signIn(signInRequest)
+            .collect { response ->
+                handleApiResponse(
+                    response = response,
+                    onSuccess = {
+                        if(it.data?.isOurUser == true) {
+                            onOurUser(it.data?.jwtBearer)
+                        }
+                        else {
+                            onNewUser()
+                        }
+                    },
+                    onException = {
+                        onPostFail()
+                    },
+                    onError = {
+                        onPostFail()
                     }
                 )
             }

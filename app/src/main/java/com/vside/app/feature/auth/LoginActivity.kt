@@ -1,5 +1,6 @@
 package com.vside.app.feature.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowInsetsController
 import androidx.core.view.ViewCompat
@@ -11,11 +12,13 @@ import com.vside.app.databinding.ActivityLoginBinding
 import com.vside.app.feature.auth.data.VsideAgeRange
 import com.vside.app.feature.auth.data.VsideGender
 import com.vside.app.feature.auth.data.VsideLoginType
+import com.vside.app.feature.auth.data.VsideUser
 import com.vside.app.feature.auth.data.request.SignInRequest
 import com.vside.app.feature.auth.data.request.SignUpRequest
 import com.vside.app.util.auth.getKakaoLoginCallback
 import com.vside.app.util.auth.storeInfoAndStartHomeActivity
 import com.vside.app.util.base.BaseActivity
+import com.vside.app.util.common.DataTransfer
 import com.vside.app.util.log.VsideLog
 import org.koin.android.ext.android.inject
 
@@ -40,19 +43,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         windowInsetController?.isAppearanceLightStatusBars = false
     }
 
-    private fun signUp(
-        signUpRequest: SignUpRequest,
-        onPostSuccess: () -> Unit,
-        onPostFail: () -> Unit
-    ) {
-        lifecycleScope.launchWhenCreated {
-            viewModel.signUp(
-                signUpRequest,
-                onPostSuccess,
-                onPostFail
-            )
-        }
-    }
 
     private fun signIn(
         signInRequest: SignInRequest,
@@ -78,8 +68,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                     UserApiClient.instance.me { user, error ->
                         if (error != null) {
                             // 실패
+                            toastShortOfFailMessage("카카오 로그인")
                         } else if (user != null) {
                             // 성공
+
                             val snsIdStr = user.id.toString()
                             val snsAccessToken = kakaoOAuthToken?.accessToken ?: ""
 
@@ -95,47 +87,41 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                                 loginTypeStr,
                                 snsIdStr
                             )
+
                             this@LoginActivity.signIn(
                                 signInRequest,
                                 onOurUser = { jwtBearer ->
                                     jwtBearer?.let {
-                                        storeInfoAndStartHomeActivity(appCompatActivity, jwtBearer, snsIdStr)
+                                        storeInfoAndStartHomeActivity(
+                                            appCompatActivity,
+                                            jwtBearer,
+                                            snsIdStr
+                                        )
                                     }
                                 },
                                 onNewUser = {
-                                    val signUpRequest = SignUpRequest(
-                                        nickname,
-                                        email,
-                                        loginTypeStr,
-                                        genderStr,
-                                        ageRangeStr,
-                                        snsIdStr
-                                    )
-                                    this@LoginActivity.signUp(
-                                        signUpRequest,
-                                        onPostSuccess = {
-                                            this@LoginActivity.signIn(
-                                                signInRequest,
-                                                onOurUser = { jwtBearer ->
-                                                    jwtBearer?.let {
-                                                        storeInfoAndStartHomeActivity(appCompatActivity, jwtBearer, snsIdStr)
-                                                    }
-                                                },
-                                                onNewUser = {},
-                                                onPostFail = {}
+                                    startActivity(
+                                        Intent(
+                                            appCompatActivity,
+                                            SignUpActivity::class.java
+                                        ).apply {
+                                            putExtra(
+                                                DataTransfer.VSIDE_USER,
+                                                VsideUser(
+                                                    nickname,
+                                                    email,
+                                                    loginTypeStr,
+                                                    genderStr,
+                                                    ageRangeStr,
+                                                    snsIdStr
+                                                )
                                             )
-                                        },
-                                        onPostFail = {
-                                            toastShortOfFailMessage("회원가입")
-                                        }
-                                    )
-
+                                        })
                                 },
                                 onPostFail = {
                                     toastShortOfFailMessage("로그인")
                                 }
                             )
-
 
                             VsideLog.d("snsId $snsIdStr")
                             VsideLog.d("loginType $loginTypeStr")
@@ -154,7 +140,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                                 afterKakaoLoginSuccess(it)
                             },
                             onFail = {
-
+                                toastShortOfFailMessage("카카오 로그인")
                             }
                         ),
                     )

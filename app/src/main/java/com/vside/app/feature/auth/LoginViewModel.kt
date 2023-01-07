@@ -10,30 +10,6 @@ import com.vside.app.util.lifecycle.SingleLiveEvent
 import kotlinx.coroutines.flow.collect
 
 class LoginViewModel(private val authRepository: AuthRepository) : BaseViewModel() {
-    suspend fun signUp(
-        signUpRequest: SignUpRequest,
-        onPostSuccess: () -> Unit,
-        onPostFail: () -> Unit
-    ) {
-        authRepository.signUp(signUpRequest)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        if(it.data?.success == true) {
-                            onPostSuccess()
-                        }
-                        else {
-                            onPostFail()
-                        }
-                    }, onException = {
-                        onPostFail()
-                    }, onError = {
-                        onPostFail()
-                    }
-                )
-            }
-    }
 
     suspend fun signIn(
         signInRequest: SignInRequest,

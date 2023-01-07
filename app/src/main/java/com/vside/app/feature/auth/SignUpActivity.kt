@@ -1,6 +1,7 @@
 package com.vside.app.feature.auth
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.ViewGroup
@@ -12,8 +13,17 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import com.vside.app.R
 import com.vside.app.databinding.ActivitySignUpBinding
+import com.vside.app.feature.MainActivity
+import com.vside.app.feature.auth.data.VsideAgeRange
+import com.vside.app.feature.auth.data.VsideGender
+import com.vside.app.feature.auth.data.VsideLoginType
+import com.vside.app.feature.auth.data.VsideUser
+import com.vside.app.feature.auth.data.request.SignInRequest
+import com.vside.app.feature.auth.data.request.SignUpRequest
 import com.vside.app.util.auth.PersonalInfoValidation
+import com.vside.app.util.auth.storeInfoAndStartHomeActivity
 import com.vside.app.util.base.BaseActivity
+import com.vside.app.util.common.DataTransfer
 import com.vside.app.util.common.navigationHeight
 import com.vside.app.util.common.statusBarHeight
 import com.vside.app.util.log.VsideLog
@@ -30,6 +40,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>() {
         super.onCreate(savedInstanceState)
         viewDataBinding.viewModel = viewModel
 
+        initData()
         initUi()
         observeData()
 
@@ -101,16 +112,83 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>() {
         )
     }
 
+    private fun signUp(
+        signUpRequest: SignUpRequest,
+        onPostSuccess: () -> Unit,
+        onPostFail: () -> Unit
+    ) {
+        lifecycleScope.launchWhenCreated {
+            viewModel.signUp(
+                signUpRequest,
+                onPostSuccess,
+                onPostFail
+            )
+        }
+    }
+
+    private fun signIn(
+        signInRequest: SignInRequest,
+        onOurUser: (jwtBearer: String?) -> Unit,
+        onNewUser: () -> Unit,
+        onPostFail: () -> Unit
+    ) {
+        lifecycleScope.launchWhenCreated {
+            viewModel.signIn(
+                signInRequest,
+                onOurUser,
+                onNewUser,
+                onPostFail
+            )
+        }
+    }
+
     private fun initUi() {
         setUpWindow()
         setUpNicknameEditText()
+    }
+
+    private fun initData() {
+        viewModel.passedVsideUser.value = intent.getParcelableExtra(DataTransfer.VSIDE_USER)
     }
 
     private fun observeData() {
         val appCompatActivity = this@SignUpActivity
         with(viewModel) {
             isStartClicked.observe(appCompatActivity) {
+                val signUpRequest = SignUpRequest(
+                    nickname.value,
+                    passedVsideUser.value?.email,
+                    passedVsideUser.value?.loginType,
+                    passedVsideUser.value?.gender,
+                    passedVsideUser.value?.ageRange,
+                    passedVsideUser.value?.snsId
+                )
+                this@SignUpActivity.signUp(
+                    signUpRequest,
+                    onPostSuccess = {
+                        val signInRequest = SignInRequest(passedVsideUser.value?.loginType, passedVsideUser.value?.snsId)
+                        this@SignUpActivity.signIn(
+                            signInRequest,
+                            onOurUser = { jwtBearer ->
+                                jwtBearer?.let {
+                                    storeInfoAndStartHomeActivity(appCompatActivity, jwtBearer, passedVsideUser.value?.snsId ?: "")
+                                }
 
+                                val intent = Intent(
+                                    this@SignUpActivity,
+                                    MainActivity::class.java
+                                )
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                startActivity(intent)
+                            },
+                            onNewUser = {},
+                            onPostFail = {}
+                        )
+                    },
+                    onPostFail = {
+                        toastShortOfFailMessage("회원가입")
+                    }
+                )
             }
         }
     }
