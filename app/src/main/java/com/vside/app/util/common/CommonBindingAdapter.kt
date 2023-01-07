@@ -31,3 +31,10 @@ fun ImageView.setImageByUrl(url: String?) {
             .into(this)
     }
 }
+
+@BindingAdapter("activated")
+fun View.setActivation(activate: Boolean?) {
+    activate?.let {
+        isActivated = it
+    }
+}

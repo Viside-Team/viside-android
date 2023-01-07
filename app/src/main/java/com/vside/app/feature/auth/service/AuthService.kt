@@ -1,6 +1,7 @@
 package com.vside.app.feature.auth.service
 
 import com.skydoves.sandwich.ApiResponse
+import com.vside.app.feature.auth.data.request.NicknameDuplicationCheckRequest
 import com.vside.app.feature.auth.data.request.SignInRequest
 import com.vside.app.feature.auth.data.request.SignUpRequest
 import com.vside.app.feature.auth.data.request.WithdrawRequest
@@ -27,5 +28,5 @@ interface AuthService {
     suspend fun withdraw(@Header("Authorization") jwtAccessToken : String, @Body withdrawRequest: WithdrawRequest): ApiResponse<BasicMessageResponse>
 
     @POST("/nameCheck")
-    suspend fun nicknameDuplicationCheck() : ApiResponse<NicknameDuplicationCheckResponse>
+    suspend fun nicknameDuplicationCheck(@Body nicknameDuplicationCheckRequest: NicknameDuplicationCheckRequest) : ApiResponse<NicknameDuplicationCheckResponse>
 }
