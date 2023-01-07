@@ -8,6 +8,7 @@ object PersonalInfoValidation {
 
     private const val NICKNAME_REGEX =
         "^([A-Za-z\\d가-힣])[A-Za-z\\d가-힣\\s]{${NICKNAME_MIN_LENGTH - 1},${NICKNAME_MAX_LENGTH - 1}}$"
+    private const val NICKNAME_ACCEPTED_CHAR_REGEX = "[A-Za-z\\d가-힣\\s]"
 
     private const val MSG_NICKNAME_UNACCEPTED_CHAR = "한글, 영어, 숫자, 공백만 입력해주세요."
     private const val MSG_NICKNAME_TOO_SHORT = "${NICKNAME_MIN_LENGTH}글자 이상 입력해주세요."
@@ -33,4 +34,10 @@ object PersonalInfoValidation {
         if (!nicknameValidationCheck(nickname)) return MSG_NICKNAME_UNACCEPTED_CHAR
         return MSG_NICKNAME_VALIDATE
     }
+
+    fun convertToValidNickname(nickname: String?): String =
+        nickname?.filter { it.toString().matches(NICKNAME_ACCEPTED_CHAR_REGEX.toRegex()) }
+            ?.trimStart()
+            ?.take(NICKNAME_MAX_LENGTH)
+            ?: ""
 }

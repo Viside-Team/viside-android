@@ -15,6 +15,7 @@ import com.vside.app.databinding.ActivitySignUpBinding
 import com.vside.app.feature.MainActivity
 import com.vside.app.feature.auth.data.request.SignInRequest
 import com.vside.app.feature.auth.data.request.SignUpRequest
+import com.vside.app.util.auth.PersonalInfoValidation
 import com.vside.app.util.auth.storeUserInfo
 import com.vside.app.util.base.BaseActivity
 import com.vside.app.util.common.DataTransfer
@@ -34,13 +35,9 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>() {
         super.onCreate(savedInstanceState)
         viewDataBinding.viewModel = viewModel
 
-        initData()
         initUi()
         observeData()
-
-        lifecycleScope.launchWhenCreated {
-            viewModel.nicknameValidationCheck({}, {})
-        }
+        initData()
     }
 
     private fun setUpNicknameEditText() {
@@ -141,8 +138,19 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>() {
         setUpNicknameEditText()
     }
 
+    @ExperimentalCoroutinesApi
+    @FlowPreview
     private fun initData() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.nicknameValidationCheck({}, {})
+        }
         viewModel.passedVsideUser.value = intent.getParcelableExtra(DataTransfer.VSIDE_USER)
+        lifecycleScope.launchWhenCreated {
+            viewModel.initNickname(
+                PersonalInfoValidation.convertToValidNickname(viewModel.passedVsideUser.value?.nickname),
+                { viewDataBinding.etSignUpNickname.setSelection(viewDataBinding.etSignUpNickname.length()) },
+                {})
+        }
     }
 
     private fun observeData() {
@@ -160,12 +168,19 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>() {
                 this@SignUpActivity.signUp(
                     signUpRequest,
                     onPostSuccess = {
-                        val signInRequest = SignInRequest(passedVsideUser.value?.loginType, passedVsideUser.value?.snsId)
+                        val signInRequest = SignInRequest(
+                            passedVsideUser.value?.loginType,
+                            passedVsideUser.value?.snsId
+                        )
                         this@SignUpActivity.signIn(
                             signInRequest,
                             onOurUser = { jwtBearer ->
                                 jwtBearer?.let {
-                                    storeUserInfo(appCompatActivity, jwtBearer, passedVsideUser.value?.snsId ?: "")
+                                    storeUserInfo(
+                                        appCompatActivity,
+                                        jwtBearer,
+                                        passedVsideUser.value?.snsId ?: ""
+                                    )
                                 }
 
                                 val intent = Intent(

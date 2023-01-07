@@ -40,6 +40,11 @@ class SignUpViewModel(private val authRepository: AuthRepository) : BaseViewMode
             }
     }
 
+    suspend fun initNickname(inputNickname: String, onCheckSuccess: () -> Unit, onCheckFail: () -> Unit) {
+        nickname.value = inputNickname
+        nicknameDuplicationCheck(inputNickname, onCheckSuccess, onCheckFail)
+    }
+
     private suspend fun nicknameDuplicationCheck(
         nickname: String,
         onCheckSuccess: () -> Unit,
