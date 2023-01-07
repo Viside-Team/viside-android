@@ -1,5 +1,6 @@
 package com.vside.app.util.auth
 
+import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import com.kakao.sdk.auth.model.OAuthToken
@@ -21,13 +22,12 @@ fun getKakaoLoginCallback(
     }
 }
 
-fun storeInfoAndStartHomeActivity(
-    fragmentActivity: FragmentActivity,
+fun storeUserInfo(
+    context: Context,
     tokenBearer: String,
     snsId: String
 ) {
-    SharedPrefManager.setString(fragmentActivity, { TOKEN_BEARER }, tokenBearer)
-    SharedPrefManager.setString(fragmentActivity, { SNS_ID }, snsId)
-    fragmentActivity.startActivity(Intent(fragmentActivity, MainActivity::class.java))
+    SharedPrefManager.setString(context, { TOKEN_BEARER }, tokenBearer)
+    SharedPrefManager.setString(context, { SNS_ID }, snsId)
 }
 

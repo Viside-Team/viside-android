@@ -9,19 +9,13 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.WindowCompat
-import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import com.vside.app.R
 import com.vside.app.databinding.ActivitySignUpBinding
 import com.vside.app.feature.MainActivity
-import com.vside.app.feature.auth.data.VsideAgeRange
-import com.vside.app.feature.auth.data.VsideGender
-import com.vside.app.feature.auth.data.VsideLoginType
-import com.vside.app.feature.auth.data.VsideUser
 import com.vside.app.feature.auth.data.request.SignInRequest
 import com.vside.app.feature.auth.data.request.SignUpRequest
-import com.vside.app.util.auth.PersonalInfoValidation
-import com.vside.app.util.auth.storeInfoAndStartHomeActivity
+import com.vside.app.util.auth.storeUserInfo
 import com.vside.app.util.base.BaseActivity
 import com.vside.app.util.common.DataTransfer
 import com.vside.app.util.common.navigationHeight
@@ -171,7 +165,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>() {
                             signInRequest,
                             onOurUser = { jwtBearer ->
                                 jwtBearer?.let {
-                                    storeInfoAndStartHomeActivity(appCompatActivity, jwtBearer, passedVsideUser.value?.snsId ?: "")
+                                    storeUserInfo(appCompatActivity, jwtBearer, passedVsideUser.value?.snsId ?: "")
                                 }
 
                                 val intent = Intent(

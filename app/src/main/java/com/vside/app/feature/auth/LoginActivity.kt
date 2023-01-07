@@ -2,21 +2,20 @@ package com.vside.app.feature.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.WindowInsetsController
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.lifecycleScope
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.vside.app.R
 import com.vside.app.databinding.ActivityLoginBinding
+import com.vside.app.feature.MainActivity
 import com.vside.app.feature.auth.data.VsideAgeRange
 import com.vside.app.feature.auth.data.VsideGender
 import com.vside.app.feature.auth.data.VsideLoginType
 import com.vside.app.feature.auth.data.VsideUser
 import com.vside.app.feature.auth.data.request.SignInRequest
-import com.vside.app.feature.auth.data.request.SignUpRequest
 import com.vside.app.util.auth.getKakaoLoginCallback
-import com.vside.app.util.auth.storeInfoAndStartHomeActivity
+import com.vside.app.util.auth.storeUserInfo
 import com.vside.app.util.base.BaseActivity
 import com.vside.app.util.common.DataTransfer
 import com.vside.app.util.log.VsideLog
@@ -92,12 +91,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                                 signInRequest,
                                 onOurUser = { jwtBearer ->
                                     jwtBearer?.let {
-                                        storeInfoAndStartHomeActivity(
+                                        storeUserInfo(
                                             appCompatActivity,
                                             jwtBearer,
                                             snsIdStr
                                         )
                                     }
+
+                                    val intent = Intent(
+                                        this@LoginActivity,
+                                        MainActivity::class.java
+                                    )
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    startActivity(intent)
                                 },
                                 onNewUser = {
                                     startActivity(
