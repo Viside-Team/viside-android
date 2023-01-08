@@ -7,11 +7,14 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.vside.app.R
 import com.vside.app.databinding.FragmentMyPageBinding
+import com.vside.app.feature.auth.LoginActivity
 import com.vside.app.feature.auth.data.request.WithdrawRequest
 import com.vside.app.feature.common.VSideUrl
 import com.vside.app.feature.common.view.TwoBtnDialogFragment
+import com.vside.app.util.auth.removeUserInfo
 import com.vside.app.util.base.BaseFragment
 import com.vside.app.util.common.sharedpref.SharedPrefManager
+import com.vside.app.util.log.VsideLog
 import org.koin.android.ext.android.inject
 
 class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
@@ -55,7 +58,7 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
             isLogoutClicked.observe(requireActivity()) {
                 val twoBtnDialogFragment = TwoBtnDialogFragment("로그아웃을 하셔도 언제든지\n다시 돌아올 수 있어요!", "로그아웃을 진행하시겠어요?")
                 twoBtnDialogFragment.viewModel.isLeftBtnClicked.observe(viewLifecycleOwner) {
-
+                    logout()
                 }
                 twoBtnDialogFragment.viewModel.isRightBtnClicked.observe(viewLifecycleOwner) {
                     twoBtnDialogFragment.dismiss()
@@ -66,13 +69,58 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
             isWithDrawClicked.observe(requireActivity()) {
                 val twoBtnDialogFragment = TwoBtnDialogFragment("계정을 삭제하면 ${viewModel.userName.value}님의\n기록이 모두 사라져요.", "삭제를 진행하시겠어요?")
                 twoBtnDialogFragment.viewModel.isLeftBtnClicked.observe(viewLifecycleOwner) {
-
+                    withdraw()
                 }
                 twoBtnDialogFragment.viewModel.isRightBtnClicked.observe(viewLifecycleOwner) {
                     twoBtnDialogFragment.dismiss()
                 }
                 twoBtnDialogFragment.show(childFragmentManager, twoBtnDialogFragment.tag)
             }
+        }
+    }
+
+    private fun logout() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.signOut(
+                onSignOutSuccess = {
+                    removeUserInfo(requireContext())
+                    startActivity(
+                        Intent(
+                            requireContext(),
+                            LoginActivity::class.java
+                        ).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        }
+                    )
+                },
+                onSignOutFail = {
+                    toastShortOfFailMessage("로그아웃")
+                }
+            )
+        }
+    }
+
+    private fun withdraw() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.withdraw(
+                WithdrawRequest(
+                    SharedPrefManager.getString(requireContext()) { SNS_ID }
+                ),
+                onWithdrawSuccess = {
+                    removeUserInfo(requireContext())
+                    startActivity(
+                        Intent(
+                            requireContext(),
+                            LoginActivity::class.java
+                        ).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        }
+                    )
+                },
+                onWithdrawFail = {
+                    toastShortOfFailMessage("회원 탈퇴")
+                }
+            )
         }
     }
 
@@ -90,25 +138,6 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
             viewModel.getProfile(
                 onGetSuccess = {},
                 onGetFail = {toastShortOfFailMessage("프로필 정보 가져오기")}
-            )
-        }
-    }
-
-    private fun signOut() {
-        lifecycleScope.launchWhenCreated {
-            viewModel.signOut(
-                onSignOutSuccess = {},
-                onSignOutFail = { toastShortOfFailMessage("로그아웃") }
-            )
-        }
-    }
-
-    private fun withDraw() {
-        lifecycleScope.launchWhenCreated {
-            viewModel.withdraw(
-                WithdrawRequest(SharedPrefManager.getString(requireContext()) { SNS_ID }),
-                onWithdrawSuccess = {},
-                onWithdrawFail = { toastShortOfFailMessage("회원 탈퇴")}
             )
         }
     }
