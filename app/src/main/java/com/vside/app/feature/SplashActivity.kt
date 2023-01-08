@@ -62,7 +62,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
                         Intent(
                             appCompatActivity,
                             LoginActivity::class.java
-                        )
+                        ).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        }
                     )
                 },
                 onPostFail = {
@@ -71,7 +73,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
                         Intent(
                             appCompatActivity,
                             LoginActivity::class.java
-                        )
+                        ).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        }
                     )
                 }
             )
@@ -81,7 +85,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
                 Intent(
                     appCompatActivity,
                     LoginActivity::class.java
-                )
+                ).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                }
             )
         }
     }
