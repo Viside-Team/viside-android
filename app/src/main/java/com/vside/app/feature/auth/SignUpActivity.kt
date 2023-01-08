@@ -179,7 +179,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>() {
                                     storeUserInfo(
                                         appCompatActivity,
                                         jwtBearer,
-                                        passedVsideUser.value?.snsId ?: ""
+                                        passedVsideUser.value?.snsId ?: "",
+                                        passedVsideUser.value?.loginType ?: ""
                                     )
                                 }
 

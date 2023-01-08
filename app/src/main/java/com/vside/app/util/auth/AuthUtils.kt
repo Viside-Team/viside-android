@@ -25,9 +25,18 @@ fun getKakaoLoginCallback(
 fun storeUserInfo(
     context: Context,
     tokenBearer: String,
-    snsId: String
+    snsId: String,
+    loginTypeStr: String
 ) {
+    SharedPrefManager.setBoolean(context, { IS_LOGGED_IN }, true)
+    SharedPrefManager.setString(context, { LOGIN_TYPE }, loginTypeStr)
     SharedPrefManager.setString(context, { TOKEN_BEARER }, tokenBearer)
     SharedPrefManager.setString(context, { SNS_ID }, snsId)
 }
 
+fun removeUserInfo(context: Context) {
+    SharedPrefManager.removeBoolean(context) { IS_LOGGED_IN }
+    SharedPrefManager.removeString(context) { LOGIN_TYPE }
+    SharedPrefManager.removeString(context) { TOKEN_BEARER }
+    SharedPrefManager.removeString(context) { SNS_ID }
+}

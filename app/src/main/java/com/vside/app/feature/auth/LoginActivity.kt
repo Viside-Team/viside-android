@@ -94,7 +94,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                                         storeUserInfo(
                                             appCompatActivity,
                                             jwtBearer,
-                                            snsIdStr
+                                            snsIdStr,
+                                            loginTypeStr
                                         )
                                     }
 

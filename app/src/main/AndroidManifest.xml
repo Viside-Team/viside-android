@@ -15,19 +15,9 @@
         android:theme="@style/ContentDetailTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.vside.app.feature.auth.SignUpActivity"
-            android:theme="@style/SignUpTheme"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name=".feature.content.ContentActivity"
-            android:exported="false" />
-        <activity
-            android:name=".feature.mypage.BookShelfActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.vside.app.feature.auth.LoginActivity"
-            android:exported="true">
+            android:name=".feature.SplashActivity"
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +25,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.vside.app.feature.MainActivity"
+            android:name=".feature.auth.SignUpActivity"
+            android:exported="false"
+            android:theme="@style/SignUpTheme" />
+        <activity
+            android:name=".feature.content.ContentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature.mypage.BookShelfActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature.auth.LoginActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".feature.MainActivity"
             android:exported="true" />
     </application>
 

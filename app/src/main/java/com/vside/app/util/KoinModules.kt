@@ -1,6 +1,7 @@
 package com.vside.app.util
 
 import com.vside.app.feature.MainViewModel
+import com.vside.app.feature.SplashViewModel
 import com.vside.app.feature.auth.LoginViewModel
 import com.vside.app.feature.auth.SignUpViewModel
 import com.vside.app.feature.auth.repo.AuthRepository
@@ -39,6 +40,9 @@ val networkModule = module {
 }
 
 val viewModelModule = module {
+    // 스플래시 화면
+    viewModel { SplashViewModel(get()) }
+
     // 로그인 화면
     viewModel { LoginViewModel(get()) }
     viewModel { SignUpViewModel(get()) }

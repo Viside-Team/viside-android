@@ -3,6 +3,8 @@ package com.vside.app.util.common
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
+import androidx.annotation.RawRes
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -30,6 +32,11 @@ fun ImageView.setImageByUrl(url: String?) {
             .load(it)
             .into(this)
     }
+}
+
+@BindingAdapter("gifRaw")
+fun ImageView.setGifDrawable(@RawRes rawResId: Int) {
+    Glide.with(context).load(rawResId).into(this)
 }
 
 @BindingAdapter("activated")

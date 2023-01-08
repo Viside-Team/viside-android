@@ -38,6 +38,7 @@ internal object SharedPrefManager {
 
     internal object StringKey {
         const val TOKEN_BEARER = "TOKEN_BEARER"
+        const val LOGIN_TYPE = "LOGIN_TYPE"
         const val SNS_ID = "SNS_ID"
     }
 
