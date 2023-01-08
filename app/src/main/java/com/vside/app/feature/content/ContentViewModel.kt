@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.collect
 import java.math.BigInteger
 
 class ContentViewModel(private val contentRepository: ContentRepository): BaseViewModel() {
+    var contentUrl = ""
+
     val isContentImgCollapsed = MutableLiveData<Boolean>()
 
     val isLightBg = MutableLiveData<Boolean>()

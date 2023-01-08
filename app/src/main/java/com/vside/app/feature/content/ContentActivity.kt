@@ -10,6 +10,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.vside.app.R
 import com.vside.app.databinding.ActivityContentBinding
 import com.vside.app.util.base.BaseActivity
+import com.vside.app.util.common.DataTransfer
 import com.vside.app.util.common.statusBarHeight
 import com.vside.app.util.common.webViewSetting
 import org.koin.android.ext.android.inject
@@ -23,14 +24,15 @@ class ContentActivity : BaseActivity<ActivityContentBinding, ContentViewModel>()
         super.onCreate(savedInstanceState)
         viewDataBinding.viewModel = viewModel
 
+        initData()
         setUpWindow()
         initWebView()
         setUpCollapseListener()
-        initData()
         observeData()
     }
 
     private fun initData() {
+        viewModel.contentUrl = intent.getStringExtra(DataTransfer.CONTENT_URL) ?: ""
         viewModel.isLightBg.value = true
         viewModel.isBookmarked.value = true
     }
@@ -67,7 +69,7 @@ class ContentActivity : BaseActivity<ActivityContentBinding, ContentViewModel>()
             this@ContentActivity,
             viewDataBinding.webViewContent,
             viewDataBinding.progressCircularContent,
-            "https://s3.ap-northeast-2.amazonaws.com/vside.contents/vegetarian/vside_vegetarian.html"
+            viewModel.contentUrl
         )
     }
 }

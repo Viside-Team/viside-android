@@ -1,12 +1,15 @@
 package com.vside.app.feature.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.vside.app.R
 import com.vside.app.databinding.FragmentHomeBinding
 import com.vside.app.feature.common.view.VSideToast
+import com.vside.app.feature.content.ContentActivity
 import com.vside.app.util.base.BaseFragment
+import com.vside.app.util.common.DataTransfer
 import com.vside.app.util.common.sharedpref.SharedPrefManager
 import org.koin.android.ext.android.inject
 
@@ -19,11 +22,27 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         viewDataBinding.viewModel = viewModel
 
         initData()
+        observeData()
     }
 
     private fun initData() {
         getHomeContentList()
         getProfile()
+    }
+
+    private fun observeData() {
+        with(viewModel) {
+            isHomeContentItemClicked.observe(requireActivity()) {
+                startActivity(
+                    Intent(requireContext(), ContentActivity::class.java)
+                        .putExtra(DataTransfer.CONTENT_URL, it.contentUrl)
+                )
+            }
+
+            isHomeContentBookmarkClicked.observe(requireActivity()) {
+
+            }
+        }
     }
 
     private fun showToastIfFirstLoggedIn() {

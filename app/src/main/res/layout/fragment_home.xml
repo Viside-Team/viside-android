@@ -60,6 +60,7 @@
                 bind:dino_itemLayout="@{@layout/item_home_content}"
                 bind:dino_items="@{viewModel.contentList}"
                 bind:dino_itemSpace="@{`20dp`}"
+                bind:dino_eventHolder="@{viewModel}"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_home_content"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
