@@ -14,4 +14,17 @@ data class Content(
     @SerializedName("scrap") val isBookmark: Boolean?,
     @SerializedName("isLightBg") val isLightBg: Boolean?,
     @SerializedName("keywords") val keywords: List<String>?
-)
+) {
+    constructor(contentItem: ContentItem) : this(
+        contentItem.contentId,
+        contentItem.title,
+        contentItem.coverImgUrl,
+        contentItem.mainKeyword,
+        contentItem.darkerColor,
+        contentItem.lighterColor,
+        contentItem.contentUrl,
+        contentItem.isBookmark.value,
+        contentItem.isLightBg,
+        contentItem.keywords
+    )
+}

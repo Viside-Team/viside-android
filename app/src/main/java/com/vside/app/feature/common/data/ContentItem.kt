@@ -13,21 +13,19 @@ data class ContentItem(
     val contentUrl: String?,
     val isBookmark: MutableLiveData<Boolean>,
     val isLightBg: Boolean?,
-    val keywords: List<String>?
+    val keywords: List<String>?,
+    val isScrapClickable: MutableLiveData<Boolean> = MutableLiveData(true)
 ) {
-    companion object {
-        fun getInstanceFromContent(content: Content) =
-            ContentItem(
-                content.contentId,
-                content.title,
-                content.coverImgUrl,
-                content.mainKeyword,
-                content.darkerColor,
-                content.lighterColor,
-                content.contentUrl,
-                MutableLiveData(content.isBookmark),
-                content.isLightBg,
-                content.keywords
-            )
-    }
+    constructor(content: Content): this(
+        content.contentId,
+        content.title,
+        content.coverImgUrl,
+        content.mainKeyword,
+        content.darkerColor,
+        content.lighterColor,
+        content.contentUrl,
+        MutableLiveData(content.isBookmark),
+        content.isLightBg,
+        content.keywords
+    )
 }

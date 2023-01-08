@@ -9,6 +9,7 @@ import com.vside.app.util.common.HomeContentItemClickListener
 import com.vside.app.util.common.handleApiResponse
 import com.vside.app.util.lifecycle.SingleLiveEvent
 import kotlinx.coroutines.flow.collect
+import java.math.BigInteger
 
 class HomeViewModel(private val homeRepository: HomeRepository): BaseViewModel(),
     HomeContentItemClickListener {
@@ -24,9 +25,7 @@ class HomeViewModel(private val homeRepository: HomeRepository): BaseViewModel()
                 handleApiResponse(
                     response = response,
                     onSuccess = {
-                        _contentList.value = it.data?.contents?.map { content ->
-                            ContentItem.getInstanceFromContent(content)
-                        }
+                        _contentList.value = it.data?.contents?.map { content -> ContentItem(content) }
                         onGetSuccess()
                     },
                     onError = {
@@ -53,6 +52,24 @@ class HomeViewModel(private val homeRepository: HomeRepository): BaseViewModel()
                     }
                     , onException = {
                         onGetFail()
+                    }
+                )
+            }
+    }
+
+    suspend fun toggleScrapContent(contentId: BigInteger, onPostSuccess: () -> Unit, onPostFail: () -> Unit) {
+        homeRepository.toggleContentScrap(tokenBearer, contentId)
+            .collect { response ->
+                handleApiResponse(
+                    response = response,
+                    onSuccess = {
+                        onPostSuccess()
+                    },
+                    onError = {
+                        onPostFail()
+                    },
+                    onException = {
+                        onPostFail()
                     }
                 )
             }

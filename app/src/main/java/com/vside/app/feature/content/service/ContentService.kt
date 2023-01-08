@@ -12,7 +12,4 @@ import java.math.BigInteger
 interface ContentService {
     @GET("/contents/{contentId}")
     suspend fun getContentDetail(@Header("Authorization") jwtAccessToken: String, @Path("contentId") contentId: BigInteger): ApiResponse<Content>
-
-    @POST("/scrap/{contentId}")
-    suspend fun toggleScrapContent(@Header("Authorization") jwtAccessToken: String): ApiResponse<BasicResponse>
 }
