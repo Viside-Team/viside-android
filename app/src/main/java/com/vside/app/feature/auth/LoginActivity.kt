@@ -2,6 +2,7 @@ package com.vside.app.feature.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.lifecycleScope
 import com.kakao.sdk.auth.model.OAuthToken
@@ -63,10 +64,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         val appCompatActivity = this@LoginActivity
         with(viewModel) {
             isKakaoClicked.observe(appCompatActivity) {
+                viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
                 fun afterKakaoLoginSuccess(kakaoOAuthToken: OAuthToken?) {
                     UserApiClient.instance.me { user, error ->
                         if (error != null) {
                             // 실패
+                            viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
                             toastShortOfFailMessage("카카오 로그인")
                         } else if (user != null) {
                             // 성공
@@ -104,9 +107,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                                         MainActivity::class.java
                                     )
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
+                                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
                                     startActivity(intent)
                                 },
                                 onNewUser = {
+                                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
                                     startActivity(
                                         Intent(
                                             appCompatActivity,
@@ -126,16 +132,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                                         })
                                 },
                                 onPostFail = {
+                                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
                                     toastShortOfFailMessage("로그인")
                                 }
                             )
-
-                            VsideLog.d("snsId $snsIdStr")
-                            VsideLog.d("loginType $loginTypeStr")
-                            VsideLog.d("nickname $nickname")
-                            VsideLog.d("email $email")
-                            VsideLog.d("gender $genderStr")
-                            VsideLog.d("ageRange $ageRangeStr")
                         }
                     }
                 }
@@ -147,6 +147,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                                 afterKakaoLoginSuccess(it)
                             },
                             onFail = {
+                                viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
                                 toastShortOfFailMessage("카카오 로그인")
                             }
                         ),
@@ -159,6 +160,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                                 afterKakaoLoginSuccess(it)
                             },
                             onFail = {
+                                viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
                                 toastShortOfFailMessage("카카오 로그인")
                             }
                         )

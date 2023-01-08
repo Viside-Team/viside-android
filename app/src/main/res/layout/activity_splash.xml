@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.vside.app.R"/>
         <variable
             name="viewModel"
             type="com.vside.app.feature.SplashViewModel" />
@@ -26,7 +27,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            bind:gifRaw="@{viewModel.gifRawResId}"
+            bind:gifRaw="@{R.raw.splash}"
             android:contentDescription="@string/logo" />
         <TextView
             style="@style/TextAppearance.AppCompat.XL_EB"

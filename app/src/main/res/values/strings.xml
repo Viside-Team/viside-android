@@ -33,4 +33,5 @@
     <string name="sign_up_nickname_hint">닉네임을 입력해주세요</string>
     <string name="sign_up_begin">시작하기</string>
     <string name="logo">로고</string>
+    <string name="loading">로딩</string>
 </resources>

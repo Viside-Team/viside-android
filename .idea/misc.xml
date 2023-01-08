@@ -41,6 +41,7 @@
         <entry key="app/src/main/res/layout/item_home_content.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_keyword.xml" value="0.75" />
         <entry key="app/src/main/res/layout/item_my_page_book_shelf.xml" value="0.55" />
+        <entry key="app/src/main/res/layout/layout_loading.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_pop_up_window.xml" value="0.3151041666666667" />
         <entry key="app/src/main/res/layout/layout_toast.xml" value="0.33" />
         <entry key="app/src/main/res/layout/te.xml" value="0.3234375" />
