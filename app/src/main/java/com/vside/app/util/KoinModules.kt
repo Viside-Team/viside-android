@@ -57,7 +57,7 @@ val viewModelModule = module {
     viewModel { FilterSelectViewModel(get()) }
 
     // 마이 페이지 화면
-    viewModel { BookShelfViewModel() }
+    viewModel { BookShelfViewModel(get()) }
 
     // 다이얼로그
     viewModel { TwoBtnDialogViewModel() }

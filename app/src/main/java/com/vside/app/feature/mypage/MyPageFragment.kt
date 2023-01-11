@@ -37,7 +37,8 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
     private fun observeData() {
         with(viewModel) {
             isSeeAllClicked.observe(requireActivity()) {
-
+                val intent = Intent(requireContext(), BookShelfActivity::class.java)
+                startActivity(intent)
             }
 
             isInquiryClicked.observe(requireActivity()) {
