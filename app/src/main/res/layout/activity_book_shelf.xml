@@ -69,6 +69,7 @@
             android:clipToPadding="false"
             bind:dino_items="@{viewModel.scrapList}"
             bind:dino_itemLayout="@{@layout/item_filter_tab_main}"
+            bind:dino_eventHolder="@{viewModel}"
             tools:listitem="@layout/item_filter_tab_main"
             android:paddingHorizontal="@dimen/default_horizontal_margin"
             bind:dino_itemSpace="@{`14dp`}"
