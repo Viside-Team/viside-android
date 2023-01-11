@@ -81,6 +81,8 @@
                                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                                 android:orientation="horizontal"
                                 android:layout_marginBottom="32dp"
+                                android:paddingHorizontal="10dp"
+                                android:clipToPadding="false"
                                 bind:dino_items="@{viewModel.scrapList}"
                                 bind:dino_itemLayout="@{@layout/item_my_page_book_shelf}"
                                 tools:listitem="@layout/item_my_page_book_shelf"
