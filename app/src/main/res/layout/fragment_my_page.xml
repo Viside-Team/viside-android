@@ -27,7 +27,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/default_horizontal_margin"
-                android:text="@{viewModel.userName + `'s Bookshelf`}"
+                android:text="@{(viewModel.userName ?? ``) + `'s Bookshelf`}"
                 tools:text="데비's Bookshelf"
                 style="@style/TextAppearance.AppCompat.XL_B"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
