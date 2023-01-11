@@ -39,7 +39,8 @@
             app:layout_constraintBottom_toBottomOf="parent">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="72dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_my_page_book_shelf"
