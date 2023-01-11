@@ -65,6 +65,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             android:paddingTop="12dp"
+            android:paddingBottom="24dp"
             android:clipToPadding="false"
             bind:dino_items="@{viewModel.scrapList}"
             bind:dino_itemLayout="@{@layout/item_filter_tab_main}"
