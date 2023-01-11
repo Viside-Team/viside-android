@@ -78,15 +78,14 @@
                                 app:layout_constraintTop_toBottomOf="@id/tv_my_page_show_all"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                                android:orientation="horizontal"
                                 android:layout_marginBottom="32dp"
                                 android:paddingHorizontal="10dp"
                                 android:clipToPadding="false"
                                 bind:dino_items="@{viewModel.scrapList}"
                                 bind:dino_itemLayout="@{@layout/item_my_page_book_shelf}"
                                 tools:listitem="@layout/item_my_page_book_shelf"
-                                app:spanCount="2"/>
+                                bind:scrapLayoutManager="@{viewModel.scrapList.size() > 1 ? 2 : 1}"
+                                />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"

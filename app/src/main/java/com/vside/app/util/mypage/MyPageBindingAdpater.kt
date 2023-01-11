@@ -4,6 +4,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vside.app.R
 
 @BindingAdapter("contentBackBtnLightBg", "contentBackBtnCollapsed")
@@ -57,4 +59,9 @@ fun TextView.setContentTitleDateStyle(isLightBg: Boolean?) {
     }
 
     setTextColor(ContextCompat.getColor(this.context, R.color.white))
+}
+
+@BindingAdapter("scrapLayoutManager")
+fun RecyclerView.setScrapLayoutManager(spanCnt : Int) {
+    layoutManager = GridLayoutManager(context, spanCnt, GridLayoutManager.HORIZONTAL, false)
 }
