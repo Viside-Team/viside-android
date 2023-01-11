@@ -35,14 +35,14 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
     private fun observeData() {
         with(viewModel) {
-            isHomeContentItemClicked.observe(requireActivity()) {
+            isContentItemClicked.observe(requireActivity()) {
                 startActivity(
                     Intent(requireContext(), ContentActivity::class.java)
                         .putExtra(DataTransfer.CONTENT, Content(it))
                 )
             }
 
-            isHomeContentBookmarkClicked.observe(requireActivity()) {
+            isContentBookmarkClicked.observe(requireActivity()) {
                 toggleScrapContent(it)
             }
         }

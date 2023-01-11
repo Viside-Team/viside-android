@@ -11,7 +11,7 @@
 
         <variable
             name="eventHolder"
-            type="com.vside.app.util.common.HomeContentItemClickListener" />
+            type="com.vside.app.util.common.ContentItemClickListener" />
 
     </data>
 
@@ -24,7 +24,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:onClick="@{()->eventHolder.onHomeContentItemClickListener(item)}">
+            android:onClick="@{()->eventHolder.onContentItemClickListener(item)}">
 
             <ImageView
                 android:layout_width="0dp"
@@ -53,7 +53,7 @@
                 android:layout_marginEnd="16dp"
                 android:contentDescription="@string/bookmark"
                 bind:activated="@{item.isBookmark()}"
-                android:onClick="@{()->eventHolder.onHomeContentItemBookmarkClickListener(item)}"
+                android:onClick="@{()->eventHolder.onContentItemBookmarkClickListener(item)}"
                 app:tint="@color/white" />
 
             <com.google.android.material.card.MaterialCardView

@@ -3,16 +3,18 @@ package com.vside.app.feature.mypage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.vside.app.feature.auth.data.request.WithdrawRequest
-import com.vside.app.feature.common.data.Content
+import com.vside.app.feature.common.data.ContentItem
 import com.vside.app.feature.mypage.repo.MyPageRepository
 import com.vside.app.util.base.BaseViewModel
+import com.vside.app.util.common.ContentItemClickListener
 import com.vside.app.util.common.handleApiResponse
 import com.vside.app.util.lifecycle.SingleLiveEvent
 import kotlinx.coroutines.flow.collect
 
-class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewModel() {
-    private val _scrapContentList = MutableLiveData<List<Content>>()
-    val scrapList: LiveData<List<Content>> = _scrapContentList
+class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewModel(),
+    ContentItemClickListener {
+    private val _scrapContentList = MutableLiveData<List<ContentItem>>()
+    val scrapList: LiveData<List<ContentItem>> = _scrapContentList
 
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> = _userName
@@ -42,7 +44,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewM
                 handleApiResponse(
                     response = response,
                     onSuccess = {
-                        _scrapContentList.value = it.data?.contentList
+                        _scrapContentList.value = it.data?.contentList?.map { content -> ContentItem(content) }
                         onGetSuccess()
                     },
                     onError = {
@@ -133,4 +135,10 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewM
         _isWithDrawClicked.call()
     }
 
+    private val _isContentItemClicked = SingleLiveEvent<ContentItem>()
+    val isContentItemClicked: LiveData<ContentItem> = _isContentItemClicked
+
+    override fun onContentItemClickListener(item: ContentItem) {
+        _isContentItemClicked.value = item
+    }
 }

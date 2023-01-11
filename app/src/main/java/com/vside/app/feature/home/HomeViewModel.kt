@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import com.vside.app.feature.common.data.ContentItem
 import com.vside.app.feature.home.repo.HomeRepository
 import com.vside.app.util.base.BaseViewModel
-import com.vside.app.util.common.HomeContentItemClickListener
+import com.vside.app.util.common.ContentItemClickListener
 import com.vside.app.util.common.handleApiResponse
 import com.vside.app.util.lifecycle.SingleLiveEvent
 import kotlinx.coroutines.flow.collect
 import java.math.BigInteger
 
 class HomeViewModel(private val homeRepository: HomeRepository): BaseViewModel(),
-    HomeContentItemClickListener {
+    ContentItemClickListener {
     private val _contentList = MutableLiveData<List<ContentItem>>()
     val contentList: LiveData<List<ContentItem>> = _contentList
 
@@ -76,17 +76,17 @@ class HomeViewModel(private val homeRepository: HomeRepository): BaseViewModel()
     }
 
     // 클릭 이벤트들
-    private val _isHomeContentItemClicked = SingleLiveEvent<ContentItem>()
-    val isHomeContentItemClicked: LiveData<ContentItem> = _isHomeContentItemClicked
+    private val _isContentItemClicked = SingleLiveEvent<ContentItem>()
+    val isContentItemClicked: LiveData<ContentItem> = _isContentItemClicked
 
-    override fun onHomeContentItemClickListener(item: ContentItem) {
-        _isHomeContentItemClicked.value = item
+    override fun onContentItemClickListener(item: ContentItem) {
+        _isContentItemClicked.value = item
     }
 
-    private val _isHomeContentBookmarkClicked = SingleLiveEvent<ContentItem>()
-    val isHomeContentBookmarkClicked: LiveData<ContentItem> = _isHomeContentBookmarkClicked
+    private val _isContentBookmarkClicked = SingleLiveEvent<ContentItem>()
+    val isContentBookmarkClicked: LiveData<ContentItem> = _isContentBookmarkClicked
 
-    override fun onHomeContentItemBookmarkClickListener(item: ContentItem) {
-        _isHomeContentBookmarkClicked.value = item
+    override fun onContentItemBookmarkClickListener(item: ContentItem) {
+        _isContentBookmarkClicked.value = item
     }
 }

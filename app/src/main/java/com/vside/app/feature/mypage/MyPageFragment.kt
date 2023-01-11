@@ -10,11 +10,13 @@ import com.vside.app.databinding.FragmentMyPageBinding
 import com.vside.app.feature.auth.LoginActivity
 import com.vside.app.feature.auth.data.request.WithdrawRequest
 import com.vside.app.feature.common.VSideUrl
+import com.vside.app.feature.common.data.Content
 import com.vside.app.feature.common.view.TwoBtnDialogFragment
+import com.vside.app.feature.content.ContentActivity
 import com.vside.app.util.auth.removeUserInfo
 import com.vside.app.util.base.BaseFragment
+import com.vside.app.util.common.DataTransfer
 import com.vside.app.util.common.sharedpref.SharedPrefManager
-import com.vside.app.util.log.VsideLog
 import org.koin.android.ext.android.inject
 
 class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
@@ -76,6 +78,13 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
                     twoBtnDialogFragment.dismiss()
                 }
                 twoBtnDialogFragment.show(childFragmentManager, twoBtnDialogFragment.tag)
+            }
+
+            isContentItemClicked.observe(requireActivity()) {
+                startActivity(
+                    Intent(requireContext(), ContentActivity::class.java)
+                        .putExtra(DataTransfer.CONTENT, Content(it))
+                )
             }
         }
     }

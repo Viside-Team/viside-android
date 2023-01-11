@@ -83,6 +83,7 @@
                                 android:clipToPadding="false"
                                 bind:dino_items="@{viewModel.scrapList}"
                                 bind:dino_itemLayout="@{@layout/item_my_page_book_shelf}"
+                                bind:dino_eventHolder="@{viewModel}"
                                 tools:listitem="@layout/item_my_page_book_shelf"
                                 bind:scrapLayoutManager="@{viewModel.scrapList.size() > 1 ? 2 : 1}"
                                 />

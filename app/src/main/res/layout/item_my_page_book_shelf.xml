@@ -7,7 +7,11 @@
     <data>
         <variable
             name="item"
-            type="com.vside.app.feature.common.data.Content" />
+            type="com.vside.app.feature.common.data.ContentItem" />
+
+        <variable
+            name="eventHolder"
+            type="com.vside.app.util.common.ContentItemClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -21,7 +25,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:onClick="@{()->eventHolder.onContentItemClickListener(item)}">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
