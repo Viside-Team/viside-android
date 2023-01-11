@@ -7,13 +7,18 @@
     <data>
         <variable
             name="item"
-            type="com.vside.app.feature.common.data.Content" />
+            type="com.vside.app.feature.common.data.ContentItem" />
 
+        <variable
+            name="eventHolder"
+            type="com.vside.app.util.common.ContentItemClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{()->eventHolder.onContentItemClickListener(item)}"
+        >
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_item_filter_tab_main_img"
@@ -44,6 +49,8 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
             android:contentDescription="@string/bookmark"
+            bind:activated="@{item.isBookmark()}"
+            android:onClick="@{()->eventHolder.onContentItemBookmarkClickListener(item)}"
             app:tint="@color/white" />
 
         <TextView

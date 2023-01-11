@@ -48,6 +48,7 @@
                 bind:dino_itemSpace="@{`14dp`}"
                 bind:dino_items="@{viewModel.contentList}"
                 bind:dino_itemLayout="@{@layout/item_filter_tab_main}"
+                bind:dino_eventHolder="@{viewModel}"
                 tools:listitem="@layout/item_filter_tab_main"
                 android:orientation="vertical"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
