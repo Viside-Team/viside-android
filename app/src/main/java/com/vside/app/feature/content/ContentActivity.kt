@@ -38,6 +38,7 @@ class ContentActivity : BaseActivity<ActivityContentBinding, ContentViewModel>()
     private fun initData() {
         intent.getParcelableExtra<Content>(DataTransfer.CONTENT)?.let {
             viewModel.contentUrl = it.contentUrl ?: ""
+            viewModel.title.value = it.title ?: ""
             viewModel.isBookmarked.value = it.isBookmark
             viewModel.contentImgUrl.value = it.contentImgUrl
             viewModel.isLightBg.value = it.isLightBg
