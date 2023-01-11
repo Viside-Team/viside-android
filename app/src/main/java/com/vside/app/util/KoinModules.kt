@@ -73,5 +73,5 @@ val repositoryModule = module {
     single { HomeRepository(get(), get()) }
     single { FilterRepository(get()) }
     single { MyPageRepository(get(), get(), get()) }
-    single { ContentRepository(get()) }
+    single { ContentRepository(get(), get()) }
 }

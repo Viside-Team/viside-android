@@ -6,6 +6,7 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.vside.app.R
 import com.vside.app.databinding.FragmentHomeBinding
+import com.vside.app.feature.common.data.Content
 import com.vside.app.feature.common.data.ContentItem
 import com.vside.app.feature.common.view.VSideToast
 import com.vside.app.feature.content.ContentActivity
@@ -37,7 +38,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             isHomeContentItemClicked.observe(requireActivity()) {
                 startActivity(
                     Intent(requireContext(), ContentActivity::class.java)
-                        .putExtra(DataTransfer.CONTENT_URL, it.contentUrl)
+                        .putExtra(DataTransfer.CONTENT, Content(it))
                 )
             }
 

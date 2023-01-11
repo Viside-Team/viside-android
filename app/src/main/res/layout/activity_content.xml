@@ -33,6 +33,7 @@
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
                     app:layout_collapseMode="parallax"
+                    bind:imgUrl="@{viewModel.contentImgUrl}"
                     android:contentDescription="@string/book_image" />
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/toolbar_content"
@@ -62,6 +63,7 @@
                         android:padding="13dp"
                         android:layout_gravity="end"
                         android:layout_marginEnd="7dp"
+                        android:onClick="@{()->viewModel.onBookmarkClick()}"
                         bind:contentBookmarkLightBg="@{viewModel.isLightBg()}"
                         bind:contentBookmarkCollapsed="@{viewModel.isContentImgCollapsed()}"
                         bind:contentBookmarkActivated="@{viewModel.isBookmarked()}"

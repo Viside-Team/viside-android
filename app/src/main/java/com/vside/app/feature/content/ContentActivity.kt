@@ -1,19 +1,23 @@
 package com.vside.app.feature.content
 
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
-import android.view.View
+import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import android.view.WindowInsetsController
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.AppBarLayout
 import com.vside.app.R
 import com.vside.app.databinding.ActivityContentBinding
+import com.vside.app.feature.common.data.Content
 import com.vside.app.util.base.BaseActivity
 import com.vside.app.util.common.DataTransfer
 import com.vside.app.util.common.statusBarHeight
 import com.vside.app.util.common.webViewSetting
 import org.koin.android.ext.android.inject
+import java.math.BigInteger
 import kotlin.math.abs
 
 class ContentActivity : BaseActivity<ActivityContentBinding, ContentViewModel>() {
@@ -32,15 +36,68 @@ class ContentActivity : BaseActivity<ActivityContentBinding, ContentViewModel>()
     }
 
     private fun initData() {
-        viewModel.contentUrl = intent.getStringExtra(DataTransfer.CONTENT_URL) ?: ""
-        viewModel.isLightBg.value = true
-        viewModel.isBookmarked.value = true
+        intent.getParcelableExtra<Content>(DataTransfer.CONTENT)?.let {
+            viewModel.contentUrl = it.contentUrl ?: ""
+            viewModel.isBookmarked.value = it.isBookmark
+            viewModel.contentImgUrl.value = it.contentImgUrl
+            viewModel.isLightBg.value = it.isLightBg
+            viewModel.contentId = it.contentId ?: BigInteger.ZERO
+        }
     }
 
     private fun observeData() {
         val appCompatActivity = this@ContentActivity
         with(viewModel) {
+            isContentImgCollapsed.observe(appCompatActivity) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    if(it==true) {
+                        window.insetsController?.setSystemBarsAppearance(WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+                    }
+                    else {
+                        val systemUiAppearance =
+                            if(viewModel.isLightBg.value == true) WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                            else 0
+                        window.insetsController?.setSystemBarsAppearance(systemUiAppearance, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+                    }
+                }
+                else {
+                    if(it==true) {
+                        window.decorView.systemUiVisibility = window.decorView.systemUiVisibility and SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+                    }
+                    else {
+                        val systemUiVisibilityFlags =
+                            if(viewModel.isLightBg.value == true) window.decorView.systemUiVisibility and SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+                            else window.decorView.systemUiVisibility or SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                        window.decorView.systemUiVisibility = systemUiVisibilityFlags
+                    }
+                }
+            }
+            isBookmarkClicked.observe(appCompatActivity) {
+                toggleScrapContent()
+            }
+        }
+    }
 
+    private fun toggleScrapContent() {
+        lifecycleScope.launchWhenCreated {
+            if(viewModel.isScrapClickable.value == true) {
+                viewModel.isScrapClickable.value = false
+                val isBookmarked = viewModel.isBookmarked.value
+                isBookmarked?.let {
+                    viewModel.isBookmarked.value = !isBookmarked
+                }
+                this@ContentActivity.viewModel.toggleContentScrap(
+                    viewModel.contentId,
+                    onPostSuccess = {
+                        viewModel.isScrapClickable.value = true
+                    },
+                    onPostFail = {
+                        toastShortOfFailMessage("스크랩 / 스크랩 취소")
+                        viewModel.isScrapClickable.value = false
+                        viewModel.isBookmarked.value = isBookmarked
+                    }
+                )
+            }
         }
     }
 
