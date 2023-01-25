@@ -47,14 +47,44 @@
             android:id="@+id/view_login_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="72dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/cl_login_look_around"
+            android:layout_marginBottom="20dp"
             app:loginBgColor="@color/kakao_color"
             app:loginText="@string/login_with_kakao"
             app:loginTextColor="@color/black"
             android:layout_marginHorizontal="50dp"
             android:onClick="@{()->viewModel.onKakaoClick()}"
             app:loginIcon="@drawable/ic_kakao"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_login_look_around"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="60dp"
+            android:paddingHorizontal="9dp"
+            android:paddingVertical="8dp"
+            android:onClick="@{()->viewModel.onLookAroundClick()}"
+            >
+            <TextView
+                android:id="@+id/tv_login_look_around"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/g200"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/TextAppearance.AppCompat.XS_R"
+                android:text="@string/login_lookaround"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/g700"
+                android:layout_marginTop="2dp"
+                app:layout_constraintStart_toStartOf="@id/tv_login_look_around"
+                app:layout_constraintEnd_toEndOf="@id/tv_login_look_around"
+                app:layout_constraintTop_toBottomOf="@id/tv_login_look_around"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

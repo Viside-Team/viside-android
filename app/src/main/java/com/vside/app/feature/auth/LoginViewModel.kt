@@ -46,4 +46,11 @@ class LoginViewModel(private val authRepository: AuthRepository) : BaseViewModel
     fun onKakaoClick() {
         _isKakaoClicked.call()
     }
+
+    private val _isLookAroundClicked = SingleLiveEvent<Void>()
+    val isLookAroundClicked: LiveData<Void> = _isLookAroundClicked
+
+    fun onLookAroundClick() {
+        _isLookAroundClicked.call()
+    }
 }

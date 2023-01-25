@@ -16,6 +16,7 @@ import com.vside.app.feature.auth.data.VsideLoginType
 import com.vside.app.feature.auth.data.VsideUser
 import com.vside.app.feature.auth.data.request.SignInRequest
 import com.vside.app.util.auth.getKakaoLoginCallback
+import com.vside.app.util.auth.removeUserInfo
 import com.vside.app.util.auth.storeUserInfo
 import com.vside.app.util.base.BaseActivity
 import com.vside.app.util.common.DataTransfer
@@ -166,6 +167,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                         )
                     )
                 }
+            }
+
+            isLookAroundClicked.observe(appCompatActivity) {
+                removeUserInfo(appCompatActivity)
+                val intent = Intent(
+                    this@LoginActivity,
+                    MainActivity::class.java
+                )
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
             }
         }
     }
