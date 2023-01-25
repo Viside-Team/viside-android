@@ -15,7 +15,8 @@ class FilterSelectViewModel(private val filterRepository: FilterRepository): Bas
     private val _allKeywordsGroupedByCategory = MutableLiveData<List<CategoryKeywordItem>>()
     val allKeywordsGroupedByCategory: LiveData<List<CategoryKeywordItem>> = _allKeywordsGroupedByCategory
 
-    val selectedKeywordList = MutableLiveData<Set<String>>(mutableSetOf())
+    // 사용자의 입력을 받을 집합
+    val selectedKeywordSet = MutableLiveData<Set<String>>(mutableSetOf())
 
     suspend fun getKeywordsGroupedByCategory(onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
         filterRepository.getKeywordsGroupedByCategory(tokenBearer)
@@ -33,6 +34,20 @@ class FilterSelectViewModel(private val filterRepository: FilterRepository): Bas
                     }
                 )
             }
+    }
+
+    private val _isCompleteClicked = SingleLiveEvent<Void>()
+    val isCompleteClicked: LiveData<Void> = _isCompleteClicked
+
+    fun onCompleteClick() {
+        _isCompleteClicked.call()
+    }
+
+    private val _isAllClearClicked = SingleLiveEvent<Void>()
+    val isAllClearClicked: LiveData<Void> = _isAllClearClicked
+
+    fun onAllClearClick() {
+        _isAllClearClicked.call()
     }
 
     private val _isKeywordItemClicked = SingleLiveEvent<CategoryKeywordItem.KeywordItem>()

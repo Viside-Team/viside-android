@@ -16,22 +16,8 @@ class FilterViewModel(private val filterRepository: FilterRepository): BaseViewM
     private val _contentList = MutableLiveData<List<ContentItem>>()
     val contentList: LiveData<List<ContentItem>> = _contentList
 
-    suspend fun getKeywordsGroupedByCategory(onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
-        filterRepository.getKeywordsGroupedByCategory(tokenBearer)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        onGetSuccess()
-                    },
-                    onError = {
-                        onGetFail()
-                    }, onException = {
-                        onGetFail()
-                    }
-                )
-            }
-    }
+    // 실제로 요청을 보낼 키워드의 집합
+    val selectedKeywordSet = MutableLiveData<Set<String>>(mutableSetOf())
 
     suspend fun getFilteredContentList(filteredContentRequest: FilteredContentRequest, onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
         filterRepository.getFilteredContentList(tokenBearer, filteredContentRequest)

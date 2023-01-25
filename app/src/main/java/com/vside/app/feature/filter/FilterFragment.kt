@@ -14,7 +14,6 @@ import com.vside.app.feature.filter.data.request.FilteredContentRequest
 import com.vside.app.util.base.BaseFragment
 import com.vside.app.util.common.DataTransfer
 import com.vside.app.util.common.sharedpref.SharedPrefManager
-import com.vside.app.util.log.VsideLog
 import org.koin.android.ext.android.inject
 import java.math.BigInteger
 
@@ -58,10 +57,19 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
                 it.isSelected.value?.let { bool ->
                     it.isSelected.value = !bool
                     if(it.isSelected.value == true) {
-                        selectedKeywordList.value = selectedKeywordList.value?.toMutableSet()?.apply { add(it.keyword) }
+                        selectedKeywordSet.value = selectedKeywordSet.value?.toMutableSet()?.apply { add(it.keyword) }
                     }
                     else {
-                        selectedKeywordList.value = selectedKeywordList.value?.toMutableSet()?.apply { remove(it.keyword) }
+                        selectedKeywordSet.value = selectedKeywordSet.value?.toMutableSet()?.apply { remove(it.keyword) }
+                    }
+                }
+            }
+
+            isAllClearClicked.observe(requireActivity()) {
+                selectedKeywordSet.value = mutableSetOf()
+                allKeywordsGroupedByCategory.value?.forEach { it1 ->
+                    it1.keywordItems.forEach { it2 ->
+                        it2.isSelected.value = false
                     }
                 }
             }
@@ -106,7 +114,7 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
     private fun getFilteredGroupedByCategory() {
         lifecycleScope.launchWhenCreated {
             val filteredContentRequest =
-                FilteredContentRequest(filterSelectViewModel.selectedKeywordList.value?.toList() ?: listOf())
+                FilteredContentRequest(filterSelectViewModel.selectedKeywordSet.value?.toList() ?: listOf())
             viewModel.getFilteredContentList(
                 filteredContentRequest,
                 onGetSuccess = {},
