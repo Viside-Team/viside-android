@@ -56,22 +56,19 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
             isKeywordItemClicked.observe(requireActivity()) {
                 it.isSelected.value?.let { bool ->
                     it.isSelected.value = !bool
-                    if(it.isSelected.value == true) {
-                        selectedKeywordSet.value = selectedKeywordSet.value?.toMutableSet()?.apply { add(it.keyword) }
-                    }
-                    else {
-                        selectedKeywordSet.value = selectedKeywordSet.value?.toMutableSet()?.apply { remove(it.keyword) }
-                    }
+                    if(it.isSelected.value == true) addKeyword(it.keyword)
+                    else removeKeyword(it.keyword)
                 }
             }
 
             isAllClearClicked.observe(requireActivity()) {
-                selectedKeywordSet.value = mutableSetOf()
-                allKeywordsGroupedByCategory.value?.forEach { it1 ->
-                    it1.keywordItems.forEach { it2 ->
-                        it2.isSelected.value = false
-                    }
-                }
+                setSelectedKeywords(null)
+            }
+
+            isCompleteClicked.observe(requireActivity()) {
+                viewModel.selectedKeywordSet.value = filterSelectViewModel.selectedKeywordSet.value
+                val behavior = BottomSheetBehavior.from(viewDataBinding.clDialogFilterSelect)
+                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
     }
@@ -79,7 +76,11 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
     private fun addBottomSheetCallback() {
         val behavior = BottomSheetBehavior.from(viewDataBinding.clDialogFilterSelect)
         behavior.addBottomSheetCallback(object :BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {}
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if(newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    filterSelectViewModel.setSelectedKeywords(viewModel.selectedKeywordSet.value)
+                }
+            }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 if(slideOffset<0.5) viewDataBinding.bindingDialogFilterSelect.tvFilterSelectComplete.visibility = View.INVISIBLE

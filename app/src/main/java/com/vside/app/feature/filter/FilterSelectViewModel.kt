@@ -3,7 +3,6 @@ package com.vside.app.feature.filter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.vside.app.feature.filter.data.CategoryKeywordItem
-import com.vside.app.feature.filter.data.response.KeywordsGroupedByCategoryResponse
 import com.vside.app.feature.filter.repo.FilterRepository
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.KeywordItemClickListener
@@ -16,7 +15,8 @@ class FilterSelectViewModel(private val filterRepository: FilterRepository): Bas
     val allKeywordsGroupedByCategory: LiveData<List<CategoryKeywordItem>> = _allKeywordsGroupedByCategory
 
     // 사용자의 입력을 받을 집합
-    val selectedKeywordSet = MutableLiveData<Set<String>>(mutableSetOf())
+    private val _selectedKeywordSet = MutableLiveData<Set<String>>(mutableSetOf())
+    val selectedKeywordSet:LiveData<Set<String>> = _selectedKeywordSet
 
     suspend fun getKeywordsGroupedByCategory(onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
         filterRepository.getKeywordsGroupedByCategory(tokenBearer)
@@ -34,6 +34,35 @@ class FilterSelectViewModel(private val filterRepository: FilterRepository): Bas
                     }
                 )
             }
+    }
+
+    fun addKeyword(keyword: String) {
+        _selectedKeywordSet.value = selectedKeywordSet.value?.toMutableSet()?.apply { add(keyword) }
+    }
+
+    fun removeKeyword(keyword: String) {
+        _selectedKeywordSet.value = selectedKeywordSet.value?.toMutableSet()?.apply { remove(keyword) }
+    }
+
+    fun setSelectedKeywords(keywordsSet: Set<String>?) {
+        if(keywordsSet.isNullOrEmpty()) {
+            _selectedKeywordSet.value = mutableSetOf()
+            allKeywordsGroupedByCategory.value?.forEach { it1 ->
+                it1.keywordItems.forEach { it2 ->
+                    it2.isSelected.value = false
+                }
+            }
+        }
+        else {
+            _selectedKeywordSet.value = mutableSetOf<String>().apply {
+                addAll(keywordsSet)
+            }
+            allKeywordsGroupedByCategory.value?.forEach {
+                it.keywordItems.forEach { keywordItem ->
+                    keywordItem.isSelected.value = keywordsSet.contains(keywordItem.keyword)
+                }
+            }
+        }
     }
 
     private val _isCompleteClicked = SingleLiveEvent<Void>()
