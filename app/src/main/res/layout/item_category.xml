@@ -8,7 +8,10 @@
     <data>
         <variable
             name="item"
-            type="com.vside.app.feature.filter.data.response.KeywordsGroupedByCategoryResponse.CategoryKeyword" />
+            type="com.vside.app.feature.filter.data.CategoryKeywordItem" />
+        <variable
+            name="eventHolder"
+            type="com.vside.app.util.common.KeywordItemClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +24,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            bind:text="@{item.category.get(0)}"
+            bind:text="@{item.category}"
             tools:text="분위기"
             style="@style/TextAppearance.AppCompat.MD_B"/>
         <androidx.recyclerview.widget.RecyclerView
@@ -32,7 +35,8 @@
             android:orientation="horizontal"
             tools:listitem="@layout/item_keyword"
             bind:dino_itemLayout="@{@layout/item_keyword}"
-            bind:dino_items="@{item.keywords}"
+            bind:dino_items="@{item.keywordItems}"
+            bind:dino_vm="@{eventHolder}"
             app:layout_constraintTop_toBottomOf="@id/tv_item_category_category"
             app:layout_constraintBottom_toBottomOf="parent"/>
 

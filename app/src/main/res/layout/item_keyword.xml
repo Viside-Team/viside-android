@@ -7,8 +7,10 @@
     <data>
         <variable
             name="item"
-            type="String" />
-
+            type="com.vside.app.feature.filter.data.CategoryKeywordItem.KeywordItem" />
+        <variable
+            name="eventHolder"
+            type="com.vside.app.util.common.KeywordItemClickListener" />
     </data>
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
@@ -17,6 +19,10 @@
         app:cardCornerRadius="18dp"
         app:strokeWidth="1.5dp"
         app:cardElevation="0dp"
+        android:onClick="@{()->eventHolder.onKeywordItemClickListener(item)}"
+        bind:activated="@{item.isSelected()}"
+        app:strokeColor="@{item.isSelected() ? @color/main500: @android:color/transparent}"
+        app:cardBackgroundColor="@{item.isSelected() ? @color/main100 : @color/g50}"
         tools:strokeColor="@android:color/transparent"
         tools:cardBackgroundColor="@color/g50"
         app:rippleColor="@android:color/transparent">
@@ -27,7 +33,9 @@
             android:layout_marginHorizontal="14dp"
             android:layout_marginVertical="8dp"
             tools:style="@style/TextAppearance.AppCompat.MD_R"
-            bind:text="@{item}"
+            bind:activated="@{item.isSelected()}"
+            bind:text="@{item.keyword}"
+            android:textColor="@{item.isSelected() ? @color/main500 : @color/g600}"
             tools:textColor="@color/g600"
             tools:text="동기부여"/>
     </com.google.android.material.card.MaterialCardView>

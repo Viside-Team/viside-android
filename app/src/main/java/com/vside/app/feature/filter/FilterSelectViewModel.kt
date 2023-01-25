@@ -2,18 +2,20 @@ package com.vside.app.feature.filter
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.vside.app.feature.filter.data.CategoryKeywordItem
 import com.vside.app.feature.filter.data.response.KeywordsGroupedByCategoryResponse
 import com.vside.app.feature.filter.repo.FilterRepository
 import com.vside.app.util.base.BaseViewModel
+import com.vside.app.util.common.KeywordItemClickListener
 import com.vside.app.util.common.handleApiResponse
+import com.vside.app.util.lifecycle.SingleLiveEvent
 import kotlinx.coroutines.flow.collect
 
-class FilterSelectViewModel(private val filterRepository: FilterRepository): BaseViewModel() {
-    private val _allKeywordsGroupedByCategory = MutableLiveData<List<KeywordsGroupedByCategoryResponse.CategoryKeyword>>()
-    val allKeywordsGroupedByCategory: LiveData<List<KeywordsGroupedByCategoryResponse.CategoryKeyword>> = _allKeywordsGroupedByCategory
+class FilterSelectViewModel(private val filterRepository: FilterRepository): BaseViewModel(), KeywordItemClickListener {
+    private val _allKeywordsGroupedByCategory = MutableLiveData<List<CategoryKeywordItem>>()
+    val allKeywordsGroupedByCategory: LiveData<List<CategoryKeywordItem>> = _allKeywordsGroupedByCategory
 
-    private val _selectedKeywordList = MutableLiveData<Set<String>>()
-    val selectedKeywordList: LiveData<Set<String>> = _selectedKeywordList
+    val selectedKeywordList = MutableLiveData<Set<String>>(mutableSetOf())
 
     suspend fun getKeywordsGroupedByCategory(onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
         filterRepository.getKeywordsGroupedByCategory(tokenBearer)
@@ -21,7 +23,7 @@ class FilterSelectViewModel(private val filterRepository: FilterRepository): Bas
                 handleApiResponse(
                     response = response,
                     onSuccess = {
-                        _allKeywordsGroupedByCategory.value = it.data?.categories
+                        _allKeywordsGroupedByCategory.value = it.data?.categories?.map { it1 -> CategoryKeywordItem(it1) }
                         onGetSuccess()
                     },
                     onError = {
@@ -31,5 +33,12 @@ class FilterSelectViewModel(private val filterRepository: FilterRepository): Bas
                     }
                 )
             }
+    }
+
+    private val _isKeywordItemClicked = SingleLiveEvent<CategoryKeywordItem.KeywordItem>()
+    val isKeywordItemClicked: LiveData<CategoryKeywordItem.KeywordItem> = _isKeywordItemClicked
+
+    override fun onKeywordItemClickListener(item: CategoryKeywordItem.KeywordItem) {
+        _isKeywordItemClicked.value = item
     }
 }

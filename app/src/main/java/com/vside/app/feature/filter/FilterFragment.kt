@@ -52,6 +52,20 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
                 toggleScrapContent(it)
             }
         }
+
+        with(filterSelectViewModel) {
+            isKeywordItemClicked.observe(requireActivity()) {
+                it.isSelected.value?.let { bool ->
+                    it.isSelected.value = !bool
+                    if(it.isSelected.value == true) {
+                        selectedKeywordList.value = selectedKeywordList.value?.toMutableSet()?.apply { add(it.keyword) }
+                    }
+                    else {
+                        selectedKeywordList.value = selectedKeywordList.value?.toMutableSet()?.apply { remove(it.keyword) }
+                    }
+                }
+            }
+        }
     }
 
     private fun addBottomSheetCallback() {

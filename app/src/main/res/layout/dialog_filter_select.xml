@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.vside.app.feature.filter.FilterSelectViewModel" />
@@ -117,6 +118,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             bind:dino_itemLayout="@{@layout/item_category}"
             bind:dino_items="@{viewModel.allKeywordsGroupedByCategory}"
+            bind:dino_vm="@{viewModel}"
             android:orientation="vertical"
             tools:listitem="@layout/item_category"
             />
@@ -129,6 +131,7 @@
             android:elevation="50dp"
             android:layout_marginEnd="@dimen/default_horizontal_margin"
             android:layout_marginBottom="16dp"
+            android:visibility="@{viewModel.selectedKeywordList == null || viewModel.selectedKeywordList.empty ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/rv_filter_select_category"
             app:layout_constraintEnd_toEndOf="@id/rv_filter_select_category">
             <TextView
@@ -148,6 +151,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/color_bg_filter_select_complete"
+            bind:activated="@{viewModel.selectedKeywordList == null || viewModel.selectedKeywordList.empty ? false : true}"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="18dp"
