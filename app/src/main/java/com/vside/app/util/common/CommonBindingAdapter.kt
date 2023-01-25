@@ -7,7 +7,12 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 
 @BindingAdapter("bgColorAlpha")
 fun View.setBgColorAlpha(alpha0To100: Int?) {
@@ -43,5 +48,20 @@ fun ImageView.setGifDrawable(@RawRes rawResId: Int) {
 fun View.setActivation(activate: Boolean?) {
     activate?.let {
         isActivated = it
+    }
+}
+
+@BindingAdapter("setFlexboxLayoutManager")
+fun RecyclerView.setFlexboxLayoutManager(boolean: Boolean?) {
+    boolean?.let {
+        if(boolean) {
+            FlexboxLayoutManager(context).apply {
+                flexWrap = FlexWrap.WRAP
+                flexDirection = FlexDirection.ROW
+                justifyContent = JustifyContent.FLEX_START
+            }.let {
+                layoutManager = it
+            }
+        }
     }
 }
