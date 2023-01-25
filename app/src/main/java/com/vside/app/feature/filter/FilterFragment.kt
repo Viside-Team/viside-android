@@ -66,9 +66,11 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
             }
 
             isCompleteClicked.observe(requireActivity()) {
-                viewModel.selectedKeywordSet.value = filterSelectViewModel.selectedKeywordSet.value
-                val behavior = BottomSheetBehavior.from(viewDataBinding.clDialogFilterSelect)
-                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                if(viewDataBinding.bindingDialogFilterSelect.tvFilterSelectComplete.isActivated) {
+                    viewModel.selectedKeywordSet.value = filterSelectViewModel.selectedKeywordSet.value
+                    val behavior = BottomSheetBehavior.from(viewDataBinding.clDialogFilterSelect)
+                    behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
             }
         }
     }
