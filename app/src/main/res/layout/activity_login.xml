@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_login_main"
-            app:layout_constraintBottom_toTopOf="@id/cv_login_kakao"
+            app:layout_constraintBottom_toTopOf="@id/view_login_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -43,28 +43,18 @@
             app:layout_constraintStart_toStartOf="@id/iv_login_main"
             app:layout_constraintTop_toBottomOf="@id/iv_login_main" />
 
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_login_kakao"
+        <com.vside.app.feature.auth.view.LoginBtnView
+            android:id="@+id/view_login_btn"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginHorizontal="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="72dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:loginBgColor="@color/kakao_color"
+            app:loginText="@string/login_with_kakao"
+            app:loginTextColor="@color/black"
+            android:layout_marginHorizontal="50dp"
             android:onClick="@{()->viewModel.onKakaoClick()}"
-            app:cardBackgroundColor="@color/kakao_color"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <TextView
-                style="@style/TextAppearance.AppCompat.MD_M"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawablePadding="6dp"
-                android:text="@string/login_with_kakao"
-                app:drawableStartCompat="@drawable/ic_kakao" />
-        </androidx.cardview.widget.CardView>
+            app:loginIcon="@drawable/ic_kakao"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

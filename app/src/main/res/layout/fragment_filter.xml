@@ -57,7 +57,7 @@
             android:id="@+id/cl_dialog_filter_select"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_filter_select"
+            android:background="@drawable/bg_bottom_sheet"
             app:elevation="20dp"
             app:behavior_hideable="false"
             app:behavior_peekHeight="70dp"

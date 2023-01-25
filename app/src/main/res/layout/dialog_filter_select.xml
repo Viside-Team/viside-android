@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_filter_select">
+        android:background="@drawable/bg_bottom_sheet">
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_filter_select_bar"
             android:layout_width="56dp"

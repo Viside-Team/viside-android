@@ -7,6 +7,7 @@ import com.vside.app.feature.auth.SignUpViewModel
 import com.vside.app.feature.auth.repo.AuthRepository
 import com.vside.app.feature.auth.service.AuthService
 import com.vside.app.feature.common.service.CommonService
+import com.vside.app.feature.common.view.LoginDialogViewModel
 import com.vside.app.feature.common.view.OneBtnDialogViewModel
 import com.vside.app.feature.common.view.TwoBtnDialogViewModel
 import com.vside.app.feature.content.ContentViewModel
@@ -46,6 +47,7 @@ val viewModelModule = module {
     // 로그인 화면
     viewModel { LoginViewModel(get()) }
     viewModel { SignUpViewModel(get()) }
+    viewModel { LoginDialogViewModel(get()) }
 
     // 메인 화면
     viewModel { MainViewModel() }

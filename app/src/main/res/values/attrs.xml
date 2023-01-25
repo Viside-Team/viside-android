@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LoginBtnView">
+        <attr name="loginBgColor" format="reference|color"/>
+        <attr name="loginIcon" format="reference"/>
+        <attr name="loginText" format="reference|string"/>
+        <attr name="loginTextColor" format="reference|color"/>
+    </declare-styleable>
+</resources>
