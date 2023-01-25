@@ -61,7 +61,6 @@
             app:elevation="20dp"
             app:behavior_hideable="false"
             app:behavior_peekHeight="70dp"
-            android:paddingBottom="@dimen/bottom_margin_for_covering_bnv"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             >
             <include
