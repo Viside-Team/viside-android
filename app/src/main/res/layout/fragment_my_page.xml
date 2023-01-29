@@ -140,6 +140,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:onClick="@{()->viewModel.onLoginClick()}"
+                        android:visibility="@{viewModel.isLoggedIn() ? View.GONE : View.VISIBLE}"
                         android:paddingHorizontal="@dimen/default_horizontal_margin">
                         <androidx.cardview.widget.CardView
                             android:layout_width="0dp"
@@ -200,6 +201,7 @@
                         android:onClick="@{()->viewModel.onLogoutClick()}"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="@dimen/default_horizontal_margin"
+                        android:visibility="@{viewModel.isLoggedIn() ? View.VISIBLE : View.GONE}"
                         android:text="@string/my_page_log_out"
                         android:textColor="@color/g600"/>
 
@@ -210,6 +212,7 @@
                         android:onClick="@{()->viewModel.onWithDrawClick()}"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="@dimen/default_horizontal_margin"
+                        android:visibility="@{viewModel.isLoggedIn() ? View.VISIBLE : View.GONE}"
                         android:text="@string/my_page_withdraw"
                         android:textColor="@color/g400"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>

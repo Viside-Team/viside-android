@@ -34,6 +34,7 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
     private fun initData() {
         getScrapList()
         getProfile()
+        initIsLoggedIn()
     }
 
     private fun observeData() {
@@ -136,6 +137,10 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
                 }
             )
         }
+    }
+
+    private fun initIsLoggedIn() {
+        viewModel.isLoggedIn.value = SharedPrefManager.getBoolean(requireContext()) { IS_LOGGED_IN }
     }
 
     private fun getScrapList() {

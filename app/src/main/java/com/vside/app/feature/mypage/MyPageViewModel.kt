@@ -19,6 +19,8 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewM
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> = _userName
 
+    val isLoggedIn = MutableLiveData<Boolean>()
+
     suspend fun getProfile(onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
         myPageRepository.getProfile(tokenBearer)
             .collect { response ->
