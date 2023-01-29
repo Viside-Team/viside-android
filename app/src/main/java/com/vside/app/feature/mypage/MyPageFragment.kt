@@ -45,7 +45,8 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
             }
 
             isLoginClicked.observe(requireActivity()) {
-
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                startActivity(intent)
             }
 
             isInquiryClicked.observe(requireActivity()) {
