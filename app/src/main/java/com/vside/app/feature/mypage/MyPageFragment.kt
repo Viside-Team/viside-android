@@ -43,6 +43,10 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
                 startActivity(intent)
             }
 
+            isLoginClicked.observe(requireActivity()) {
+
+            }
+
             isInquiryClicked.observe(requireActivity()) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(VSideUrl.KAKAO_CHANNEL_WEB_LINK_URL))
                 startActivity(intent)

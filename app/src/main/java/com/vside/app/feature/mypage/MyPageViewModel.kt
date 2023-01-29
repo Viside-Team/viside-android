@@ -100,6 +100,13 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewM
         _isSeeAllClicked.call()
     }
 
+    private val _isLoginClicked = SingleLiveEvent<Void>()
+    val isLoginClicked: LiveData<Void> = _isLoginClicked
+
+    fun onLoginClick() {
+        _isLoginClicked.call()
+    }
+
     private val _isInquiryClicked = SingleLiveEvent<Void>()
     val isInquiryClicked: LiveData<Void> = _isInquiryClicked
 

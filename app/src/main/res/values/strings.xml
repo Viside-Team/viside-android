@@ -36,4 +36,5 @@
     <string name="login_dialog_title">10초만에 로그인하기</string>
     <string name="login_dialog_subtitle">이 컨텐츠가 마음에 드셨나요?\n로그인하고 내 성향에 맞는 책을 찾아봐요!</string>
     <string name="login_lookaround">먼저 둘러보기</string>
+    <string name="my_page_log_in">로그인하기</string>
 </resources>
