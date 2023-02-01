@@ -9,7 +9,6 @@ import com.vside.app.util.lifecycle.SingleLiveEvent
 import kotlinx.coroutines.flow.collect
 
 class LoginDialogViewModel(private val authRepository: AuthRepository) : BaseViewModel() {
-
     suspend fun signIn(
         signInRequest: SignInRequest,
         onOurUser: (jwtBearer: String?) -> Unit,

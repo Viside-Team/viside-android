@@ -1,10 +1,8 @@
 package com.vside.app.util.auth
 
 import android.content.Context
-import android.content.Intent
-import androidx.fragment.app.FragmentActivity
 import com.kakao.sdk.auth.model.OAuthToken
-import com.vside.app.feature.MainActivity
+import com.kakao.sdk.user.UserApiClient
 import com.vside.app.util.common.sharedpref.SharedPrefManager
 import com.vside.app.util.log.VsideLog
 
@@ -19,6 +17,20 @@ fun getKakaoLoginCallback(
     } else if (token != null) {
         VsideLog.i("로그인 성공 ${token.accessToken}")
         onSuccess(token)
+    }
+}
+
+fun kakaoLogin(context: Context, callback: (token: OAuthToken?, error: Throwable?) -> Unit) {
+    if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
+        UserApiClient.instance.loginWithKakaoTalk(
+            context,
+            callback = callback
+        )
+    } else {
+        UserApiClient.instance.loginWithKakaoAccount(
+            context,
+            callback = callback
+        )
     }
 }
 

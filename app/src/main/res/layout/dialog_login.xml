@@ -51,6 +51,7 @@
         <com.vside.app.feature.auth.view.LoginBtnView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.onKakaoClick()}"
             app:loginBgColor="@color/kakao_color"
             app:loginText="@string/login_with_kakao"
             app:loginTextColor="@color/black"

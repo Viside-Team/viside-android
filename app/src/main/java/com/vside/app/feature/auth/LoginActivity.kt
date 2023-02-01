@@ -16,11 +16,11 @@ import com.vside.app.feature.auth.data.VsideLoginType
 import com.vside.app.feature.auth.data.VsideUser
 import com.vside.app.feature.auth.data.request.SignInRequest
 import com.vside.app.util.auth.getKakaoLoginCallback
+import com.vside.app.util.auth.kakaoLogin
 import com.vside.app.util.auth.removeUserInfo
 import com.vside.app.util.auth.storeUserInfo
 import com.vside.app.util.base.BaseActivity
 import com.vside.app.util.common.DataTransfer
-import com.vside.app.util.log.VsideLog
 import org.koin.android.ext.android.inject
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
@@ -140,33 +140,17 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                         }
                     }
                 }
-                if (UserApiClient.instance.isKakaoTalkLoginAvailable(appCompatActivity)) {
-                    UserApiClient.instance.loginWithKakaoTalk(
-                        appCompatActivity,
-                        callback = getKakaoLoginCallback(
-                            onSuccess = {
-                                afterKakaoLoginSuccess(it)
-                            },
-                            onFail = {
-                                viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
-                                toastShortOfFailMessage("카카오 로그인")
-                            }
-                        ),
+                kakaoLogin(
+                    appCompatActivity,
+                    getKakaoLoginCallback(
+                        onSuccess = { afterKakaoLoginSuccess(it) },
+                        onFail = {
+                            viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
+                            toastShortOfFailMessage("카카오 로그인")
+                        }
                     )
-                } else {
-                    UserApiClient.instance.loginWithKakaoAccount(
-                        appCompatActivity,
-                        callback = getKakaoLoginCallback(
-                            onSuccess = {
-                                afterKakaoLoginSuccess(it)
-                            },
-                            onFail = {
-                                viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
-                                toastShortOfFailMessage("카카오 로그인")
-                            }
-                        )
-                    )
-                }
+                )
+
             }
 
             isLookAroundClicked.observe(appCompatActivity) {
