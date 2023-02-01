@@ -34,7 +34,6 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
 
     private fun initData() {
         addBottomSheetCallback()
-        getFilteredGroupedByCategory()
         getKeywordsGroupedByCategory()
     }
 
@@ -49,6 +48,10 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
 
             isContentBookmarkClicked.observe(requireActivity()) {
                 toggleScrapContent(it)
+            }
+
+            selectedKeywordSet.observe(requireActivity()) {
+                getFilteredContents()
             }
         }
 
@@ -114,10 +117,10 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
         }
     }
 
-    private fun getFilteredGroupedByCategory() {
+    private fun getFilteredContents() {
         lifecycleScope.launchWhenCreated {
             val filteredContentRequest =
-                FilteredContentRequest(filterSelectViewModel.selectedKeywordSet.value?.toList() ?: listOf())
+                FilteredContentRequest(viewModel.selectedKeywordSet.value?.toList() ?: listOf())
             viewModel.getFilteredContentList(
                 filteredContentRequest,
                 onGetSuccess = {},
