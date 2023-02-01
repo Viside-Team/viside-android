@@ -153,7 +153,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/color_bg_filter_select_complete"
-            bind:activated="@{viewModel.selectedKeywordSet == null || viewModel.selectedKeywordSet.empty ? false : true}"
+            bind:activated="@{true}"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="12dp"
