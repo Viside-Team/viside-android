@@ -61,4 +61,11 @@ class ContentViewModel(private val contentRepository: ContentRepository): BaseVi
     fun onBookmarkClick() {
         _isBookmarkClicked.call()
     }
+
+    private val _isBackClicked = SingleLiveEvent<Void>()
+    val isBackClicked: LiveData<Void> = _isBackClicked
+
+    fun onBackClick() {
+        _isBackClicked.call()
+    }
 }

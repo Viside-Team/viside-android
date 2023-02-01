@@ -76,6 +76,10 @@ class ContentActivity : BaseActivity<ActivityContentBinding, ContentViewModel>()
             isBookmarkClicked.observe(appCompatActivity) {
                 toggleScrapContent()
             }
+
+            isBackClicked.observe(appCompatActivity) {
+                onBackPressed()
+            }
         }
     }
 

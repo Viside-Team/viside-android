@@ -50,6 +50,7 @@
                         android:src="@drawable/ic_back"
                         android:layout_marginStart="7dp"
                         android:padding="13dp"
+                        android:onClick="@{()->viewModel.onBackClick()}"
                         bind:contentBackBtnLightBg="@{viewModel.isLightBg()}"
                         bind:contentBackBtnCollapsed="@{viewModel.isContentImgCollapsed()}"
                         android:contentDescription="@string/back"
