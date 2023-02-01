@@ -9,6 +9,7 @@ import com.vside.app.R
 import com.vside.app.databinding.FragmentFilterBinding
 import com.vside.app.feature.common.data.Content
 import com.vside.app.feature.common.data.ContentItem
+import com.vside.app.feature.common.view.LoginDialogFragment
 import com.vside.app.feature.content.ContentActivity
 import com.vside.app.feature.filter.data.request.FilteredContentRequest
 import com.vside.app.util.base.BaseFragment
@@ -47,7 +48,13 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
             }
 
             isContentBookmarkClicked.observe(requireActivity()) {
-                toggleScrapContent(it)
+                if(SharedPrefManager.getBoolean(requireContext()) { IS_LOGGED_IN }) {
+                    toggleScrapContent(it)
+                    return@observe
+                }
+
+                val loginDialog = LoginDialogFragment()
+                loginDialog.show(parentFragmentManager, loginDialog.tag)
             }
 
             selectedKeywordSet.observe(requireActivity()) {
