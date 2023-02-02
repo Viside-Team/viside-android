@@ -30,4 +30,18 @@ data class ContentItem(
         content.isLightBg,
         content.keywords
     )
+
+    constructor() : this(
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        MutableLiveData(),
+        null,
+        null
+    )
 }

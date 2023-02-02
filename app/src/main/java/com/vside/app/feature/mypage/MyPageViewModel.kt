@@ -21,6 +21,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewM
 
     val isLoggedIn = MutableLiveData<Boolean>()
 
+    private val myPageContentMaxCnt = 24
     suspend fun getProfile(onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
         myPageRepository.getProfile(tokenBearer)
             .collect { response ->
@@ -46,7 +47,22 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewM
                 handleApiResponse(
                     response = response,
                     onSuccess = {
-                        _scrapContentList.value = it.data?.contentList?.map { content -> ContentItem(content) }
+                        val contentListSize =
+                            if(it.data?.contentList?.size != null) {
+                                if(it.data?.contentList?.size!! > myPageContentMaxCnt) myPageContentMaxCnt
+                                else it.data?.contentList?.size!!
+                            }
+                            else 0
+                        val tempContentList = Array(contentListSize) { ContentItem () }
+
+                        (0 until contentListSize).forEach { idx ->
+                            if(idx < (contentListSize + 1) / 2) {
+                                tempContentList[2 * idx] = ContentItem(it.data?.contentList!![idx])
+                            } else {
+                                tempContentList[2 * (idx - (contentListSize + 1) / 2) + 1] = ContentItem(it.data?.contentList!![idx])
+                            }
+                        }
+                        _scrapContentList.value = tempContentList.toList()
                         onGetSuccess()
                     },
                     onError = {
