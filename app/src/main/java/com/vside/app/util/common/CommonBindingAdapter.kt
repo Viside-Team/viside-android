@@ -3,7 +3,6 @@ package com.vside.app.util.common
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.ImageView
-import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
@@ -26,7 +25,9 @@ fun View.setBgColorAlpha(alpha0To100: Int?) {
 @BindingAdapter("cardBgColorAlpha")
 fun CardView.setCardBgColorAlpha(alpha0To100: Int?) {
     alpha0To100?.let {
-        setCardBackgroundColor(cardBackgroundColor.withAlpha(alpha0To100*255/100))
+        val temp = ((alpha0To100 / 100f) * 256).toInt()
+        val alpha = if(temp > 255) 255 else temp
+        setCardBackgroundColor(cardBackgroundColor.withAlpha(alpha))
     }
 }
 

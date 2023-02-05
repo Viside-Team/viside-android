@@ -66,9 +66,9 @@
                 app:cardElevation="0dp"
                 app:cardCornerRadius="18dp"
                 app:cardBackgroundColor="@color/white"
-                bind:cardBgColorAlpha="@{90}"
+                bind:cardBgColorAlpha="@{80}"
                 app:rippleColor="@android:color/transparent"
-                app:strokeColor="@color/g100"
+                app:strokeColor="@color/g50"
                 app:strokeWidth="1dp">
 
                 <TextView
