@@ -3,6 +3,7 @@ package com.vside.app.feature.content
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 import android.view.ViewGroup
 import android.view.WindowInsetsController
@@ -127,10 +128,12 @@ class ContentActivity : BaseActivity<ActivityContentBinding, ContentViewModel>()
     }
 
     private fun initWebView() {
+        viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
+        viewDataBinding.layoutLoading.progressCl.setBackgroundColor(Color.WHITE)
         webViewSetting(
             this@ContentActivity,
             viewDataBinding.webViewContent,
-            viewDataBinding.progressCircularContent,
+            viewDataBinding.layoutLoading.progressCl,
             viewModel.contentUrl
         )
     }
