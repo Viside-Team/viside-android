@@ -4,6 +4,9 @@ import android.graphics.Color
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.card.MaterialCardView
 import com.vside.app.R
 
@@ -28,4 +31,9 @@ fun TextView.setKeywordTextStyle(isActivated: Boolean?) {
 
     setTextAppearance(R.style.TextAppearance_AppCompat_MD_R)
     setTextColor(ContextCompat.getColor(context, R.color.g600))
+}
+
+@BindingAdapter("filterKeywordLayoutManager")
+fun RecyclerView.setFilterKeywordLayoutManager(spanCnt : Int) {
+    layoutManager = StaggeredGridLayoutManager(spanCnt, GridLayoutManager.HORIZONTAL)
 }

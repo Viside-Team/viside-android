@@ -77,13 +77,13 @@
             android:layout_marginBottom="10dp"
             app:layout_constraintStart_toStartOf="@id/tv_item_filter_tab_main_content"
             app:layout_constraintEnd_toEndOf="@id/tv_item_filter_tab_main_content"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            app:spanCount="2"
-            android:orientation="horizontal"
+            bind:filterKeywordLayoutManager="@{item.keywords.size() > 3 ? 2 : 1}"
             tools:listitem="@layout/item_filter_tab_main_keyword"
             bind:dino_itemSpace="@{`4dp`}"
             bind:dino_items="@{item.keywords}"
             bind:dino_itemLayout="@{@layout/item_filter_tab_main_keyword}"
+            tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            tools:orientation="horizontal"
             tools:itemCount="3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
