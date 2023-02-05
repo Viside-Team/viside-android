@@ -67,18 +67,24 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
             }
 
             isInquiryClicked.observe(requireActivity()) {
+                viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(VSideUrl.KAKAO_CHANNEL_WEB_LINK_URL))
                 startActivity(intent)
+                viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
             }
 
             isTermsOfServiceClicked.observe(requireActivity()) {
+                viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(VSideUrl.TERMS_OF_SERVICE_URL))
                 startActivity(intent)
+                viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
             }
 
             isPrivacyPolicyClicked.observe(requireActivity()) {
+                viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(VSideUrl.PRIVACY_POLICY_URL))
                 startActivity(intent)
+                viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
             }
 
             isLogoutClicked.observe(requireActivity()) {
@@ -113,6 +119,7 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
     }
 
     private fun logout() {
+        viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
         lifecycleScope.launchWhenCreated {
             viewModel.signOut(
                 onSignOutSuccess = {
@@ -128,12 +135,14 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
                 },
                 onSignOutFail = {
                     toastShortOfFailMessage("로그아웃")
+                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
                 }
             )
         }
     }
 
     private fun withdraw() {
+        viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
         lifecycleScope.launchWhenCreated {
             viewModel.withdraw(
                 WithdrawRequest(
@@ -152,6 +161,7 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
                 },
                 onWithdrawFail = {
                     toastShortOfFailMessage("회원 탈퇴")
+                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
                 }
             )
         }
@@ -162,10 +172,16 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
     }
 
     private fun getScrapList() {
+        viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
         lifecycleScope.launchWhenCreated {
             viewModel.getScrapList(
-                onGetSuccess = {},
-                onGetFail = { toastShortOfFailMessage("스크랩 리스트 가져오기") }
+                onGetSuccess = {
+                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
+                },
+                onGetFail = {
+                    toastShortOfFailMessage("스크랩 리스트 가져오기")
+                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
+                }
             )
         }
     }
