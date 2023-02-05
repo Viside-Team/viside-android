@@ -27,6 +27,6 @@
             bind:text="@{'#' + item}"
             style="@style/TextAppearance.AppCompat.XS_R"
             android:textColor="@color/g500"
-            android:paddingHorizontal="12dp"/>
+            android:paddingHorizontal="11dp"/>
    </com.google.android.material.card.MaterialCardView>
 </layout>
