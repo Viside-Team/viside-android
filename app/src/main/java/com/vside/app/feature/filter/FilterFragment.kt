@@ -141,13 +141,19 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
     }
 
     private fun getFilteredContents() {
+        viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
         lifecycleScope.launchWhenCreated {
             val filteredContentRequest =
                 FilteredContentRequest(viewModel.selectedKeywordSet.value?.toList() ?: listOf())
             viewModel.getFilteredContentList(
                 filteredContentRequest,
-                onGetSuccess = {},
-                onGetFail = { toastShortOfFailMessage("컨텐츠 가져오기") }
+                onGetSuccess = {
+                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
+                },
+                onGetFail = {
+                    toastShortOfFailMessage("컨텐츠 가져오기")
+                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
+                }
             )
         }
     }
