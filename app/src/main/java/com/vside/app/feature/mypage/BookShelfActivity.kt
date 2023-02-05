@@ -2,6 +2,7 @@ package com.vside.app.feature.mypage
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.vside.app.R
 import com.vside.app.databinding.ActivityBookShelfBinding
@@ -73,10 +74,16 @@ class BookShelfActivity : BaseActivity<ActivityBookShelfBinding, BookShelfViewMo
     }
 
     private fun getScrapList() {
+        viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
         lifecycleScope.launchWhenCreated {
             viewModel.getScrapList(
-                onGetSuccess = {},
-                onGetFail = { toastShortOfFailMessage("스크랩 리스트 가져오기") }
+                onGetSuccess = {
+                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
+                },
+                onGetFail = {
+                    toastShortOfFailMessage("스크랩 리스트 가져오기")
+                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
+                }
             )
         }
     }
