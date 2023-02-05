@@ -47,7 +47,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     }
 
     private fun initData() {
-        refreshData()
+        getHomeContentList()
+        getProfile()
     }
 
     private fun observeData() {
