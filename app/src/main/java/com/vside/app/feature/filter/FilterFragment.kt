@@ -33,6 +33,22 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
         observeData()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden) refreshData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getFilteredContents()
+    }
+
+    private fun refreshData() {
+        if(SharedPrefManager.getBoolean(requireContext()) { IS_LOGGED_IN }) {
+            getFilteredContents()
+        }
+    }
+
     private fun initData() {
         addBottomSheetCallback()
         getKeywordsGroupedByCategory()

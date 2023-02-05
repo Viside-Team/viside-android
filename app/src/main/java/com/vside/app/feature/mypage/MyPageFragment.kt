@@ -31,6 +31,23 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
         observeData()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden) refreshData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshData()
+    }
+
+    private fun refreshData() {
+        if(viewModel.isLoggedIn.value == true) {
+            getScrapList()
+            getProfile()
+        }
+    }
+
     private fun initData() {
         getScrapList()
         getProfile()

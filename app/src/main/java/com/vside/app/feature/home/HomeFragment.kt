@@ -29,9 +29,25 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         observeData()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden) refreshData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshData()
+    }
+
+    private fun refreshData() {
+        if(SharedPrefManager.getBoolean(requireContext()) { IS_LOGGED_IN }) {
+            getHomeContentList()
+            getProfile()
+        }
+    }
+
     private fun initData() {
-        getHomeContentList()
-        getProfile()
+        refreshData()
     }
 
     private fun observeData() {
