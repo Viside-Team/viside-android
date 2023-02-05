@@ -10,59 +10,74 @@
             type="com.vside.app.feature.home.HomeViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <include
+            android:id="@+id/layout_loading"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            layout="@layout/layout_loading"/>
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
-
+            android:fillViewport="true">
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_action_bar"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                app:layout_constraintTop_toTopOf="parent"
-                >
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/bg_home_action_bar"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    tools:ignore="ContentDescription" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="@dimen/default_horizontal_margin"
-                    android:text="@{`안녕하세요, ` + (viewModel.userName ?? ``) + `님!`}"
-                    tools:text="안녕하세요, 데비님!"
-                    app:drawableEndCompat="@drawable/ic_star"
-                    android:drawablePadding="2dp"
-                    style="@style/TextAppearance.AppCompat.XL_M"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/cl_action_bar"
-                android:paddingHorizontal="@dimen/default_horizontal_margin"
-                android:paddingTop="30dp"
-                android:paddingBottom="88dp"
-                android:clipToPadding="false"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="vertical"
-                bind:dino_itemLayout="@{@layout/item_home_content}"
-                bind:dino_items="@{viewModel.contentList}"
-                bind:dino_itemSpace="@{`20dp`}"
-                bind:dino_eventHolder="@{viewModel}"
-                tools:itemCount="3"
-                tools:listitem="@layout/item_home_content"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                android:background="@color/white">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_action_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/bg_home_action_bar"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:ignore="ContentDescription" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="@dimen/default_horizontal_margin"
+                        android:text="@{`안녕하세요, ` + (viewModel.userName ?? ``) + `님!`}"
+                        tools:text="안녕하세요, 데비님!"
+                        app:drawableEndCompat="@drawable/ic_star"
+                        android:drawablePadding="2dp"
+                        style="@style/TextAppearance.AppCompat.XL_M"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toBottomOf="@id/cl_action_bar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:paddingHorizontal="@dimen/default_horizontal_margin"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="88dp"
+                    android:clipToPadding="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="vertical"
+                    bind:dino_itemLayout="@{@layout/item_home_content}"
+                    bind:dino_items="@{viewModel.contentList}"
+                    bind:dino_itemSpace="@{`20dp`}"
+                    bind:dino_eventHolder="@{viewModel}"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_home_content"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

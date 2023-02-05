@@ -88,10 +88,16 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     }
 
     private fun getProfile() {
+        viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
         lifecycleScope.launchWhenCreated {
             viewModel.getProfile(
-                onGetSuccess = {},
-                onGetFail = {toastShortOfFailMessage("프로필 정보 가져오기")}
+                onGetSuccess = {
+                     viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
+                },
+                onGetFail = {
+                    toastShortOfFailMessage("프로필 정보 가져오기")
+                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
+                }
             )
         }
     }
