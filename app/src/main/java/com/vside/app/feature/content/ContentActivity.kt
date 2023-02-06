@@ -13,8 +13,10 @@ import com.google.android.material.appbar.AppBarLayout
 import com.vside.app.R
 import com.vside.app.databinding.ActivityContentBinding
 import com.vside.app.feature.common.data.Content
+import com.vside.app.feature.common.view.LoginDialogFragment
 import com.vside.app.util.base.BaseActivity
 import com.vside.app.util.common.DataTransfer
+import com.vside.app.util.common.sharedpref.SharedPrefManager
 import com.vside.app.util.common.statusBarHeight
 import com.vside.app.util.common.webViewSetting
 import org.koin.android.ext.android.inject
@@ -76,7 +78,13 @@ class ContentActivity : BaseActivity<ActivityContentBinding, ContentViewModel>()
                 }
             }
             isBookmarkClicked.observe(appCompatActivity) {
-                toggleScrapContent()
+                if(SharedPrefManager.getBoolean(appCompatActivity) { IS_LOGGED_IN }) {
+                    toggleScrapContent()
+                    return@observe
+                }
+
+                val loginDialog = LoginDialogFragment()
+                loginDialog.show(supportFragmentManager, loginDialog.tag)
             }
 
             isBackClicked.observe(appCompatActivity) {
