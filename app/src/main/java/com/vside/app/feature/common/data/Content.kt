@@ -9,6 +9,7 @@ import java.math.BigInteger
 data class Content(
     @SerializedName("contentId") val contentId: BigInteger?,
     @SerializedName("title") val title: String?,
+    @SerializedName("dateTime") val dateStr: String?,
     @SerializedName("coverImgUrl") val coverImgUrl: String?,
     @SerializedName("contentImgUrl") val contentImgUrl: String?,
     @SerializedName("mainKeyword") val mainKeyword: String?,
@@ -22,6 +23,7 @@ data class Content(
     constructor(contentItem: ContentItem) : this(
         contentItem.contentId,
         contentItem.title,
+        contentItem.dateStr,
         contentItem.coverImgUrl,
         contentItem.contentImgUrl,
         contentItem.mainKeyword,

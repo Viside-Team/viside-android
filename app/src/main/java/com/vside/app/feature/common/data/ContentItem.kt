@@ -6,6 +6,7 @@ import java.math.BigInteger
 data class ContentItem(
     val contentId: BigInteger?,
     val title: String?,
+    val dateStr: String?,
     val coverImgUrl: String?,
     val contentImgUrl: String?,
     val mainKeyword: String?,
@@ -20,6 +21,7 @@ data class ContentItem(
     constructor(content: Content): this(
         content.contentId,
         content.title,
+        content.dateStr,
         content.coverImgUrl,
         content.contentImgUrl,
         content.mainKeyword,
@@ -32,6 +34,7 @@ data class ContentItem(
     )
 
     constructor() : this(
+        null,
         null,
         null,
         null,

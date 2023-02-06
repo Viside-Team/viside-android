@@ -84,6 +84,7 @@
                         android:layout_height="wrap_content"
                         style="@style/TextAppearance.AppCompat.XS_M"
                         android:textColor="@color/white"
+                        android:text="@{viewModel.dateStr}"
                         bind:contentTitleDateLightBg="@{viewModel.isLightBg()}"
                         tools:text="2022 . 09 . 12"/>
                     <TextView

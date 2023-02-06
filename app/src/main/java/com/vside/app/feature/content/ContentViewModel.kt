@@ -13,6 +13,7 @@ class ContentViewModel(private val contentRepository: ContentRepository): BaseVi
     var contentUrl = ""
 
     var contentId = BigInteger("0")
+    val dateStr = MutableLiveData<String>()
     val title = MutableLiveData<String>()
     val isLightBg = MutableLiveData<Boolean>()
     val contentImgUrl = MutableLiveData<String>()
