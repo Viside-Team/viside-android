@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1016087765506",
+    "firebase_url": "https://viside-9b598-default-rtdb.firebaseio.com",
+    "project_id": "viside-9b598",
+    "storage_bucket": "viside-9b598.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016087765506:android:9a95ce5385ff1f9a267d1b",
+        "android_client_info": {
+          "package_name": "com.vside.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016087765506-nusju3t2tjkboml6bj8o3mlvinensbqe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCW8HTcA_RmX-J_KGzGpCXOJryBZG0GG3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016087765506-nusju3t2tjkboml6bj8o3mlvinensbqe.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1016087765506-p9o8ds2cjsepm3a4of26dgrpv7o6i9kr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jeuniii.viside-ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
