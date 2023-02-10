@@ -82,7 +82,7 @@
                         android:id="@+id/tv_content_upload_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/TextAppearance.AppCompat.XS_M"
+                        style="@style/TextAppearance.AppCompat.MD_R"
                         android:textColor="@color/white"
                         android:text="@{viewModel.dateStr}"
                         bind:contentTitleDateLightBg="@{viewModel.isLightBg()}"
