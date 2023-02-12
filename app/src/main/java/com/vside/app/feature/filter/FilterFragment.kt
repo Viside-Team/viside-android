@@ -92,6 +92,11 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
             }
 
             isCompleteClicked.observe(requireActivity()) {
+                if(!SharedPrefManager.getBoolean(requireContext()) { IS_LOGGED_IN }) {
+                    val loginDialog = LoginDialogFragment()
+                    loginDialog.show(parentFragmentManager, loginDialog.tag)
+                    return@observe
+                }
                 if(viewDataBinding.bindingDialogFilterSelect.tvFilterSelectComplete.isActivated) {
                     viewModel.selectedKeywordSet.value = filterSelectViewModel.selectedKeywordSet.value
                     val behavior = BottomSheetBehavior.from(viewDataBinding.clDialogFilterSelect)
