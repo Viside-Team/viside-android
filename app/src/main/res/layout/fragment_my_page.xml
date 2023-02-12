@@ -56,6 +56,11 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     android:background="@color/g25">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/g50"
+                        app:layout_constraintTop_toTopOf="parent"/>
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -137,6 +142,11 @@
                                 android:layout_marginTop="20dp"/>
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.appcompat.widget.LinearLayoutCompat>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/g50"
+                        app:layout_constraintBottom_toBottomOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
