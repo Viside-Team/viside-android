@@ -62,6 +62,7 @@ class BookShelfActivity : BaseActivity<ActivityBookShelfBinding, BookShelfViewMo
                     contentItem.contentId ?: BigInteger("0"),
                     onPostSuccess = {
                         contentItem.isScrapClickable.value = true
+                        viewModel.deleteContent(contentItem)
                     },
                     onPostFail = {
                         toastShortOfFailMessage("스크랩 / 스크랩 취소")

@@ -8,12 +8,11 @@ import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.ContentItemClickListener
 import com.vside.app.util.common.handleApiResponse
 import com.vside.app.util.lifecycle.SingleLiveEvent
-import kotlinx.coroutines.flow.collect
 import java.math.BigInteger
 
 class BookShelfViewModel(private val myPageRepository: MyPageRepository) : BaseViewModel(), ContentItemClickListener {
-    private val _scrapContentList = MutableLiveData<List<ContentItem>>()
-    val scrapList: LiveData<List<ContentItem>> = _scrapContentList
+    private val _scrapContentList = MutableLiveData<MutableList<ContentItem>>()
+    val scrapList: LiveData<MutableList<ContentItem>> = _scrapContentList
 
     suspend fun getScrapList(onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
         myPageRepository.getScrapList(tokenBearer)
@@ -21,7 +20,7 @@ class BookShelfViewModel(private val myPageRepository: MyPageRepository) : BaseV
                 handleApiResponse(
                     response = response,
                     onSuccess = {
-                        _scrapContentList.value = it.data?.contentList?.map { it1 -> ContentItem(it1) }
+                        _scrapContentList.value = it.data?.contentList?.map { it1 -> ContentItem(it1) }?.toMutableList()
                         onGetSuccess()
                     },
                     onError = {
@@ -49,6 +48,11 @@ class BookShelfViewModel(private val myPageRepository: MyPageRepository) : BaseV
                     }
                 )
             }
+    }
+
+    fun deleteContent(contentItem: ContentItem) {
+        _scrapContentList.value?.remove(contentItem)
+        _scrapContentList.value = _scrapContentList.value
     }
 
     private val _isBackClicked = SingleLiveEvent<Void>()
