@@ -26,6 +26,7 @@ class LoginDialogFragment:BaseBottomSheetDialogFragment<DialogLoginBinding, Logi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewDataBinding.viewModel = viewModel
+        dialog?.setCanceledOnTouchOutside(false)
 
         observeData()
     }
