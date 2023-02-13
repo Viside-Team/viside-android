@@ -92,7 +92,7 @@
                 android:text="@{item.title}"
                 tools:text="사랑하지만 끝내 이해할 수 없는
 것이 당신에게도 있지 않나요"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="28dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>
