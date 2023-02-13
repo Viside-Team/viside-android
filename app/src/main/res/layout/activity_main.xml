@@ -42,7 +42,7 @@
                 android:background="@drawable/bg_nav_bar"
                 app:elevation="20dp"
                 app:itemBackground="@android:color/transparent"
-                app:itemIconSize="40dp"
+                app:itemIconSize="30dp"
                 app:labelVisibilityMode="unlabeled"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
