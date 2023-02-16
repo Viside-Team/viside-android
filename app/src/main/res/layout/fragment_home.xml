@@ -5,6 +5,7 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.vside.app.feature.home.HomeViewModel" />
@@ -19,6 +20,7 @@
             android:id="@+id/layout_loading"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="@{viewModel.isLoading()==true? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             layout="@layout/layout_loading"/>

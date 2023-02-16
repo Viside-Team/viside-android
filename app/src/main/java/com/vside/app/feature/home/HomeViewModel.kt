@@ -2,16 +2,17 @@ package com.vside.app.feature.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.skydoves.sandwich.ApiResponse
 import com.vside.app.feature.common.data.ContentItem
 import com.vside.app.feature.home.repo.HomeRepository
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.ContentItemClickListener
-import com.vside.app.util.common.handleApiResponse
 import com.vside.app.util.lifecycle.SingleLiveEvent
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.math.BigInteger
 
-class HomeViewModel(private val homeRepository: HomeRepository): BaseViewModel(),
+class HomeViewModel(private val homeRepository: HomeRepository) : BaseViewModel(),
     ContentItemClickListener {
     private val _contentList = MutableLiveData<List<ContentItem>>()
     val contentList: LiveData<List<ContentItem>> = _contentList
@@ -19,61 +20,84 @@ class HomeViewModel(private val homeRepository: HomeRepository): BaseViewModel()
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> = _userName
 
-    suspend fun getHomeContentList(onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
-        homeRepository.getHomeContentList(tokenBearer)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        _contentList.value = it.data?.contents?.map { content -> ContentItem(content) }
-                        onGetSuccess()
-                    },
-                    onError = {
-                        onGetFail()
-                    }
-                    , onException = {
-                        onGetFail()
-                    }
-                )
+    // suspend 함수가 성공, 실패 여부만 리턴해준다면 BoilerPlate code 가 확연히 줄어듬.
+    // 문제는 성공, 실패 여부만 리턴해줄 수 있냐는거지,,,
+    // 로딩 상태는 어떻게 하지?
+    fun getHomeContentList() =
+        viewModelScope.launch {
+            _isLoading.value = true
+            val response = homeRepository.getHomeContentList(tokenBearer)
+            _isLoading.value = false
+            when (response) {
+                is ApiResponse.Success -> {
+                    _contentList.value = response.data?.contents?.map { content -> ContentItem(content) }
+                }
+                else -> {
+                    _toastFailThemeKeyword.value = "컨텐츠 가져오기"
+                }
             }
+        }
+
+    fun refreshHomeContentList() =
+        viewModelScope.launch {
+            _isLoading.value = true
+            val response = homeRepository.getHomeContentList(tokenBearer)
+            _isLoading.value = false
+            when(response) {
+                is ApiResponse.Success -> {
+                    _contentList.value?.forEach { originalItem ->
+                        val newContent = response.data?.contents?.find { it.contentId == originalItem.contentId }
+                        if(originalItem.isBookmark.value != newContent?.isBookmark) { originalItem.isBookmark.value = newContent?.isBookmark }
+                    }
+                    _contentList.value = _contentList.value
+                }
+                else -> {
+                    _toastFailThemeKeyword.value = "컨텐츠 가져오기"
+                }
+            }
+        }
+
+
+    fun getProfile() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            val response = homeRepository.getProfile(tokenBearer)
+            _isLoading.value = false
+            when (response) {
+                is ApiResponse.Success -> {
+                    _userName.value = response.data?.userName
+                }
+                else -> {
+                    _toastFailThemeKeyword.value = "프로필 정보 가져오기"
+                }
+            }
+        }
     }
 
-    suspend fun getProfile(onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
-        homeRepository.getProfile(tokenBearer)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        _userName.value = it.data?.userName
-                        onGetSuccess()
-                    },
-                    onError = {
-                        onGetFail()
-                    }
-                    , onException = {
-                        onGetFail()
-                    }
+    fun toggleScrapContent(contentItem: ContentItem) =
+        viewModelScope.launch {
+            if(contentItem.isScrapClickable.value == true) {
+                contentItem.isScrapClickable.value = false
+                val isBookmarked = contentItem.isBookmark.value
+                isBookmarked?.let {
+                    contentItem.isBookmark.value = !isBookmarked
+                }
+                val response =  homeRepository.toggleContentScrap(
+                    tokenBearer,
+                    contentItem.contentId ?: BigInteger("0")
                 )
-            }
-    }
-
-    suspend fun toggleScrapContent(contentId: BigInteger, onPostSuccess: () -> Unit, onPostFail: () -> Unit) {
-        homeRepository.toggleContentScrap(tokenBearer, contentId)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        onPostSuccess()
-                    },
-                    onError = {
-                        onPostFail()
-                    },
-                    onException = {
-                        onPostFail()
+                when(response) {
+                    is ApiResponse.Success -> {
+                        contentItem.isScrapClickable.value = true
                     }
-                )
+                    else -> {
+                        _toastFailThemeKeyword.value = "스크랩 / 스크랩 취소"
+                        contentItem.isScrapClickable.value = false
+                        contentItem.isBookmark.value = isBookmarked
+                    }
+                }
             }
-    }
+        }
 
     // 클릭 이벤트들
     private val _isContentItemClicked = SingleLiveEvent<ContentItem>()

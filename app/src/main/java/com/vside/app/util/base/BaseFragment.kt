@@ -39,6 +39,9 @@ abstract class BaseFragment<T: ViewDataBinding, VM: BaseViewModel>: Fragment() {
         viewModel.toastMessage.observe(viewLifecycleOwner) {
             toastShort(it)
         }
+        viewModel.toastFailThemeKeyword.observe(viewLifecycleOwner) {
+            toastShortOfFailMessage(it)
+        }
     }
 
     fun toastShort(str:String) {

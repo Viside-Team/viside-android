@@ -9,7 +9,6 @@ import com.vside.app.R
 import com.vside.app.util.common.KeyboardHeightObserver
 import com.vside.app.util.common.KeyboardHeightProvider
 import com.vside.app.util.common.sharedpref.SharedPrefManager
-import com.vside.app.util.log.VsideLog
 
 abstract class BaseActivity<T: ViewDataBinding, VM: BaseViewModel> : AppCompatActivity(),
     KeyboardHeightObserver {
@@ -41,6 +40,9 @@ abstract class BaseActivity<T: ViewDataBinding, VM: BaseViewModel> : AppCompatAc
         //토스트 메세지 띄우기
         viewModel.toastMessage.observe(this) {
             toastShort(it)
+        }
+        viewModel.toastFailThemeKeyword.observe(this) {
+            toastShortOfFailMessage(it)
         }
     }
 

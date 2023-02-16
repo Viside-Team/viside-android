@@ -11,4 +11,10 @@ open class BaseViewModel : ViewModel() {
 
     protected val _toastMessage = MutableLiveData<String>()
     val toastMessage: LiveData<String> = _toastMessage
+
+    protected val _toastFailThemeKeyword = MutableLiveData<String>()
+    val toastFailThemeKeyword: LiveData<String> = _toastFailThemeKeyword
+
+    protected val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 }
