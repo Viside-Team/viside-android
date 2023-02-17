@@ -20,9 +20,6 @@ class HomeViewModel(private val homeRepository: HomeRepository) : BaseViewModel(
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> = _userName
 
-    // suspend 함수가 성공, 실패 여부만 리턴해준다면 BoilerPlate code 가 확연히 줄어듬.
-    // 문제는 성공, 실패 여부만 리턴해줄 수 있냐는거지,,,
-    // 로딩 상태는 어떻게 하지?
     fun getHomeContentList() =
         viewModelScope.launch {
             _isLoading.value = true
