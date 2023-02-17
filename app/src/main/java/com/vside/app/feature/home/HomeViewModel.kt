@@ -83,13 +83,11 @@ class HomeViewModel(private val homeRepository: HomeRepository) : BaseViewModel(
                     tokenBearer,
                     contentItem.contentId ?: BigInteger("0")
                 )
+                contentItem.isScrapClickable.value = true
                 when(response) {
-                    is ApiResponse.Success -> {
-                        contentItem.isScrapClickable.value = true
-                    }
+                    is ApiResponse.Success -> {}
                     else -> {
                         _toastFailThemeKeyword.value = "스크랩 / 스크랩 취소"
-                        contentItem.isScrapClickable.value = false
                         contentItem.isBookmark.value = isBookmarked
                     }
                 }

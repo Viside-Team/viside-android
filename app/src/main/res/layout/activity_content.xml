@@ -6,6 +6,7 @@
     tools:context=".feature.content.ContentActivity">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.vside.app.feature.content.ContentViewModel" />

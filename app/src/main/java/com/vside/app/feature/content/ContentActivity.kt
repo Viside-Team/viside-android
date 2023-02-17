@@ -8,7 +8,6 @@ import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 import android.view.ViewGroup
 import android.view.WindowInsetsController
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.AppBarLayout
 import com.vside.app.R
 import com.vside.app.databinding.ActivityContentBinding
@@ -79,7 +78,7 @@ class ContentActivity : BaseActivity<ActivityContentBinding, ContentViewModel>()
             }
             isBookmarkClicked.observe(appCompatActivity) {
                 if(SharedPrefManager.getBoolean(appCompatActivity) { IS_LOGGED_IN }) {
-                    toggleScrapContent()
+                    viewModel.toggleContentScrap()
                     return@observe
                 }
 
@@ -89,29 +88,6 @@ class ContentActivity : BaseActivity<ActivityContentBinding, ContentViewModel>()
 
             isBackClicked.observe(appCompatActivity) {
                 onBackPressed()
-            }
-        }
-    }
-
-    private fun toggleScrapContent() {
-        lifecycleScope.launchWhenCreated {
-            if(viewModel.isScrapClickable.value == true) {
-                viewModel.isScrapClickable.value = false
-                val isBookmarked = viewModel.isBookmarked.value
-                isBookmarked?.let {
-                    viewModel.isBookmarked.value = !isBookmarked
-                }
-                this@ContentActivity.viewModel.toggleContentScrap(
-                    viewModel.contentId,
-                    onPostSuccess = {
-                        viewModel.isScrapClickable.value = true
-                    },
-                    onPostFail = {
-                        toastShortOfFailMessage("스크랩 / 스크랩 취소")
-                        viewModel.isScrapClickable.value = false
-                        viewModel.isBookmarked.value = isBookmarked
-                    }
-                )
             }
         }
     }

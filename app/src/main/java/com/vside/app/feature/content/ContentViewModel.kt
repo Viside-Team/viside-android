@@ -2,11 +2,12 @@ package com.vside.app.feature.content
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.skydoves.sandwich.ApiResponse
 import com.vside.app.feature.content.repo.ContentRepository
 import com.vside.app.util.base.BaseViewModel
-import com.vside.app.util.common.handleApiResponse
 import com.vside.app.util.lifecycle.SingleLiveEvent
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.math.BigInteger
 
 class ContentViewModel(private val contentRepository: ContentRepository): BaseViewModel() {
@@ -22,38 +23,49 @@ class ContentViewModel(private val contentRepository: ContentRepository): BaseVi
 
     val isContentImgCollapsed = MutableLiveData<Boolean>()
 
-    suspend fun getContentDetail(contentId: BigInteger, onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
-        contentRepository.getContentDetail(tokenBearer, contentId)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        onGetSuccess()
-                    },
-                    onError = {
-                        onGetFail()
-                    }, onException = {
-                        onGetFail()
-                    }
-                )
+    fun getContentDetail(contentId: BigInteger) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            val response = contentRepository.getContentDetail(tokenBearer, contentId)
+            _isLoading.value = false
+            when(response) {
+                is ApiResponse.Success -> {
+                    title.value = response.data?.title ?: ""
+                    dateStr.value = response.data?.dateStr?.replace("-", ". ") ?: ""
+                    isBookmarked.value = response.data?.isBookmark
+                    contentImgUrl.value = response.data?.contentImgUrl
+                    isLightBg.value = response.data?.isLightBg
+                }
+                else -> {
+                    _toastFailThemeKeyword.value = "컨텐츠 정보 가져오기"
+                }
             }
+        }
     }
 
-    suspend fun toggleContentScrap(contentId: BigInteger, onPostSuccess: () -> Unit, onPostFail: () -> Unit) {
-        contentRepository.toggleContentScrap(tokenBearer, contentId)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        onPostSuccess()
-                    },
-                    onError = {
-                        onPostFail()
-                    }, onException = {
-                        onPostFail()
-                    }
+    fun toggleContentScrap() {
+        viewModelScope.launch {
+            if(isScrapClickable.value == true) {
+                isScrapClickable.value = false
+                val isBookmark = isBookmarked.value
+                isBookmark?.let {
+                    isBookmarked.value = !isBookmark
+                }
+                val response = contentRepository.toggleContentScrap(
+                    tokenBearer,
+                    contentId
                 )
+                isScrapClickable.value = true
+                when(response) {
+                    is ApiResponse.Success -> {}
+                    else -> {
+                        _toastFailThemeKeyword.value = "스크랩 / 스크랩 취소"
+                        isBookmarked.value = isBookmark
+                    }
+                }
             }
+        }
+
     }
 
     private val _isBookmarkClicked = SingleLiveEvent<Void>()
