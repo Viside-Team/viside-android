@@ -3,20 +3,16 @@ package com.vside.app.feature.filter
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.vside.app.R
 import com.vside.app.databinding.FragmentFilterBinding
 import com.vside.app.feature.common.data.Content
-import com.vside.app.feature.common.data.ContentItem
 import com.vside.app.feature.common.view.LoginDialogFragment
 import com.vside.app.feature.content.ContentActivity
-import com.vside.app.feature.filter.data.request.FilteredContentRequest
 import com.vside.app.util.base.BaseFragment
 import com.vside.app.util.common.DataTransfer
 import com.vside.app.util.common.sharedpref.SharedPrefManager
 import org.koin.android.ext.android.inject
-import java.math.BigInteger
 
 class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
     override val layoutResId: Int = R.layout.fragment_filter
@@ -40,18 +36,18 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        getFilteredContents()
+        viewModel.getFilteredContentList()
     }
 
     private fun refreshData() {
         if(SharedPrefManager.getBoolean(requireContext()) { IS_LOGGED_IN }) {
-            getFilteredContents()
+            viewModel.getFilteredContentList()
         }
     }
 
     private fun initData() {
         addBottomSheetCallback()
-        getKeywordsGroupedByCategory()
+        filterSelectViewModel.getKeywordsGroupedByCategory()
     }
 
     private fun observeData() {
@@ -65,7 +61,7 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
 
             isContentBookmarkClicked.observe(requireActivity()) {
                 if(SharedPrefManager.getBoolean(requireContext()) { IS_LOGGED_IN }) {
-                    toggleScrapContent(it)
+                    viewModel.toggleScrapContent(it)
                     return@observe
                 }
 
@@ -74,7 +70,7 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
             }
 
             selectedKeywordSet.observe(requireActivity()) {
-                getFilteredContents()
+                viewModel.getFilteredContentList()
             }
         }
 
@@ -120,55 +116,5 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
                 else viewDataBinding.bindingDialogFilterSelect.tvFilterSelectComplete.visibility = View.VISIBLE
             }
         })
-    }
-
-    private fun toggleScrapContent(contentItem: ContentItem) {
-        lifecycleScope.launchWhenCreated {
-            if(contentItem.isScrapClickable.value == true) {
-                contentItem.isScrapClickable.value = false
-                val isBookmarked = contentItem.isBookmark.value
-                isBookmarked?.let {
-                    contentItem.isBookmark.value = !isBookmarked
-                }
-                viewModel.toggleScrapContent(
-                    contentItem.contentId ?: BigInteger("0"),
-                    onPostSuccess = {
-                        contentItem.isScrapClickable.value = true
-                    },
-                    onPostFail = {
-                        toastShortOfFailMessage("스크랩 / 스크랩 취소")
-                        contentItem.isScrapClickable.value = false
-                        contentItem.isBookmark.value = isBookmarked
-                    }
-                )
-            }
-        }
-    }
-
-    private fun getFilteredContents() {
-        viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
-        lifecycleScope.launchWhenCreated {
-            val filteredContentRequest =
-                FilteredContentRequest(viewModel.selectedKeywordSet.value?.toList() ?: listOf())
-            viewModel.getFilteredContentList(
-                filteredContentRequest,
-                onGetSuccess = {
-                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
-                },
-                onGetFail = {
-                    toastShortOfFailMessage("컨텐츠 가져오기")
-                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
-                }
-            )
-        }
-    }
-
-    private fun getKeywordsGroupedByCategory() {
-        lifecycleScope.launchWhenCreated {
-            filterSelectViewModel.getKeywordsGroupedByCategory(
-                onGetSuccess = {},
-                onGetFail = { toastShortOfFailMessage("키워드 리스트 가져오기") }
-            )
-        }
     }
 }

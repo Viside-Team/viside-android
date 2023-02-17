@@ -2,14 +2,15 @@ package com.vside.app.feature.filter
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.skydoves.sandwich.ApiResponse
 import com.vside.app.feature.common.data.ContentItem
 import com.vside.app.feature.filter.data.request.FilteredContentRequest
 import com.vside.app.feature.filter.repo.FilterRepository
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.ContentItemClickListener
-import com.vside.app.util.common.handleApiResponse
 import com.vside.app.util.lifecycle.SingleLiveEvent
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.math.BigInteger
 
 class FilterViewModel(private val filterRepository: FilterRepository): BaseViewModel(), ContentItemClickListener {
@@ -19,40 +20,47 @@ class FilterViewModel(private val filterRepository: FilterRepository): BaseViewM
     // 실제로 요청을 보낼 키워드의 집합
     val selectedKeywordSet = MutableLiveData<Set<String>>(mutableSetOf())
 
-    suspend fun getFilteredContentList(filteredContentRequest: FilteredContentRequest, onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
-        filterRepository.getFilteredContentList(tokenBearer, filteredContentRequest)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        _contentList.value = it.data?.contents?.map { ContentItem(it) }
-                        onGetSuccess()
-                    },
-                    onError = {
-                        onGetFail()
-                    }, onException = {
-                        onGetFail()
-                    }
-                )
+    fun getFilteredContentList() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            val response = filterRepository.getFilteredContentList(
+                tokenBearer,
+                FilteredContentRequest(selectedKeywordSet.value?.toList() ?: listOf())
+            )
+            _isLoading.value = false
+            when(response) {
+                is ApiResponse.Success -> {
+                    _contentList.value = response.data?.contents?.map { ContentItem(it) }
+                }
+                else -> {
+                    _toastFailThemeKeyword.value = "컨텐츠 가져오기"
+                }
             }
+        }
     }
 
-    suspend fun toggleScrapContent(contentId: BigInteger, onPostSuccess: () -> Unit, onPostFail: () -> Unit) {
-        filterRepository.toggleContentScrap(tokenBearer, contentId)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        onPostSuccess()
-                    },
-                    onError = {
-                        onPostFail()
-                    },
-                    onException = {
-                        onPostFail()
-                    }
+    fun toggleScrapContent(contentItem: ContentItem) {
+        viewModelScope.launch {
+            if(contentItem.isScrapClickable.value == true) {
+                contentItem.isScrapClickable.value = false
+                val isBookmarked = contentItem.isBookmark.value
+                isBookmarked?.let {
+                    contentItem.isBookmark.value = !isBookmarked
+                }
+                val response = filterRepository.toggleContentScrap(
+                    tokenBearer,
+                    contentItem.contentId ?: BigInteger("0")
                 )
+                contentItem.isScrapClickable.value = true
+                when(response) {
+                    is ApiResponse.Success -> {}
+                    else -> {
+                        _toastFailThemeKeyword.value = "스크랩 / 스크랩 취소"
+                        contentItem.isBookmark.value = isBookmarked
+                    }
+                }
             }
+        }
     }
 
     private val _isContentItemClicked = SingleLiveEvent<ContentItem>()

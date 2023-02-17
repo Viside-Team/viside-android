@@ -2,13 +2,14 @@ package com.vside.app.feature.filter
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.skydoves.sandwich.ApiResponse
 import com.vside.app.feature.filter.data.CategoryKeywordItem
 import com.vside.app.feature.filter.repo.FilterRepository
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.KeywordItemClickListener
-import com.vside.app.util.common.handleApiResponse
 import com.vside.app.util.lifecycle.SingleLiveEvent
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class FilterSelectViewModel(private val filterRepository: FilterRepository): BaseViewModel(), KeywordItemClickListener {
     private val _allKeywordsGroupedByCategory = MutableLiveData<List<CategoryKeywordItem>>()
@@ -18,22 +19,18 @@ class FilterSelectViewModel(private val filterRepository: FilterRepository): Bas
     private val _selectedKeywordSet = MutableLiveData<Set<String>>(mutableSetOf())
     val selectedKeywordSet:LiveData<Set<String>> = _selectedKeywordSet
 
-    suspend fun getKeywordsGroupedByCategory(onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
-        filterRepository.getKeywordsGroupedByCategory(tokenBearer)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        _allKeywordsGroupedByCategory.value = it.data?.categories?.map { it1 -> CategoryKeywordItem(it1) }
-                        onGetSuccess()
-                    },
-                    onError = {
-                        onGetFail()
-                    }, onException = {
-                        onGetFail()
-                    }
-                )
+    fun getKeywordsGroupedByCategory() {
+        viewModelScope.launch {
+            val response = filterRepository.getKeywordsGroupedByCategory(tokenBearer)
+            when(response) {
+                is ApiResponse.Success -> {
+                    _allKeywordsGroupedByCategory.value = response.data?.categories?.map { it1 -> CategoryKeywordItem(it1) }
+                }
+                else -> {
+                    _toastFailThemeKeyword.value = "키워드 리스트 가져오기"
+                }
             }
+        }
     }
 
     fun addKeyword(keyword: String) {
