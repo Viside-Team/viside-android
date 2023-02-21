@@ -11,6 +11,7 @@ object PersonalInfoValidation {
     private const val NICKNAME_ACCEPTED_CHAR_REGEX = "[A-Za-z\\d가-힣\\s]"
 
     private const val MSG_NICKNAME_UNACCEPTED_CHAR = "한글, 영어, 숫자, 공백만 입력해주세요."
+    private const val MSG_NICKNAME_FIRST_CHAR = "첫 글자는 한글, 영어, 숫자만 입력해 주세요."
     private const val MSG_NICKNAME_TOO_SHORT = "${NICKNAME_MIN_LENGTH}글자 이상 입력해주세요."
     private const val MSG_NICKNAME_TOO_LONG = "${NICKNAME_MAX_LENGTH}글자 이하로 입력해주세요."
     private const val MSG_NICKNAME_VALIDATE = "사용가능한 닉네임이에요!"
@@ -28,6 +29,7 @@ object PersonalInfoValidation {
 
     fun nicknameGuidanceStr(nickname: String?): String {
         if (nickname.isNullOrEmpty()) return ""
+        if (nickname.first() == ' ') return MSG_NICKNAME_FIRST_CHAR
         if (nickname.length < NICKNAME_MIN_LENGTH) return MSG_NICKNAME_TOO_SHORT
         if (nickname.length > NICKNAME_MAX_LENGTH) return MSG_NICKNAME_TOO_LONG
         if ("[ㄱ-ㅎ|ㅏ-ㅣ]".toRegex().containsMatchIn(nickname)) return MSG_NICKNAME_CONSONANT_VOWEL_KOREAN
