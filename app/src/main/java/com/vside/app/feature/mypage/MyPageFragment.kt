@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import com.skydoves.sandwich.ApiResponse
 import com.vside.app.R
 import com.vside.app.databinding.FragmentMyPageBinding
 import com.vside.app.feature.auth.LoginActivity
@@ -43,14 +44,14 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
 
     private fun refreshData() {
         if(viewModel.isLoggedIn.value == true) {
-            getScrapList()
-            getProfile()
+            viewModel.getScrapList()
+            viewModel.getProfile()
         }
     }
 
     private fun initData() {
-        getScrapList()
-        getProfile()
+        viewModel.getScrapList()
+        viewModel.getProfile()
         initIsLoggedIn()
     }
 
@@ -119,79 +120,44 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
     }
 
     private fun logout() {
-        viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
         lifecycleScope.launchWhenCreated {
-            viewModel.signOut(
-                onSignOutSuccess = {
-                    removeUserInfo(requireContext())
-                    startActivity(
-                        Intent(
-                            requireContext(),
-                            LoginActivity::class.java
-                        ).apply {
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        }
-                    )
-                },
-                onSignOutFail = {
-                    toastShortOfFailMessage("로그아웃")
-                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
-                }
-            )
+            val deferred = viewModel.signOutAsync()
+            if(deferred.await() is ApiResponse.Success) {
+                removeUserInfo(requireContext())
+                startActivity(
+                    Intent(
+                        requireContext(),
+                        LoginActivity::class.java
+                    ).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    }
+                )
+            }
         }
     }
 
     private fun withdraw() {
-        viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
         lifecycleScope.launchWhenCreated {
-            viewModel.withdraw(
+            val deferred = viewModel.withdrawAsync(
                 WithdrawRequest(
                     SharedPrefManager.getString(requireContext()) { SNS_ID }
-                ),
-                onWithdrawSuccess = {
-                    removeUserInfo(requireContext())
-                    startActivity(
-                        Intent(
-                            requireContext(),
-                            LoginActivity::class.java
-                        ).apply {
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        }
-                    )
-                },
-                onWithdrawFail = {
-                    toastShortOfFailMessage("회원 탈퇴")
-                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
-                }
+                )
             )
+            if(deferred.await() is ApiResponse.Success) {
+                removeUserInfo(requireContext())
+                startActivity(
+                    Intent(
+                        requireContext(),
+                        LoginActivity::class.java
+                    ).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    }
+                )
+            }
         }
     }
 
     private fun initIsLoggedIn() {
         viewModel.isLoggedIn.value = SharedPrefManager.getBoolean(requireContext()) { IS_LOGGED_IN }
-    }
-
-    private fun getScrapList() {
-        viewDataBinding.layoutLoading.progressCl.visibility = View.VISIBLE
-        lifecycleScope.launchWhenCreated {
-            viewModel.getScrapList(
-                onGetSuccess = {
-                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
-                },
-                onGetFail = {
-                    toastShortOfFailMessage("스크랩 리스트 가져오기")
-                    viewDataBinding.layoutLoading.progressCl.visibility = View.GONE
-                }
-            )
-        }
-    }
-
-    private fun getProfile() {
-        lifecycleScope.launchWhenCreated {
-            viewModel.getProfile(
-                onGetSuccess = {},
-                onGetFail = {toastShortOfFailMessage("프로필 정보 가져오기")}
-            )
-        }
     }
 }

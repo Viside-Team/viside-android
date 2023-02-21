@@ -2,52 +2,60 @@ package com.vside.app.feature.mypage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.skydoves.sandwich.ApiResponse
 import com.vside.app.feature.common.data.ContentItem
 import com.vside.app.feature.mypage.repo.MyPageRepository
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.ContentItemClickListener
-import com.vside.app.util.common.handleApiResponse
 import com.vside.app.util.lifecycle.SingleLiveEvent
+import kotlinx.coroutines.launch
 import java.math.BigInteger
 
 class BookShelfViewModel(private val myPageRepository: MyPageRepository) : BaseViewModel(), ContentItemClickListener {
     private val _scrapContentList = MutableLiveData<MutableList<ContentItem>>()
-    val scrapList: LiveData<MutableList<ContentItem>> = _scrapContentList
+    val scrapContentList: LiveData<MutableList<ContentItem>> = _scrapContentList
 
-    suspend fun getScrapList(onGetSuccess: () -> Unit, onGetFail: () -> Unit) {
-        myPageRepository.getScrapList(tokenBearer)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        _scrapContentList.value = it.data?.contentList?.map { it1 -> ContentItem(it1) }?.toMutableList()
-                        onGetSuccess()
-                    },
-                    onError = {
-                        onGetFail()
-                    }, onException = {
-                        onGetFail()
-                    }
-                )
+    fun getScrapList() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            val response = myPageRepository.getScrapList(tokenBearer)
+            _isLoading.value = false
+            when(response) {
+                is ApiResponse.Success -> {
+                    _scrapContentList.value = response.data?.contentList?.map { it1 -> ContentItem(it1) }?.toMutableList()
+                }
+                else -> {
+                    _toastFailThemeKeyword.value = "스크랩 리스트 가져오기"
+                }
             }
+        }
     }
 
-    suspend fun toggleScrapContent(contentId: BigInteger, onPostSuccess: () -> Unit, onPostFail: () -> Unit) {
-        myPageRepository.toggleContentScrap(tokenBearer, contentId)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        onPostSuccess()
-                    },
-                    onError = {
-                        onPostFail()
-                    },
-                    onException = {
-                        onPostFail()
-                    }
+    fun toggleScrapContent(contentItem: ContentItem) {
+        viewModelScope.launch {
+            if(contentItem.isScrapClickable.value == true) {
+                contentItem.isScrapClickable.value = false
+                val isBookmarked = contentItem.isBookmark.value
+                isBookmarked?.let {
+                    contentItem.isBookmark.value = !isBookmarked
+                }
+                val response = myPageRepository.toggleContentScrap(
+                    tokenBearer,
+                    contentItem.contentId ?: BigInteger("0")
                 )
+                contentItem.isScrapClickable.value = true
+                when(response) {
+                    is ApiResponse.Success -> {
+                        deleteContent(contentItem)
+                    }
+                    else -> {
+                        _toastFailThemeKeyword.value = "스크랩 / 스크랩 취소"
+                        contentItem.isBookmark.value = isBookmarked
+                    }
+                }
             }
+        }
     }
 
     fun deleteContent(contentItem: ContentItem) {
