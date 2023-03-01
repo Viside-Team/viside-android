@@ -72,7 +72,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
     private fun showToastIfFirstLoggedIn() {
         if(!SharedPrefManager.getBoolean(requireContext()) { HAVE_SEEN_WELCOME_TOAST }) {
-            showToastShort(VSideToast.createShortCenterToast(requireContext(), "Welcome to Vside!"))
+            showToastShort(VSideToast.createShortCenterToast(requireContext(), "Welcome to V side!"))
             SharedPrefManager.setBoolean(requireContext(), { HAVE_SEEN_WELCOME_TOAST }, true)
         }
     }
