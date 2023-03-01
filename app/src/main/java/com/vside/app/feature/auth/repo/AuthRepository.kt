@@ -11,5 +11,5 @@ class AuthRepository(private val authService: AuthService) {
 
     suspend fun signIn(signInRequest: SignInRequest) = flowApiResponse(authService.signIn(signInRequest))
 
-    suspend fun nicknameDuplicationCheck(nicknameDuplicationCheckRequest: NicknameDuplicationCheckRequest) = flowApiResponse(authService.nicknameDuplicationCheck(nicknameDuplicationCheckRequest))
+    suspend fun nicknameDuplicationCheck(nicknameDuplicationCheckRequest: NicknameDuplicationCheckRequest) = authService.nicknameDuplicationCheck(nicknameDuplicationCheckRequest)
 }

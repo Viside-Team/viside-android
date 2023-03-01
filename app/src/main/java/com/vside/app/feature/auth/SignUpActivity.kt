@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
+import com.skydoves.sandwich.ApiResponse
 import com.vside.app.R
 import com.vside.app.databinding.ActivitySignUpBinding
 import com.vside.app.feature.MainActivity
@@ -142,14 +143,19 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>() {
     @FlowPreview
     private fun initData() {
         lifecycleScope.launchWhenCreated {
-            viewModel.nicknameValidationCheck({}, {})
+            viewModel.nicknameValidationCheck()
         }
         viewModel.passedVsideUser.value = intent.getParcelableExtra(DataTransfer.VSIDE_USER)
+        initNickNameThenSetSelection()
+    }
+
+    private fun initNickNameThenSetSelection() {
         lifecycleScope.launchWhenCreated {
-            viewModel.initNickname(
-                PersonalInfoValidation.convertToValidNickname(viewModel.passedVsideUser.value?.nickname),
-                { viewDataBinding.etSignUpNickname.setSelection(viewDataBinding.etSignUpNickname.length()) },
-                {})
+            val convertedNickname = PersonalInfoValidation.convertToValidNickname(viewModel.passedVsideUser.value?.nickname)
+            viewModel.nickname.value = convertedNickname
+            if(viewModel.nicknameDuplicationCheckAsync(convertedNickname).await() is ApiResponse.Success) {
+                viewDataBinding.etSignUpNickname.setSelection(viewDataBinding.etSignUpNickname.length())
+            }
         }
     }
 

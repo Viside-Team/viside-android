@@ -2,6 +2,8 @@ package com.vside.app.feature.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.skydoves.sandwich.ApiResponse
 import com.vside.app.feature.auth.data.VsideUser
 import com.vside.app.feature.auth.data.request.NicknameDuplicationCheckRequest
 import com.vside.app.feature.auth.data.request.SignInRequest
@@ -11,11 +13,8 @@ import com.vside.app.util.auth.PersonalInfoValidation
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.handleApiResponse
 import com.vside.app.util.lifecycle.SingleLiveEvent
-import com.vside.app.util.log.VsideLog
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
 
 class SignUpViewModel(private val authRepository: AuthRepository) : BaseViewModel() {
@@ -28,62 +27,48 @@ class SignUpViewModel(private val authRepository: AuthRepository) : BaseViewMode
 
     @ExperimentalCoroutinesApi
     @FlowPreview
-    suspend fun nicknameValidationCheck(onCheckSuccess: () -> Unit, onCheckFail: () -> Unit) {
+    suspend fun nicknameValidationCheck() {
         nickname
             .debounce(300)
             .collect {
                 nicknameGuidance.value = PersonalInfoValidation.nicknameGuidanceStr(it)
                 isNicknameValidate.value = PersonalInfoValidation.nicknameValidationCheck(it)
                 if (PersonalInfoValidation.nicknameValidationCheck(it)) {
-                    nicknameDuplicationCheck(it, onCheckSuccess, onCheckFail)
+                    viewModelScope.launch { nicknameDuplicationCheckAsync(it).join() }
                 }
             }
     }
 
-    suspend fun initNickname(inputNickname: String, onCheckSuccess: () -> Unit, onCheckFail: () -> Unit) {
-        nickname.value = inputNickname
-        nicknameDuplicationCheck(inputNickname, onCheckSuccess, onCheckFail)
-    }
 
-    private suspend fun nicknameDuplicationCheck(
-        nickname: String,
-        onCheckSuccess: () -> Unit,
-        onCheckFail: () -> Unit
-    ) {
-        authRepository.nicknameDuplicationCheck(NicknameDuplicationCheckRequest(nickname))
-            .collect { response ->
-                handleApiResponse(
-                    response,
-                    onSuccess = {
-                        when (it.data?.isDuplicated) {
-                            false -> {
-                                nicknameGuidance.value =
-                                    PersonalInfoValidation.nicknameGuidanceStr(this.nickname.value)
-                                isNicknameValidate.value = true
-                            }
-                            true -> {
-                                nicknameGuidance.value =
-                                    PersonalInfoValidation.MSG_NICKNAME_DUPLICATED
-                                isNicknameValidate.value = false
-                            }
-                            else -> {
-                                // 서버에러
-                                isNicknameValidate.value = false
-                            }
+    suspend fun nicknameDuplicationCheckAsync(nickname: String) =
+        viewModelScope.async {
+            val response = authRepository.nicknameDuplicationCheck(NicknameDuplicationCheckRequest(nickname))
+            when(response) {
+                is ApiResponse.Success -> {
+                    when (response.data?.isDuplicated) {
+                        false -> {
+                            nicknameGuidance.value =
+                                PersonalInfoValidation.nicknameGuidanceStr(this@SignUpViewModel.nickname.value)
+                            isNicknameValidate.value = true
                         }
-                        onCheckSuccess()
-                    },
-                    onError = {
-                        isNicknameValidate.value = false
-                        onCheckFail()
-                    },
-                    onException = {
-                        isNicknameValidate.value = false
-                        onCheckFail()
+                        true -> {
+                            nicknameGuidance.value =
+                                PersonalInfoValidation.MSG_NICKNAME_DUPLICATED
+                            isNicknameValidate.value = false
+                        }
+                        else -> {
+                            // 서버에러
+                            isNicknameValidate.value = false
+                        }
                     }
-                )
+                }
+                else -> {
+                    isNicknameValidate.value = false
+                }
             }
-    }
+            response
+        }
+
 
 
     suspend fun signUp(
