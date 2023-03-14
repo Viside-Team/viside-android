@@ -17,7 +17,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="27dp"
+            android:paddingHorizontal="18dp"
             android:paddingVertical="11dp">
             <TextView
                 android:id="@+id/tv_toast_text"
@@ -32,7 +32,7 @@
                 android:shadowColor="#66000000"
                 android:shadowRadius="4"
                 style="@style/TextAppearance.AppCompat.XL_EB"
-                android:textColor="@color/lemon300"/>
+                android:textColor="@color/main100"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
