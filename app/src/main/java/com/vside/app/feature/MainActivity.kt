@@ -32,12 +32,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         viewDataBinding.viewModel = viewModel
 
         setUpBottomNavigationView()
-
-        initTab()
     }
 
-    private fun initTab() {
-        viewDataBinding.bnvMain.selectedItemId = VsideBottomMenu.Home.menuItemResId
+    override fun onStart() {
+        super.onStart()
+        syncBottomMenuAndTab()
     }
 
     private fun setUpBottomNavigationView() {
@@ -48,18 +47,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             // 탭 선택 리스너 설정
             setOnItemSelectedListener(
                 VsideBottomMenu.getNavigationOnItemSelectedListener(
-                    onHomeSelected = {
-                        changeFragment(homeFragment)
-                    },
-                    onFilterSelected = {
-                        changeFragment(filterFragment)
-                    },
-                    onMyPageSelected = {
-                        changeFragment(myPageFragment)
+                    listOf(homeFragment, filterFragment, myPageFragment),
+                    onItemSelected = {
+                        it?.let {
+                             changeFragment(it)
+                        }
                     }
                 )
             )
         }
+    }
+
+    private fun syncBottomMenuAndTab() {
+        viewDataBinding.bnvMain.selectedItemId =
+            VsideBottomMenu.values()
+                .find { it1 -> it1.kClass == supportFragmentManager.fragments.find { !it.isHidden }?.let { it::class }}
+                ?.menuItemResId
+                ?: VsideBottomMenu.defaultBottomMenu.menuItemResId
     }
 
     private fun changeFragment(fragment: Fragment) {
@@ -89,5 +93,4 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 commit()
             }
     }
-
 }
