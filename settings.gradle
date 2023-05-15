@@ -18,3 +18,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Vside"
 include ':app'
+include ':presentation'
+include ':domain'
+include ':data'
