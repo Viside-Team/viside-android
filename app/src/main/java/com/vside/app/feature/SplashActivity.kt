@@ -9,7 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import com.vside.app.R
 import com.vside.app.databinding.ActivitySplashBinding
 import com.vside.app.feature.auth.LoginActivity
-import com.vside.app.feature.auth.data.request.SignInRequest
 import com.vside.app.util.auth.removeUserInfo
 import com.vside.app.util.auth.storeUserInfo
 import com.vside.app.util.base.BaseActivity
@@ -35,10 +34,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
             val loginType = SharedPrefManager.getString(appCompatActivity) { LOGIN_TYPE }
             val snsIdStr = SharedPrefManager.getString(appCompatActivity) { SNS_ID }
             signIn(
-                SignInRequest(
-                    loginType,
-                    snsIdStr
-                ),
+                loginType,
+                snsIdStr,
                 onOurUser = { jwtBearer ->
                     jwtBearer?.let {
                         storeUserInfo(
@@ -103,14 +100,16 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
 
     private fun signIn(
-        signInRequest: SignInRequest,
+        loginType: String?,
+        snsId: String?,
         onOurUser: (jwtBearer: String?) -> Unit,
         onNewUser: () -> Unit,
         onPostFail: () -> Unit
     ) {
         lifecycleScope.launchWhenCreated {
             viewModel.signIn(
-                signInRequest,
+                loginType,
+                snsId,
                 onOurUser,
                 onNewUser,
                 onPostFail

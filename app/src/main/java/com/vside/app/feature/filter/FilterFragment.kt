@@ -3,10 +3,10 @@ package com.vside.app.feature.filter
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.depayse.data.remote.mapper.toData
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.vside.app.R
 import com.vside.app.databinding.FragmentFilterBinding
-import com.vside.app.feature.common.data.Content
 import com.vside.app.feature.common.view.LoginDialogFragment
 import com.vside.app.feature.content.ContentActivity
 import com.vside.app.util.base.BaseFragment
@@ -55,7 +55,7 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
             isContentItemClicked.observe(requireActivity()) {
                 startActivity(
                     Intent(requireContext(), ContentActivity::class.java)
-                        .putExtra(DataTransfer.CONTENT, Content(it))
+                        .putExtra(DataTransfer.CONTENT, it.toData())
                 )
             }
 

@@ -14,8 +14,6 @@ import com.skydoves.sandwich.ApiResponse
 import com.vside.app.R
 import com.vside.app.databinding.ActivitySignUpBinding
 import com.vside.app.feature.MainActivity
-import com.vside.app.feature.auth.data.request.SignInRequest
-import com.vside.app.feature.auth.data.request.SignUpRequest
 import com.vside.app.util.auth.PersonalInfoValidation
 import com.vside.app.util.auth.storeUserInfo
 import com.vside.app.util.base.BaseActivity
@@ -105,13 +103,23 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>() {
     }
 
     private fun signUp(
-        signUpRequest: SignUpRequest,
+        name: String?,
+        email: String?,
+        loginType: String?,
+        gender: String?,
+        ageRange: String?,
+        snsId: String?,
         onPostSuccess: () -> Unit,
         onPostFail: () -> Unit
     ) {
         lifecycleScope.launchWhenCreated {
             viewModel.signUp(
-                signUpRequest,
+                name,
+                email,
+                loginType,
+                gender,
+                ageRange,
+                snsId,
                 onPostSuccess,
                 onPostFail
             )
@@ -119,14 +127,16 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>() {
     }
 
     private fun signIn(
-        signInRequest: SignInRequest,
+        loginType: String?,
+        snsId: String?,
         onOurUser: (jwtBearer: String?) -> Unit,
         onNewUser: () -> Unit,
         onPostFail: () -> Unit
     ) {
         lifecycleScope.launchWhenCreated {
             viewModel.signIn(
-                signInRequest,
+                loginType,
+                snsId,
                 onOurUser,
                 onNewUser,
                 onPostFail
@@ -163,23 +173,17 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>() {
         val appCompatActivity = this@SignUpActivity
         with(viewModel) {
             isStartClicked.observe(appCompatActivity) {
-                val signUpRequest = SignUpRequest(
+                this@SignUpActivity.signUp(
                     nickname.value,
                     passedVsideUser.value?.email,
                     passedVsideUser.value?.loginType,
                     passedVsideUser.value?.gender,
                     passedVsideUser.value?.ageRange,
-                    passedVsideUser.value?.snsId
-                )
-                this@SignUpActivity.signUp(
-                    signUpRequest,
+                    passedVsideUser.value?.snsId,
                     onPostSuccess = {
-                        val signInRequest = SignInRequest(
-                            passedVsideUser.value?.loginType,
-                            passedVsideUser.value?.snsId
-                        )
                         this@SignUpActivity.signIn(
-                            signInRequest,
+                            passedVsideUser.value?.loginType,
+                            passedVsideUser.value?.snsId,
                             onOurUser = { jwtBearer ->
                                 jwtBearer?.let {
                                     storeUserInfo(

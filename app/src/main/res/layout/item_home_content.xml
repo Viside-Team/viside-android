@@ -7,7 +7,7 @@
     <data>
         <variable
             name="item"
-            type="com.vside.app.feature.common.data.ContentItem" />
+            type="com.depayse.domain.entity.Content" />
 
         <variable
             name="eventHolder"

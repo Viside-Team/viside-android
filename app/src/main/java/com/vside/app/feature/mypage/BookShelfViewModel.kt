@@ -3,8 +3,9 @@ package com.vside.app.feature.mypage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.depayse.data.remote.mapper.toDomain
+import com.depayse.domain.entity.Content
 import com.skydoves.sandwich.ApiResponse
-import com.vside.app.feature.common.data.ContentItem
 import com.vside.app.feature.mypage.repo.MyPageRepository
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.ContentItemClickListener
@@ -13,8 +14,8 @@ import kotlinx.coroutines.launch
 import java.math.BigInteger
 
 class BookShelfViewModel(private val myPageRepository: MyPageRepository) : BaseViewModel(), ContentItemClickListener {
-    private val _scrapContentList = MutableLiveData<MutableList<ContentItem>>()
-    val scrapContentList: LiveData<MutableList<ContentItem>> = _scrapContentList
+    private val _scrapContentList = MutableLiveData<MutableList<Content>>()
+    val scrapContentList: LiveData<MutableList<Content>> = _scrapContentList
 
     fun getScrapList() {
         viewModelScope.launch {
@@ -23,7 +24,7 @@ class BookShelfViewModel(private val myPageRepository: MyPageRepository) : BaseV
             _isLoading.value = false
             when(response) {
                 is ApiResponse.Success -> {
-                    _scrapContentList.value = response.data?.contentList?.map { it1 -> ContentItem(it1) }?.toMutableList()
+                    _scrapContentList.value = response.data?.contentList?.map { it1 -> it1.toDomain() }?.toMutableList()
                 }
                 else -> {
                     _toastFailThemeKeyword.value = "스크랩 리스트 가져오기"
@@ -32,33 +33,42 @@ class BookShelfViewModel(private val myPageRepository: MyPageRepository) : BaseV
         }
     }
 
-    fun toggleScrapContent(contentItem: ContentItem) {
+    fun toggleScrapContent(contentItem: Content) {
         viewModelScope.launch {
-            if(contentItem.isScrapClickable.value == true) {
-                contentItem.isScrapClickable.value = false
-                val isBookmarked = contentItem.isBookmark.value
-                isBookmarked?.let {
-                    contentItem.isBookmark.value = !isBookmarked
-                }
+            val itemIdx = _scrapContentList.value?.indexOf(contentItem) ?: -1
+            var tempItem = contentItem.copy()
+            val tempItemList = _scrapContentList.value?.toMutableList()
+            if(tempItem.isScrapClickable) {
+                tempItemList?.set(itemIdx, tempItem.copy(isScrapClickable = false))
+                _scrapContentList.value = tempItemList
+
+                tempItem = tempItem.copy(isBookmark = !tempItem.isBookmark)
+                tempItemList?.set(itemIdx, tempItem)
+                _scrapContentList.value = tempItemList
+
                 val response = myPageRepository.toggleContentScrap(
                     tokenBearer,
                     contentItem.contentId ?: BigInteger("0")
                 )
-                contentItem.isScrapClickable.value = true
+                tempItemList?.set(itemIdx, tempItem.copy(isScrapClickable = true))
+                _scrapContentList.value = tempItemList
                 when(response) {
                     is ApiResponse.Success -> {
                         deleteContent(contentItem)
                     }
                     else -> {
                         _toastFailThemeKeyword.value = "스크랩 / 스크랩 취소"
-                        contentItem.isBookmark.value = isBookmarked
+
+                        tempItem = tempItem.copy(isBookmark = !tempItem.isBookmark)
+                        tempItemList?.set(itemIdx, tempItem)
+                        _scrapContentList.value = tempItemList
                     }
                 }
             }
         }
     }
 
-    fun deleteContent(contentItem: ContentItem) {
+    fun deleteContent(contentItem: Content) {
         _scrapContentList.value?.remove(contentItem)
         _scrapContentList.value = _scrapContentList.value
     }
@@ -70,17 +80,17 @@ class BookShelfViewModel(private val myPageRepository: MyPageRepository) : BaseV
         _isBackClicked.call()
     }
 
-    private val _isContentItemClicked = SingleLiveEvent<ContentItem>()
-    val isContentItemClicked: LiveData<ContentItem> = _isContentItemClicked
+    private val _isContentItemClicked = SingleLiveEvent<Content>()
+    val isContentItemClicked: LiveData<Content> = _isContentItemClicked
 
-    override fun onContentItemClickListener(item: ContentItem) {
+    override fun onContentItemClickListener(item: Content) {
         _isContentItemClicked.value = item
     }
 
-    private val _isContentBookmarkClicked = SingleLiveEvent<ContentItem>()
-    val isContentBookmarkClicked: LiveData<ContentItem> = _isContentBookmarkClicked
+    private val _isContentBookmarkClicked = SingleLiveEvent<Content>()
+    val isContentBookmarkClicked: LiveData<Content> = _isContentBookmarkClicked
 
-    override fun onContentItemBookmarkClickListener(item: ContentItem) {
+    override fun onContentItemBookmarkClickListener(item: Content) {
         _isContentBookmarkClicked.value = item
     }
 }

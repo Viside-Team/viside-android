@@ -10,8 +10,10 @@ import com.vside.app.R
 import com.vside.app.databinding.DialogLoginBinding
 import com.vside.app.feature.MainActivity
 import com.vside.app.feature.auth.SignUpActivity
-import com.vside.app.feature.auth.data.*
-import com.vside.app.feature.auth.data.request.SignInRequest
+import com.vside.app.feature.auth.data.VsideAgeRange
+import com.vside.app.feature.auth.data.VsideGender
+import com.vside.app.feature.auth.data.VsideLoginType
+import com.vside.app.feature.auth.data.VsideUser
 import com.vside.app.util.auth.getKakaoLoginCallback
 import com.vside.app.util.auth.kakaoLogin
 import com.vside.app.util.auth.storeUserInfo
@@ -19,7 +21,8 @@ import com.vside.app.util.base.BaseBottomSheetDialogFragment
 import com.vside.app.util.common.DataTransfer
 import org.koin.android.ext.android.inject
 
-class LoginDialogFragment:BaseBottomSheetDialogFragment<DialogLoginBinding, LoginDialogViewModel>() {
+class LoginDialogFragment :
+    BaseBottomSheetDialogFragment<DialogLoginBinding, LoginDialogViewModel>() {
     override val layoutResId: Int = R.layout.dialog_login
     override val viewModel: LoginDialogViewModel by inject()
 
@@ -31,14 +34,17 @@ class LoginDialogFragment:BaseBottomSheetDialogFragment<DialogLoginBinding, Logi
         observeData()
     }
 
-    fun signIn(signInRequest: SignInRequest,
-               onOurUser: (jwtBearer: String?) -> Unit,
-               onNewUser: () -> Unit,
-               onPostFail: () -> Unit
+    fun signIn(
+        loginType: String?,
+        snsId: String?,
+        onOurUser: (jwtBearer: String?) -> Unit,
+        onNewUser: () -> Unit,
+        onPostFail: () -> Unit
     ) {
         lifecycleScope.launchWhenCreated {
             viewModel.signIn(
-                signInRequest,
+                loginType,
+                snsId,
                 onOurUser,
                 onNewUser,
                 onPostFail
@@ -68,13 +74,10 @@ class LoginDialogFragment:BaseBottomSheetDialogFragment<DialogLoginBinding, Logi
                             val ageRangeStr =
                                 VsideAgeRange.getRequestStrByKakaoAgeRangeObj(user.kakaoAccount?.ageRange)
                             val loginTypeStr = VsideLoginType.Kakao.serverDataStr
-                            val signInRequest = SignInRequest(
-                                loginTypeStr,
-                                snsIdStr
-                            )
 
                             this@LoginDialogFragment.signIn(
-                                signInRequest,
+                                loginTypeStr,
+                                snsIdStr,
                                 onOurUser = { jwtBearer ->
                                     jwtBearer?.let {
                                         storeUserInfo(

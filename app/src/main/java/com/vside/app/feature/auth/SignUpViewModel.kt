@@ -5,17 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.skydoves.sandwich.ApiResponse
 import com.vside.app.feature.auth.data.VsideUser
-import com.vside.app.feature.auth.data.request.NicknameDuplicationCheckRequest
-import com.vside.app.feature.auth.data.request.SignInRequest
-import com.vside.app.feature.auth.data.request.SignUpRequest
 import com.vside.app.feature.auth.repo.AuthRepository
 import com.vside.app.util.auth.PersonalInfoValidation
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.handleApiResponse
 import com.vside.app.util.lifecycle.SingleLiveEvent
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.launch
 
 class SignUpViewModel(private val authRepository: AuthRepository) : BaseViewModel() {
     val nickname = MutableStateFlow("")
@@ -42,7 +42,7 @@ class SignUpViewModel(private val authRepository: AuthRepository) : BaseViewMode
 
     suspend fun nicknameDuplicationCheckAsync(nickname: String) =
         viewModelScope.async {
-            val response = authRepository.nicknameDuplicationCheck(NicknameDuplicationCheckRequest(nickname))
+            val response = authRepository.nicknameDuplicationCheck(nickname)
             when(response) {
                 is ApiResponse.Success -> {
                     when (response.data?.isDuplicated) {
@@ -72,11 +72,16 @@ class SignUpViewModel(private val authRepository: AuthRepository) : BaseViewMode
 
 
     suspend fun signUp(
-        signUpRequest: SignUpRequest,
+        name: String?,
+        email: String?,
+        loginType: String?,
+        gender: String?,
+        ageRange: String?,
+        snsId: String?,
         onPostSuccess: () -> Unit,
         onPostFail: () -> Unit
     ) {
-        authRepository.signUp(signUpRequest)
+        authRepository.signUp(name, email, loginType, gender, ageRange, snsId)
             .collect { response ->
                 handleApiResponse(
                     response = response,
@@ -97,12 +102,13 @@ class SignUpViewModel(private val authRepository: AuthRepository) : BaseViewMode
     }
 
     suspend fun signIn(
-        signInRequest: SignInRequest,
+        loginType: String?,
+        snsId: String?,
         onOurUser: (jwtBearer: String?) -> Unit,
         onNewUser: () -> Unit,
         onPostFail: () -> Unit
     ) {
-        authRepository.signIn(signInRequest)
+        authRepository.signIn(loginType, snsId)
             .collect { response ->
                 handleApiResponse(
                     response = response,

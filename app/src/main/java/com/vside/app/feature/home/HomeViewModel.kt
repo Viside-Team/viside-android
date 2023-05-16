@@ -3,8 +3,9 @@ package com.vside.app.feature.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.depayse.data.remote.mapper.toDomain
+import com.depayse.domain.entity.Content
 import com.skydoves.sandwich.ApiResponse
-import com.vside.app.feature.common.data.ContentItem
 import com.vside.app.feature.home.repo.HomeRepository
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.ContentItemClickListener
@@ -14,8 +15,8 @@ import java.math.BigInteger
 
 class HomeViewModel(private val homeRepository: HomeRepository) : BaseViewModel(),
     ContentItemClickListener {
-    private val _contentList = MutableLiveData<List<ContentItem>>()
-    val contentList: LiveData<List<ContentItem>> = _contentList
+    private val _contentList = MutableLiveData<List<Content>>()
+    val contentList: LiveData<List<Content>> = _contentList
 
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> = _userName
@@ -27,7 +28,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : BaseViewModel(
             _isLoading.value = false
             when (response) {
                 is ApiResponse.Success -> {
-                    _contentList.value = response.data?.contents?.map { content -> ContentItem(content) }
+                    _contentList.value = response.data?.contents?.map { it1 -> it1.toDomain() }
                 }
                 else -> {
                     _toastFailThemeKeyword.value = "컨텐츠 가져오기"
@@ -42,9 +43,14 @@ class HomeViewModel(private val homeRepository: HomeRepository) : BaseViewModel(
             _isLoading.value = false
             when(response) {
                 is ApiResponse.Success -> {
-                    _contentList.value?.forEach { originalItem ->
+                    val tempContentList = _contentList.value?.toMutableList()
+                    tempContentList?.forEachIndexed { idx, originalItem ->
                         val newContent = response.data?.contents?.find { it.contentId == originalItem.contentId }
-                        if(originalItem.isBookmark.value != newContent?.isBookmark) { originalItem.isBookmark.value = newContent?.isBookmark }
+                        if(originalItem.isBookmark != newContent?.isBookmark) {
+                            newContent?.isBookmark?.let {
+                                tempContentList[idx] = originalItem.copy(isBookmark = it)
+                            }
+                        }
                     }
                     _contentList.value = _contentList.value
                 }
@@ -71,41 +77,52 @@ class HomeViewModel(private val homeRepository: HomeRepository) : BaseViewModel(
         }
     }
 
-    fun toggleScrapContent(contentItem: ContentItem) =
+    fun toggleScrapContent(contentItem: Content) =
         viewModelScope.launch {
-            if(contentItem.isScrapClickable.value == true) {
-                contentItem.isScrapClickable.value = false
-                val isBookmarked = contentItem.isBookmark.value
-                isBookmarked?.let {
-                    contentItem.isBookmark.value = !isBookmarked
-                }
+            val itemIdx = _contentList.value?.indexOf(contentItem) ?: -1
+            var tempItem = contentItem.copy()
+            val tempItemList = _contentList.value?.toMutableList()
+            if(tempItem.isScrapClickable) {
+                tempItemList?.set(itemIdx, tempItem.copy(isScrapClickable = false))
+                _contentList.value = tempItemList
+
+                tempItem = tempItem.copy(isBookmark = !tempItem.isBookmark)
+                tempItemList?.set(itemIdx, tempItem)
+                _contentList.value = tempItemList
+
                 val response =  homeRepository.toggleContentScrap(
                     tokenBearer,
                     contentItem.contentId ?: BigInteger("0")
                 )
-                contentItem.isScrapClickable.value = true
+
+                tempItemList?.set(itemIdx, tempItem.copy(isScrapClickable = true))
+                _contentList.value = tempItemList
+
                 when(response) {
                     is ApiResponse.Success -> {}
                     else -> {
                         _toastFailThemeKeyword.value = "스크랩 / 스크랩 취소"
-                        contentItem.isBookmark.value = isBookmarked
+
+                        tempItem = tempItem.copy(isBookmark = !tempItem.isBookmark)
+                        tempItemList?.set(itemIdx, tempItem)
+                        _contentList.value = tempItemList
                     }
                 }
             }
         }
 
     // 클릭 이벤트들
-    private val _isContentItemClicked = SingleLiveEvent<ContentItem>()
-    val isContentItemClicked: LiveData<ContentItem> = _isContentItemClicked
+    private val _isContentItemClicked = SingleLiveEvent<Content>()
+    val isContentItemClicked: LiveData<Content> = _isContentItemClicked
 
-    override fun onContentItemClickListener(item: ContentItem) {
+    override fun onContentItemClickListener(item: Content) {
         _isContentItemClicked.value = item
     }
 
-    private val _isContentBookmarkClicked = SingleLiveEvent<ContentItem>()
-    val isContentBookmarkClicked: LiveData<ContentItem> = _isContentBookmarkClicked
+    private val _isContentBookmarkClicked = SingleLiveEvent<Content>()
+    val isContentBookmarkClicked: LiveData<Content> = _isContentBookmarkClicked
 
-    override fun onContentItemBookmarkClickListener(item: ContentItem) {
+    override fun onContentItemBookmarkClickListener(item: Content) {
         _isContentBookmarkClicked.value = item
     }
 }

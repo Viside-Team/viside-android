@@ -2,9 +2,9 @@ package com.vside.app.feature.mypage
 
 import android.content.Intent
 import android.os.Bundle
+import com.depayse.data.remote.mapper.toData
 import com.vside.app.R
 import com.vside.app.databinding.ActivityBookShelfBinding
-import com.vside.app.feature.common.data.Content
 import com.vside.app.feature.content.ContentActivity
 import com.vside.app.util.base.BaseActivity
 import com.vside.app.util.common.DataTransfer
@@ -36,7 +36,7 @@ class BookShelfActivity : BaseActivity<ActivityBookShelfBinding, BookShelfViewMo
             isContentItemClicked.observe(appCompatActivity) {
                 startActivity(
                     Intent(appCompatActivity, ContentActivity::class.java)
-                        .putExtra(DataTransfer.CONTENT, Content(it))
+                        .putExtra(DataTransfer.CONTENT, it.toData())
                 )
             }
 
