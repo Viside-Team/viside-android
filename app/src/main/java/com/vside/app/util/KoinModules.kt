@@ -4,25 +4,25 @@ import com.vside.app.feature.MainViewModel
 import com.vside.app.feature.SplashViewModel
 import com.vside.app.feature.auth.LoginViewModel
 import com.vside.app.feature.auth.SignUpViewModel
-import com.depayse.data.repository.AuthRepositoryImpl
+import com.vside.app.feature.auth.repo.AuthRepository
 import com.depayse.data.remote.service.AuthService
 import com.depayse.data.remote.service.CommonService
 import com.vside.app.feature.common.view.LoginDialogViewModel
 import com.vside.app.feature.common.view.OneBtnDialogViewModel
 import com.vside.app.feature.common.view.TwoBtnDialogViewModel
 import com.vside.app.feature.content.ContentViewModel
-import com.depayse.data.repository.ContentRepositoryImpl
+import com.vside.app.feature.content.repo.ContentRepository
 import com.depayse.data.remote.service.ContentService
 import com.vside.app.feature.filter.FilterSelectViewModel
 import com.vside.app.feature.filter.FilterViewModel
-import com.depayse.data.repository.FilterRepositoryImpl
+import com.vside.app.feature.filter.repo.FilterRepository
 import com.depayse.data.remote.service.FilterService
 import com.vside.app.feature.home.HomeViewModel
-import com.depayse.data.repository.HomeRepositoryImpl
+import com.vside.app.feature.home.repo.HomeRepository
 import com.depayse.data.remote.service.HomeService
 import com.vside.app.feature.mypage.BookShelfViewModel
 import com.vside.app.feature.mypage.MyPageViewModel
-import com.depayse.data.repository.MyPageRepositoryImpl
+import com.vside.app.feature.mypage.repo.MyPageRepository
 import com.depayse.data.remote.service.MyPageService
 import com.vside.app.util.common.*
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -71,9 +71,9 @@ val viewModelModule = module {
 }
 
 val repositoryModule = module {
-    single { AuthRepositoryImpl(get()) }
-    single { HomeRepositoryImpl(get(), get()) }
-    single { FilterRepositoryImpl(get(), get()) }
-    single { MyPageRepositoryImpl(get(), get(), get()) }
-    single { ContentRepositoryImpl(get(), get()) }
+    single { AuthRepository(get()) }
+    single { HomeRepository(get(), get()) }
+    single { FilterRepository(get(), get()) }
+    single { MyPageRepository(get(), get(), get()) }
+    single { ContentRepository(get(), get()) }
 }

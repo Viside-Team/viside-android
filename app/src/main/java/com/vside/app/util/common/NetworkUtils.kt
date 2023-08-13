@@ -40,6 +40,20 @@ suspend fun <T> handleApiResponse(
     }
 }
 
+fun <T> flowApiResponse(response: ApiResponse<T>): Flow<ApiResponse<T>> =
+    flow {
+        response
+            .suspendOnSuccess {
+                emit(this)
+            }
+            .suspendOnError {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(this)
+            }
+    }.flowOn(Dispatchers.IO)
+
 fun createOkHttp(): OkHttpClient {
     val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY

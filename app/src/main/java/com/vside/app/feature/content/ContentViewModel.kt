@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.skydoves.sandwich.ApiResponse
-import com.depayse.data.repository.ContentRepositoryImpl
+import com.vside.app.feature.content.repo.ContentRepository
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.lifecycle.SingleLiveEvent
 import kotlinx.coroutines.launch
 import java.math.BigInteger
 
-class ContentViewModel(private val contentRepository: ContentRepositoryImpl): BaseViewModel() {
+class ContentViewModel(private val contentRepository: ContentRepository): BaseViewModel() {
     var contentUrl = ""
 
     var contentId = BigInteger("0")

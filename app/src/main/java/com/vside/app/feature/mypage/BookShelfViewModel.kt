@@ -6,14 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.depayse.data.remote.mapper.toDomain
 import com.depayse.domain.entity.Content
 import com.skydoves.sandwich.ApiResponse
-import com.depayse.data.repository.MyPageRepositoryImpl
+import com.vside.app.feature.mypage.repo.MyPageRepository
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.ContentItemClickListener
 import com.vside.app.util.lifecycle.SingleLiveEvent
 import kotlinx.coroutines.launch
 import java.math.BigInteger
 
-class BookShelfViewModel(private val myPageRepository: MyPageRepositoryImpl) : BaseViewModel(), ContentItemClickListener {
+class BookShelfViewModel(private val myPageRepository: MyPageRepository) : BaseViewModel(), ContentItemClickListener {
     private val _scrapContentList = MutableLiveData<MutableList<Content>>()
     val scrapContentList: LiveData<MutableList<Content>> = _scrapContentList
 

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.skydoves.sandwich.ApiResponse
 import com.vside.app.feature.auth.data.VsideUser
-import com.depayse.data.repository.AuthRepositoryImpl
+import com.vside.app.feature.auth.repo.AuthRepository
 import com.vside.app.util.auth.PersonalInfoValidation
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.handleApiResponse
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
-class SignUpViewModel(private val authRepository: AuthRepositoryImpl) : BaseViewModel() {
+class SignUpViewModel(private val authRepository: AuthRepository) : BaseViewModel() {
     val nickname = MutableStateFlow("")
 
     val nicknameGuidance = MutableLiveData("")

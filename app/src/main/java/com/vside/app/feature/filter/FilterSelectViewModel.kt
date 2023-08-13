@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.skydoves.sandwich.ApiResponse
 import com.vside.app.feature.filter.data.CategoryKeywordItem
-import com.depayse.data.repository.FilterRepositoryImpl
+import com.vside.app.feature.filter.repo.FilterRepository
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.KeywordItemClickListener
 import com.vside.app.util.lifecycle.SingleLiveEvent
 import kotlinx.coroutines.launch
 
-class FilterSelectViewModel(private val filterRepository: FilterRepositoryImpl): BaseViewModel(), KeywordItemClickListener {
+class FilterSelectViewModel(private val filterRepository: FilterRepository): BaseViewModel(), KeywordItemClickListener {
     private val _allKeywordsGroupedByCategory = MutableLiveData<List<CategoryKeywordItem>>()
     val allKeywordsGroupedByCategory: LiveData<List<CategoryKeywordItem>> = _allKeywordsGroupedByCategory
 
