@@ -6,14 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.depayse.data.remote.mapper.toDomain
 import com.depayse.domain.entity.Content
 import com.skydoves.sandwich.ApiResponse
-import com.vside.app.feature.home.repo.HomeRepository
+import com.depayse.data.repository.HomeRepositoryImpl
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.ContentItemClickListener
 import com.vside.app.util.lifecycle.SingleLiveEvent
 import kotlinx.coroutines.launch
 import java.math.BigInteger
 
-class HomeViewModel(private val homeRepository: HomeRepository) : BaseViewModel(),
+class HomeViewModel(private val homeRepository: HomeRepositoryImpl) : BaseViewModel(),
     ContentItemClickListener {
     private val _contentList = MutableLiveData<List<Content>>()
     val contentList: LiveData<List<Content>> = _contentList

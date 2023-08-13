@@ -6,14 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.depayse.data.remote.mapper.toDomain
 import com.depayse.domain.entity.Content
 import com.skydoves.sandwich.ApiResponse
-import com.vside.app.feature.filter.repo.FilterRepository
+import com.depayse.data.repository.FilterRepositoryImpl
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.ContentItemClickListener
 import com.vside.app.util.lifecycle.SingleLiveEvent
 import kotlinx.coroutines.launch
 import java.math.BigInteger
 
-class FilterViewModel(private val filterRepository: FilterRepository): BaseViewModel(), ContentItemClickListener {
+class FilterViewModel(private val filterRepository: FilterRepositoryImpl): BaseViewModel(), ContentItemClickListener {
     private val _contentList = MutableLiveData<List<Content>>()
     val contentList: LiveData<List<Content>> = _contentList
 

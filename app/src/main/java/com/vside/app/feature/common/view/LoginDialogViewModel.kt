@@ -1,12 +1,12 @@
 package com.vside.app.feature.common.view
 
 import androidx.lifecycle.LiveData
-import com.vside.app.feature.auth.repo.AuthRepository
+import com.depayse.data.repository.AuthRepositoryImpl
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.handleApiResponse
 import com.vside.app.util.lifecycle.SingleLiveEvent
 
-class LoginDialogViewModel(private val authRepository: AuthRepository) : BaseViewModel() {
+class LoginDialogViewModel(private val authRepository: AuthRepositoryImpl) : BaseViewModel() {
     suspend fun signIn(
         loginType: String?,
         snsId: String?,
