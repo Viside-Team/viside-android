@@ -14,6 +14,7 @@ import com.vside.app.feature.auth.data.VsideAgeRange
 import com.vside.app.feature.auth.data.VsideGender
 import com.vside.app.feature.auth.data.VsideLoginType
 import com.vside.app.feature.auth.data.VsideUser
+import com.vside.app.feature.auth.data.request.SignInRequest
 import com.vside.app.util.auth.getKakaoLoginCallback
 import com.vside.app.util.auth.kakaoLogin
 import com.vside.app.util.auth.removeUserInfo
@@ -45,16 +46,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
 
     private fun signIn(
-        loginType: String?,
-        snsId: String?,
+        signInRequest: SignInRequest,
         onOurUser: (jwtBearer: String?) -> Unit,
         onNewUser: () -> Unit,
         onPostFail: () -> Unit
     ) {
         lifecycleScope.launchWhenCreated {
             viewModel.signIn(
-                loginType,
-                snsId,
+                signInRequest,
                 onOurUser,
                 onNewUser,
                 onPostFail
@@ -87,10 +86,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                             val ageRangeStr =
                                 VsideAgeRange.getRequestStrByKakaoAgeRangeObj(user.kakaoAccount?.ageRange)
                             val loginTypeStr = VsideLoginType.Kakao.serverDataStr
+                            val signInRequest = SignInRequest(
+                                loginTypeStr,
+                                snsIdStr
+                            )
 
                             this@LoginActivity.signIn(
-                                loginTypeStr,
-                                snsIdStr,
+                                signInRequest,
                                 onOurUser = { jwtBearer ->
                                     jwtBearer?.let {
                                         storeUserInfo(

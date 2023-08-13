@@ -1,7 +1,7 @@
 package com.vside.app.feature.filter.data
 
 import androidx.lifecycle.MutableLiveData
-import com.depayse.data.remote.model.response.KeywordsGroupedByCategoryResponse
+import com.vside.app.feature.filter.data.response.KeywordsGroupedByCategoryResponse
 
 data class CategoryKeywordItem(
     val category: String,

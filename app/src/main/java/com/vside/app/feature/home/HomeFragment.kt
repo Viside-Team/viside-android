@@ -3,9 +3,9 @@ package com.vside.app.feature.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.depayse.data.remote.mapper.toData
 import com.vside.app.R
 import com.vside.app.databinding.FragmentHomeBinding
+import com.vside.app.feature.common.data.Content
 import com.vside.app.feature.common.view.LoginDialogFragment
 import com.vside.app.feature.common.view.VSideToast
 import com.vside.app.feature.content.ContentActivity
@@ -54,7 +54,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             isContentItemClicked.observe(requireActivity()) {
                 startActivity(
                     Intent(requireContext(), ContentActivity::class.java)
-                        .putExtra(DataTransfer.CONTENT, it.toData())
+                        .putExtra(DataTransfer.CONTENT, Content(it))
                 )
             }
 

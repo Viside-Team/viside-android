@@ -1,7 +1,7 @@
 package com.vside.app.feature.home.repo
 
-import com.depayse.data.remote.service.CommonService
-import com.depayse.data.remote.service.HomeService
+import com.vside.app.feature.common.service.CommonService
+import com.vside.app.feature.home.service.HomeService
 import java.math.BigInteger
 
 class HomeRepository(private val homeService: HomeService, private val commonService: CommonService) {

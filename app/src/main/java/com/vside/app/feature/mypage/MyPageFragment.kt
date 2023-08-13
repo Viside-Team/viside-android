@@ -5,12 +5,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
-import com.depayse.data.remote.mapper.toData
 import com.skydoves.sandwich.ApiResponse
 import com.vside.app.R
 import com.vside.app.databinding.FragmentMyPageBinding
 import com.vside.app.feature.auth.LoginActivity
+import com.vside.app.feature.auth.data.request.WithdrawRequest
 import com.vside.app.feature.common.VSideUrl
+import com.vside.app.feature.common.data.Content
 import com.vside.app.feature.common.view.TwoBtnDialogFragment
 import com.vside.app.feature.content.ContentActivity
 import com.vside.app.util.auth.removeUserInfo
@@ -112,7 +113,7 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
             isContentItemClicked.observe(requireActivity()) {
                 startActivity(
                     Intent(requireContext(), ContentActivity::class.java)
-                        .putExtra(DataTransfer.CONTENT, it.toData())
+                        .putExtra(DataTransfer.CONTENT, Content(it))
                 )
             }
         }
@@ -138,7 +139,9 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
     private fun withdraw() {
         lifecycleScope.launchWhenCreated {
             val deferred = viewModel.withdrawAsync(
+                WithdrawRequest(
                     SharedPrefManager.getString(requireContext()) { SNS_ID }
+                )
             )
             if(deferred.await() is ApiResponse.Success) {
                 removeUserInfo(requireContext())

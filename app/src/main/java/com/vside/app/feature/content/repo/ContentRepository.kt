@@ -1,7 +1,7 @@
 package com.vside.app.feature.content.repo
 
-import com.depayse.data.remote.service.CommonService
-import com.depayse.data.remote.service.ContentService
+import com.vside.app.feature.common.service.CommonService
+import com.vside.app.feature.content.service.ContentService
 import java.math.BigInteger
 
 class ContentRepository(private val contentService: ContentService, private val commonService: CommonService) {

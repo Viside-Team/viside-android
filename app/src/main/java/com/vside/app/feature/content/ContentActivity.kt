@@ -8,10 +8,10 @@ import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 import android.view.ViewGroup
 import android.view.WindowInsetsController
 import androidx.core.view.WindowCompat
-import com.depayse.data.remote.model.ContentDTO
 import com.google.android.material.appbar.AppBarLayout
 import com.vside.app.R
 import com.vside.app.databinding.ActivityContentBinding
+import com.vside.app.feature.common.data.Content
 import com.vside.app.feature.common.view.LoginDialogFragment
 import com.vside.app.util.base.BaseActivity
 import com.vside.app.util.common.DataTransfer
@@ -38,7 +38,7 @@ class ContentActivity : BaseActivity<ActivityContentBinding, ContentViewModel>()
     }
 
     private fun initData() {
-        intent.getParcelableExtra<ContentDTO>(DataTransfer.CONTENT)?.let {
+        intent.getParcelableExtra<Content>(DataTransfer.CONTENT)?.let {
             viewModel.contentUrl = it.contentUrl ?: ""
             viewModel.title.value = it.title ?: ""
             viewModel.dateStr.value = it.dateStr?.replace("-", ". ") ?: ""

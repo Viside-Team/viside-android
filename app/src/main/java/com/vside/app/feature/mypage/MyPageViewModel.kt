@@ -3,9 +3,9 @@ package com.vside.app.feature.mypage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.depayse.data.remote.mapper.toDomain
-import com.depayse.domain.entity.Content
 import com.skydoves.sandwich.ApiResponse
+import com.vside.app.feature.auth.data.request.WithdrawRequest
+import com.vside.app.feature.common.data.ContentItem
 import com.vside.app.feature.mypage.repo.MyPageRepository
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.ContentItemClickListener
@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 
 class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewModel(),
     ContentItemClickListener {
-    private val _scrapContentList = MutableLiveData<List<Content>>()
-    val scrapContentList: LiveData<List<Content>> = _scrapContentList
+    private val _scrapContentList = MutableLiveData<List<ContentItem>>()
+    val scrapContentList: LiveData<List<ContentItem>> = _scrapContentList
 
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> = _userName
@@ -52,13 +52,13 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewM
                             else response.data?.contentList?.size!!
                         }
                         else 0
-                    val tempContentList = Array(contentListSize) { Content() }
+                    val tempContentList = Array(contentListSize) { ContentItem () }
 
                     (0 until contentListSize).forEach { idx ->
                         if(idx < (contentListSize + 1) / 2) {
-                            tempContentList[2 * idx] = response.data?.contentList!![idx].toDomain()
+                            tempContentList[2 * idx] = ContentItem(response.data?.contentList!![idx])
                         } else {
-                            tempContentList[2 * (idx - (contentListSize + 1) / 2) + 1] = response.data?.contentList!![idx].toDomain()
+                            tempContentList[2 * (idx - (contentListSize + 1) / 2) + 1] = ContentItem(response.data?.contentList!![idx])
                         }
                     }
                     _scrapContentList.value = tempContentList.toList()
@@ -87,10 +87,10 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewM
         }
 
 
-    suspend fun withdrawAsync(snsId: String) : Deferred<ApiResponse<*>> =
+    suspend fun withdrawAsync(withdrawRequest: WithdrawRequest) : Deferred<ApiResponse<*>> =
         viewModelScope.async {
             _isLoading.value = true
-            val response = myPageRepository.withdraw(tokenBearer, snsId)
+            val response = myPageRepository.withdraw(tokenBearer, withdrawRequest)
             _isLoading.value = false
             when(response) {
                 is ApiResponse.Success -> {
@@ -154,10 +154,10 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewM
         _isWithDrawClicked.call()
     }
 
-    private val _isContentItemClicked = SingleLiveEvent<Content>()
-    val isContentItemClicked: LiveData<Content> = _isContentItemClicked
+    private val _isContentItemClicked = SingleLiveEvent<ContentItem>()
+    val isContentItemClicked: LiveData<ContentItem> = _isContentItemClicked
 
-    override fun onContentItemClickListener(item: Content) {
+    override fun onContentItemClickListener(item: ContentItem) {
         _isContentItemClicked.value = item
     }
 }
