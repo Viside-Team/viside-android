@@ -6,12 +6,11 @@ import com.vside.app.feature.auth.repo.AuthRepository
 import com.vside.app.util.base.BaseViewModel
 import com.vside.app.util.common.handleApiResponse
 import com.vside.app.util.lifecycle.SingleLiveEvent
-import kotlinx.coroutines.flow.collect
 
 class LoginDialogViewModel(private val authRepository: AuthRepository) : BaseViewModel() {
     suspend fun signIn(
         signInRequest: SignInRequest,
-        onOurUser: (jwtBearer: String?) -> Unit,
+        onOurUser: (jwtAccessBearer: String?, refreshToken: String?) -> Unit,
         onNewUser: () -> Unit,
         onPostFail: () -> Unit
     ) {
@@ -21,7 +20,7 @@ class LoginDialogViewModel(private val authRepository: AuthRepository) : BaseVie
                     response = response,
                     onSuccess = {
                         if (it.data?.isOurUser == true) {
-                            onOurUser(it.data?.jwtBearer)
+                            onOurUser(it.data?.jwtAccessBearer, it.data?.refreshToken)
                         } else {
                             onNewUser()
                         }

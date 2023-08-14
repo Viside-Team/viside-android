@@ -12,7 +12,7 @@ fun getKakaoLoginCallback(
     onFail: () -> Unit
 ): (OAuthToken?, Throwable?) -> Unit = { token, error ->
     if (error != null) {
-        VsideLog.e("로그인 실패",tr = error)
+        VsideLog.e("로그인 실패", tr = error)
         onFail()
     } else if (token != null) {
         VsideLog.i("로그인 성공 ${token.accessToken}")
@@ -34,21 +34,30 @@ fun kakaoLogin(context: Context, callback: (token: OAuthToken?, error: Throwable
     }
 }
 
+fun updateJwtAccessBearer(
+    context: Context, jwtAccessBearer: String
+) {
+    SharedPrefManager.setString(context, { JWT_ACCESS_BEARER }, jwtAccessBearer)
+}
+
 fun storeUserInfo(
     context: Context,
-    tokenBearer: String,
+    jwtAccessBearer: String,
+    refreshToken: String,
     snsId: String,
     loginTypeStr: String
 ) {
     SharedPrefManager.setBoolean(context, { IS_LOGGED_IN }, true)
     SharedPrefManager.setString(context, { LOGIN_TYPE }, loginTypeStr)
-    SharedPrefManager.setString(context, { TOKEN_BEARER }, tokenBearer)
+    SharedPrefManager.setString(context, { JWT_ACCESS_BEARER }, jwtAccessBearer)
+    SharedPrefManager.setString(context, { REFRESH_TOKEN }, refreshToken)
     SharedPrefManager.setString(context, { SNS_ID }, snsId)
 }
 
 fun removeUserInfo(context: Context) {
     SharedPrefManager.removeBoolean(context) { IS_LOGGED_IN }
     SharedPrefManager.removeString(context) { LOGIN_TYPE }
-    SharedPrefManager.removeString(context) { TOKEN_BEARER }
+    SharedPrefManager.removeString(context) { JWT_ACCESS_BEARER }
+    SharedPrefManager.removeString(context) { REFRESH_TOKEN }
     SharedPrefManager.removeString(context) { SNS_ID }
 }

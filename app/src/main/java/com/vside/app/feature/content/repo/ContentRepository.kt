@@ -5,7 +5,7 @@ import com.vside.app.feature.content.service.ContentService
 import java.math.BigInteger
 
 class ContentRepository(private val contentService: ContentService, private val commonService: CommonService) {
-    suspend fun getContentDetail(tokenBearer: String, contentId: BigInteger) = contentService.getContentDetail(tokenBearer, contentId)
+    suspend fun getContentDetail(contentId: BigInteger) = contentService.getContentDetail(contentId)
 
-    suspend fun toggleContentScrap(tokenBearer: String, contentId: BigInteger) = commonService.toggleContentScrap(tokenBearer, contentId)
+    suspend fun toggleContentScrap(contentId: BigInteger) = commonService.toggleContentScrap(contentId)
 }

@@ -27,7 +27,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewM
     private val myPageContentMaxCnt = 24
     fun getProfile() {
         viewModelScope.launch {
-            val response = myPageRepository.getProfile(tokenBearer)
+            val response = myPageRepository.getProfile()
             when(response) {
                 is ApiResponse.Success -> {
                     _userName.value = response.data?.userName
@@ -42,7 +42,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewM
     fun getScrapList() {
         viewModelScope.launch {
             _isLoading.value = true
-            val response = myPageRepository.getScrapList(tokenBearer)
+            val response = myPageRepository.getScrapList()
             _isLoading.value = false
             when(response) {
                 is ApiResponse.Success -> {
@@ -73,7 +73,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewM
     fun signOutAsync() : Deferred<ApiResponse<*>> =
         viewModelScope.async {
             _isLoading.value = true
-            val response = myPageRepository.signOut(tokenBearer)
+            val response = myPageRepository.signOut()
             _isLoading.value = false
             when(response) {
                 is ApiResponse.Success -> {
@@ -90,7 +90,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository): BaseViewM
     suspend fun withdrawAsync(withdrawRequest: WithdrawRequest) : Deferred<ApiResponse<*>> =
         viewModelScope.async {
             _isLoading.value = true
-            val response = myPageRepository.withdraw(tokenBearer, withdrawRequest)
+            val response = myPageRepository.withdraw(withdrawRequest)
             _isLoading.value = false
             when(response) {
                 is ApiResponse.Success -> {

@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.vside.app.R
-import com.vside.app.util.common.sharedpref.SharedPrefManager
 
 abstract class BaseFragment<T: ViewDataBinding, VM: BaseViewModel>: Fragment() {
     lateinit var viewDataBinding: T
@@ -27,7 +26,6 @@ abstract class BaseFragment<T: ViewDataBinding, VM: BaseViewModel>: Fragment() {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         // 라이브 데이터 업데이트를 위한 설정
         viewDataBinding.lifecycleOwner = viewLifecycleOwner
-        viewModel.tokenBearer = SharedPrefManager.getString(requireContext()) { TOKEN_BEARER}
 
         observeData()
 

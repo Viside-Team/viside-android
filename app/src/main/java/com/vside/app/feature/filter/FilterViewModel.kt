@@ -24,7 +24,6 @@ class FilterViewModel(private val filterRepository: FilterRepository): BaseViewM
         viewModelScope.launch {
             _isLoading.value = true
             val response = filterRepository.getFilteredContentList(
-                tokenBearer,
                 FilteredContentRequest(selectedKeywordSet.value?.toList() ?: listOf())
             )
             _isLoading.value = false
@@ -48,7 +47,6 @@ class FilterViewModel(private val filterRepository: FilterRepository): BaseViewM
                     contentItem.isBookmark.value = !isBookmarked
                 }
                 val response = filterRepository.toggleContentScrap(
-                    tokenBearer,
                     contentItem.contentId ?: BigInteger("0")
                 )
                 contentItem.isScrapClickable.value = true

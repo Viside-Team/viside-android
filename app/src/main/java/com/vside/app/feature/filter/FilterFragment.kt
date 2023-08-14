@@ -22,7 +22,6 @@ class FilterFragment: BaseFragment<FragmentFilterBinding, FilterViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewDataBinding.viewModel = viewModel
-        filterSelectViewModel.tokenBearer = SharedPrefManager.getString(requireContext()) { TOKEN_BEARER }
         viewDataBinding.filterSelectViewModel = filterSelectViewModel
 
         initData()

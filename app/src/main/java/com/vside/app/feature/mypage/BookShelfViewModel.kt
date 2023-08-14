@@ -19,7 +19,7 @@ class BookShelfViewModel(private val myPageRepository: MyPageRepository) : BaseV
     fun getScrapList() {
         viewModelScope.launch {
             _isLoading.value = true
-            val response = myPageRepository.getScrapList(tokenBearer)
+            val response = myPageRepository.getScrapList()
             _isLoading.value = false
             when(response) {
                 is ApiResponse.Success -> {
@@ -41,7 +41,6 @@ class BookShelfViewModel(private val myPageRepository: MyPageRepository) : BaseV
                     contentItem.isBookmark.value = !isBookmarked
                 }
                 val response = myPageRepository.toggleContentScrap(
-                    tokenBearer,
                     contentItem.contentId ?: BigInteger("0")
                 )
                 contentItem.isScrapClickable.value = true

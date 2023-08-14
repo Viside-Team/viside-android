@@ -47,7 +47,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     private fun signIn(
         signInRequest: SignInRequest,
-        onOurUser: (jwtBearer: String?) -> Unit,
+        onOurUser: (jwtAccessBearer: String?, refreshToken: String?) -> Unit,
         onNewUser: () -> Unit,
         onPostFail: () -> Unit
     ) {
@@ -93,11 +93,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
                             this@LoginActivity.signIn(
                                 signInRequest,
-                                onOurUser = { jwtBearer ->
-                                    jwtBearer?.let {
+                                onOurUser = { jwtAccessBearer, refreshToken ->
+                                    if(jwtAccessBearer != null && refreshToken != null) {
                                         storeUserInfo(
                                             appCompatActivity,
-                                            jwtBearer,
+                                            jwtAccessBearer,
+                                            refreshToken,
                                             snsIdStr,
                                             loginTypeStr
                                         )

@@ -6,9 +6,9 @@ import com.vside.app.feature.filter.service.FilterService
 import java.math.BigInteger
 
 class FilterRepository(private val filterService: FilterService, private val commonService: CommonService) {
-    suspend fun getKeywordsGroupedByCategory(jwtAccessToken: String) = filterService.getKeywordsGroupedByCategory(jwtAccessToken)
+    suspend fun getKeywordsGroupedByCategory() = filterService.getKeywordsGroupedByCategory()
 
-    suspend fun getFilteredContentList(jwtAccessToken: String, filteredContentRequest: FilteredContentRequest) = filterService.getFilteredContentList(jwtAccessToken, filteredContentRequest)
+    suspend fun getFilteredContentList(filteredContentRequest: FilteredContentRequest) = filterService.getFilteredContentList(filteredContentRequest)
 
-    suspend fun toggleContentScrap(jwtAccessToken: String, contentId: BigInteger) = commonService.toggleContentScrap(jwtAccessToken, contentId)
+    suspend fun toggleContentScrap(contentId: BigInteger) = commonService.toggleContentScrap(contentId)
 }

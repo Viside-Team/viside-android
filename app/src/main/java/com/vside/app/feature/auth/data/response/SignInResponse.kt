@@ -4,5 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class SignInResponse(
     @SerializedName("memberStatus") val isOurUser: Boolean?,
-    @SerializedName("jwt") val jwtBearer: String?
+    @SerializedName("accessToken") val jwtAccessBearer: String?,
+    @SerializedName("refreshToken") val refreshToken: String?
 )

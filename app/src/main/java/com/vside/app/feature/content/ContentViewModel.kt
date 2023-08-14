@@ -26,7 +26,7 @@ class ContentViewModel(private val contentRepository: ContentRepository): BaseVi
     fun getContentDetail(contentId: BigInteger) {
         viewModelScope.launch {
             _isLoading.value = true
-            val response = contentRepository.getContentDetail(tokenBearer, contentId)
+            val response = contentRepository.getContentDetail(contentId)
             _isLoading.value = false
             when(response) {
                 is ApiResponse.Success -> {
@@ -52,7 +52,6 @@ class ContentViewModel(private val contentRepository: ContentRepository): BaseVi
                     isBookmarked.value = !isBookmark
                 }
                 val response = contentRepository.toggleContentScrap(
-                    tokenBearer,
                     contentId
                 )
                 isScrapClickable.value = true

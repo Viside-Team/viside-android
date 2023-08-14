@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 open class BaseViewModel : ViewModel() {
-    lateinit var tokenBearer : String
-
     val isKeyboardVisible = MutableLiveData<Boolean>()
 
     protected val _toastMessage = MutableLiveData<String>()

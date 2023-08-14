@@ -5,9 +5,9 @@ import com.vside.app.feature.home.service.HomeService
 import java.math.BigInteger
 
 class HomeRepository(private val homeService: HomeService, private val commonService: CommonService) {
-    suspend fun getHomeContentList(jwtAccessToken: String) = homeService.getHomeContentList(jwtAccessToken)
+    suspend fun getHomeContentList() = homeService.getHomeContentList()
 
-    suspend fun getProfile(jwtAccessToken: String) = commonService.getProfile(jwtAccessToken)
+    suspend fun getProfile() = commonService.getProfile()
 
-    suspend fun toggleContentScrap(jwtAccessToken: String, contentId: BigInteger) = commonService.toggleContentScrap(jwtAccessToken, contentId)
+    suspend fun toggleContentScrap(contentId: BigInteger) = commonService.toggleContentScrap(contentId)
 }

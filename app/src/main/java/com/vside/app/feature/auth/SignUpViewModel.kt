@@ -98,7 +98,7 @@ class SignUpViewModel(private val authRepository: AuthRepository) : BaseViewMode
 
     suspend fun signIn(
         signInRequest: SignInRequest,
-        onOurUser: (jwtBearer: String?) -> Unit,
+        onOurUser: (jwtAccessBearer: String?, refreshToken: String?) -> Unit,
         onNewUser: () -> Unit,
         onPostFail: () -> Unit
     ) {
@@ -108,7 +108,7 @@ class SignUpViewModel(private val authRepository: AuthRepository) : BaseViewMode
                     response = response,
                     onSuccess = {
                         if(it.data?.isOurUser == true) {
-                            onOurUser(it.data?.jwtBearer)
+                            onOurUser(it.data?.jwtAccessBearer, it.data?.refreshToken)
                         }
                         else {
                             onNewUser()

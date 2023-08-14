@@ -8,7 +8,6 @@ import androidx.databinding.ViewDataBinding
 import com.vside.app.R
 import com.vside.app.util.common.KeyboardHeightObserver
 import com.vside.app.util.common.KeyboardHeightProvider
-import com.vside.app.util.common.sharedpref.SharedPrefManager
 
 abstract class BaseActivity<T: ViewDataBinding, VM: BaseViewModel> : AppCompatActivity(),
     KeyboardHeightObserver {
@@ -27,7 +26,6 @@ abstract class BaseActivity<T: ViewDataBinding, VM: BaseViewModel> : AppCompatAc
         viewDataBinding = DataBindingUtil.setContentView(this, layoutResId)
         //LiveData의 업데이트를 위한 설정
         viewDataBinding.lifecycleOwner = this@BaseActivity
-        viewModel.tokenBearer = SharedPrefManager.getString(this) { TOKEN_BEARER }
 
         viewDataBinding.root.post {
             keyboardHeightProvider.start()

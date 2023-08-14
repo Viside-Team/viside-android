@@ -7,13 +7,13 @@ import com.vside.app.feature.mypage.service.MyPageService
 import java.math.BigInteger
 
 class MyPageRepository(private val myPageService: MyPageService, private val authService: AuthService, private val commonService: CommonService) {
-    suspend fun getScrapList(tokenBearer: String) = myPageService.getScrapList(tokenBearer)
+    suspend fun getScrapList() = myPageService.getScrapList()
 
-    suspend fun signOut(tokenBearer: String) = authService.signOut(tokenBearer)
+    suspend fun signOut() = authService.signOut()
 
-    suspend fun withdraw(tokenBearer: String, withdrawRequest: WithdrawRequest) = authService.withdraw(tokenBearer, withdrawRequest)
+    suspend fun withdraw(withdrawRequest: WithdrawRequest) = authService.withdraw(withdrawRequest)
 
-    suspend fun getProfile(tokenBearer: String) = commonService.getProfile(tokenBearer)
+    suspend fun getProfile() = commonService.getProfile()
 
-    suspend fun toggleContentScrap(jwtAccessToken: String, contentId: BigInteger) = commonService.toggleContentScrap(jwtAccessToken, contentId)
+    suspend fun toggleContentScrap(contentId: BigInteger) = commonService.toggleContentScrap(contentId)
 }

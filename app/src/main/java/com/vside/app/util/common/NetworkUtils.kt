@@ -1,17 +1,13 @@
 package com.vside.app.util.common
 
+import android.content.Context
 import com.google.gson.GsonBuilder
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.coroutines.CoroutinesResponseCallAdapterFactory
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
-import com.vside.app.feature.auth.service.AuthService
-import com.vside.app.feature.common.service.CommonService
-import com.vside.app.feature.content.service.ContentService
-import com.vside.app.feature.filter.service.FilterService
-import com.vside.app.feature.home.service.HomeService
-import com.vside.app.feature.mypage.service.MyPageService
+import com.vside.app.util.auth.AuthInterceptor
 import com.vside.app.util.log.VsideLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +17,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 
@@ -61,15 +56,17 @@ fun <T> flowApiResponse(response: ApiResponse<T>): Flow<ApiResponse<T>> =
             }
     }.flowOn(Dispatchers.IO)
 
-fun createOkHttp(): OkHttpClient {
+fun createOkHttp(context: Context): OkHttpClient {
     val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
+    val authInterceptor = AuthInterceptor(context)
 
     return OkHttpClient.Builder()
         .connectTimeout(15L, TimeUnit.SECONDS)
         .readTimeout(15L, TimeUnit.SECONDS)
         .addInterceptor(httpLoggingInterceptor)
+        .addInterceptor(authInterceptor)
         .build()
 }
 

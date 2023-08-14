@@ -39,11 +39,12 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
                     loginType,
                     snsIdStr
                 ),
-                onOurUser = { jwtBearer ->
-                    jwtBearer?.let {
+                onOurUser = { jwtAccessBearer, refreshToken ->
+                    if(jwtAccessBearer != null && refreshToken != null) {
                         storeUserInfo(
                             appCompatActivity,
-                            jwtBearer,
+                            jwtAccessBearer,
+                            refreshToken,
                             snsIdStr,
                             loginType
                         )
@@ -104,7 +105,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
     private fun signIn(
         signInRequest: SignInRequest,
-        onOurUser: (jwtBearer: String?) -> Unit,
+        onOurUser: (jwtAccessBearer: String?, refreshToken: String?) -> Unit,
         onNewUser: () -> Unit,
         onPostFail: () -> Unit
     ) {

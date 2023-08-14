@@ -25,11 +25,12 @@ import com.vside.app.feature.mypage.MyPageViewModel
 import com.vside.app.feature.mypage.repo.MyPageRepository
 import com.vside.app.feature.mypage.service.MyPageService
 import com.vside.app.util.common.*
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val networkModule = module {
-    single { createOkHttp() }
+    single { createOkHttp(androidContext()) }
     single { createRetrofit(get(), "http://43.200.221.188:8080") }
 
     single { createService<AuthService>(get()) }

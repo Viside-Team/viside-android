@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import com.vside.app.util.common.sharedpref.SharedPrefManager
 import com.vside.app.util.dpToPx
 
 abstract class BaseDialogFragment<T: ViewDataBinding, VM: BaseViewModel>(private val widthDp: Int? = null) : DialogFragment() {
@@ -42,7 +41,6 @@ abstract class BaseDialogFragment<T: ViewDataBinding, VM: BaseViewModel>(private
     ): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         viewDataBinding.lifecycleOwner = viewLifecycleOwner
-        viewModel.tokenBearer = SharedPrefManager.getString(requireContext()) { TOKEN_BEARER }
 
         return viewDataBinding.root
     }

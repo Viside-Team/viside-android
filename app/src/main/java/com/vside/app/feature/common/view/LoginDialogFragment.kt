@@ -32,7 +32,7 @@ class LoginDialogFragment:BaseBottomSheetDialogFragment<DialogLoginBinding, Logi
     }
 
     fun signIn(signInRequest: SignInRequest,
-               onOurUser: (jwtBearer: String?) -> Unit,
+               onOurUser: (jwtAccessBearer: String?, refreshToken: String?) -> Unit,
                onNewUser: () -> Unit,
                onPostFail: () -> Unit
     ) {
@@ -75,11 +75,12 @@ class LoginDialogFragment:BaseBottomSheetDialogFragment<DialogLoginBinding, Logi
 
                             this@LoginDialogFragment.signIn(
                                 signInRequest,
-                                onOurUser = { jwtBearer ->
-                                    jwtBearer?.let {
+                                onOurUser = { jwtAccessBearer, refreshToken ->
+                                    if(jwtAccessBearer != null && refreshToken != null) {
                                         storeUserInfo(
                                             requireContext(),
-                                            jwtBearer,
+                                            jwtAccessBearer,
+                                            refreshToken,
                                             snsIdStr,
                                             loginTypeStr
                                         )

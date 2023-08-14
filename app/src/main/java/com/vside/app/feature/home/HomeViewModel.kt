@@ -23,7 +23,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : BaseViewModel(
     fun getHomeContentList() =
         viewModelScope.launch {
             _isLoading.value = true
-            val response = homeRepository.getHomeContentList(tokenBearer)
+            val response = homeRepository.getHomeContentList()
             _isLoading.value = false
             when (response) {
                 is ApiResponse.Success -> {
@@ -38,7 +38,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : BaseViewModel(
     fun refreshHomeContentList() =
         viewModelScope.launch {
             _isLoading.value = true
-            val response = homeRepository.getHomeContentList(tokenBearer)
+            val response = homeRepository.getHomeContentList()
             _isLoading.value = false
             when(response) {
                 is ApiResponse.Success -> {
@@ -58,7 +58,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : BaseViewModel(
     fun getProfile() {
         viewModelScope.launch {
             _isLoading.value = true
-            val response = homeRepository.getProfile(tokenBearer)
+            val response = homeRepository.getProfile()
             _isLoading.value = false
             when (response) {
                 is ApiResponse.Success -> {
@@ -80,7 +80,6 @@ class HomeViewModel(private val homeRepository: HomeRepository) : BaseViewModel(
                     contentItem.isBookmark.value = !isBookmarked
                 }
                 val response =  homeRepository.toggleContentScrap(
-                    tokenBearer,
                     contentItem.contentId ?: BigInteger("0")
                 )
                 contentItem.isScrapClickable.value = true

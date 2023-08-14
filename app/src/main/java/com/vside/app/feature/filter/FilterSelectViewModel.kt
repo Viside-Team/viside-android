@@ -21,7 +21,7 @@ class FilterSelectViewModel(private val filterRepository: FilterRepository): Bas
 
     fun getKeywordsGroupedByCategory() {
         viewModelScope.launch {
-            val response = filterRepository.getKeywordsGroupedByCategory(tokenBearer)
+            val response = filterRepository.getKeywordsGroupedByCategory()
             when(response) {
                 is ApiResponse.Success -> {
                     _allKeywordsGroupedByCategory.value = response.data?.categories?.map { it1 -> CategoryKeywordItem(it1) }

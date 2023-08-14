@@ -11,7 +11,6 @@ import com.vside.app.feature.auth.data.response.SignUpResponse
 import com.vside.app.feature.common.data.response.BasicMessageResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
-import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface AuthService {
@@ -22,10 +21,10 @@ interface AuthService {
     suspend fun signIn(@Body signInRequest: SignInRequest) : ApiResponse<SignInResponse>
 
     @DELETE("/logout1")
-    suspend fun signOut(@Header("Authorization") jwtAccessToken : String): ApiResponse<BasicMessageResponse>
+    suspend fun signOut(): ApiResponse<BasicMessageResponse>
 
     @POST("/withdrawal")
-    suspend fun withdraw(@Header("Authorization") jwtAccessToken : String, @Body withdrawRequest: WithdrawRequest): ApiResponse<BasicMessageResponse>
+    suspend fun withdraw(@Body withdrawRequest: WithdrawRequest): ApiResponse<BasicMessageResponse>
 
     @POST("/nameCheck")
     suspend fun nicknameDuplicationCheck(@Body nicknameDuplicationCheckRequest: NicknameDuplicationCheckRequest) : ApiResponse<NicknameDuplicationCheckResponse>
